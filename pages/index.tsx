@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
 import { getSession, useSession } from "next-auth/react";
 import Head from "next/head";
+import { useState } from "react";
 
 import MainPage from "../components/MainPage";
 import SignIn from "../components/SignIn";
+import DemoAccess from "../components/DemoAccess";
 import { Movie } from "../typings";
 import cachedRequests from "../utils/apiWithCache";
 
@@ -29,9 +31,20 @@ export default function Home({
   documentaries,
 }: Props) {
   const { data: session } = useSession();
+  const [demoMode, setDemoMode] = useState(false);
   
-  // إذا لم يكن المستخدم مسجل الدخول، اعرض صفحة التسجيل
-  if (!session) return <SignIn />;
+  // التحقق من وجود مفاتيح Google OAuth
+  const hasGoogleKeys = process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET;
+  
+  // إذا لم تكن هناك مفاتيح Google ولم يتم تفعيل الوضع التوضيحي
+  if (!hasGoogleKeys && !demoMode) {
+    return <DemoAccess onDemoAccess={() => setDemoMode(true)} />;
+  }
+  
+  // إذا كانت هناك مفاتيح Google ولكن المستخدم غير مسجل الدخول
+  if (hasGoogleKeys && !session) {
+    return <SignIn />;
+  }
 
   return (
     <motion.div
@@ -57,7 +70,7 @@ export default function Home({
         horrorMovies={horrorMovies}
         romanceMovies={romanceMovies}
         documentaries={documentaries}
-        session={session}
+        session={session || { user: { name: "مستخدم تجريبي", email: "demo@example.com" } }}
       />
     </motion.div>
   );
