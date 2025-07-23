@@ -1,203 +1,119 @@
-# نسخة نتفليكس - ملف التوثيق
+# Netflix Clone 2.0 - replit.md
 
-## نظرة عامة
+## Overview
 
-هذا تطبيق حديث يحاكي نتفليكس مبني بتقنية Next.js 13 و TypeScript و Tailwind CSS. يوفر التطبيق تصفح الأفلام، المصادقة عبر جوجل باستخدام NextAuth.js، إدارة قائمة المشاهدة، معلومات تفصيلية عن الأفلام، وميزات شاملة مثل معلومات الممثلين وتصفح المواسم باستخدام TMDB API.
+This is a modern Netflix clone built with Next.js 13, featuring Google authentication, movie/TV show browsing, bookmarking functionality, and TMDB API integration. The application provides a full streaming service UI with user personalization features including favorites management and actor following.
 
-## تفضيلات المستخدم
+## User Preferences
 
-أسلوب التواصل المفضل: لغة بسيطة ومفهومة بالعربية
-لغة المستخدم: العربية (جميع المحادثات يجب أن تكون بالعربية)
-متطلبات التواصل: جميع التفاعلات يجب أن تتم باللغة العربية بالكامل
+Preferred communication style: Simple, everyday language.
 
-## هيكل النظام
+## System Architecture
 
-### هيكل الواجهة الأمامية
+### Frontend Architecture
+- **Framework**: Next.js 13 with TypeScript
+- **Styling**: Tailwind CSS with custom components
+- **Animations**: Framer Motion for smooth transitions and interactions
+- **UI Components**: Custom React components with responsive design
+- **State Management**: React hooks (useState, useEffect) and NextAuth session management
 
-التطبيق مبني باستخدام **Next.js 13** مع:
-- **العرض من جانب الخادم (SSR)** للأداء الأمثل وتحسين محركات البحث
-- **TypeScript** لضمان الأمان والحصول على تجربة تطوير أفضل
-- **Tailwind CSS** للتصميم العصري والمتجاوب
-- **Framer Motion** للحركات والانتقالات السلسة
+### Backend Architecture
+- **API Routes**: Next.js API routes for authentication
+- **Authentication**: NextAuth.js v4 with Google OAuth provider
+- **External APIs**: TMDB (The Movie Database) API for movie/TV data
+- **Data Fetching**: Server-side rendering with getServerSideProps
 
-### نظام المصادقة
+### Data Storage
+- **Database**: Firebase Firestore for user data and bookmarks
+- **Collections Structure**:
+  - `netflixUsers`: User profile data
+  - `likeMovie`: User's bookmarked movies/shows
+  - `likeActress`: User's followed actors
+  - `feedBack`: User feedback submissions
 
-يستخدم **NextAuth.js v4** مع:
-- مزود Google OAuth لمصادقة المستخدمين
-- إدارة الجلسات عبر التطبيق
-- المسارات المحمية وإدارة حالة المستخدم
+## Key Components
 
-### هيكل الخلفية
+### Core Pages
+- **Landing Page**: Sign-in page with Netflix-style hero section
+- **Home Page**: Main dashboard with movie rows and hero banner
+- **TV Shows**: Dedicated TV series browsing
+- **People**: Actor/actress discovery and following
+- **Favorites**: User's bookmarked content
+- **Details Pages**: Individual movie/show information
+- **Cast Pages**: Actor profiles and filmography
+- **Season Pages**: TV show season details and episodes
 
-التطبيق يستفيد من **مسارات Next.js API** من أجل:
-- جلب البيانات من جانب الخادم باستخدام `getServerSideProps`
-- التكامل المباشر مع TMDB API لبيانات الأفلام
-- التعامل مع مصادقة المستخدمين عبر NextAuth.js
-- إدارة الجلسات ومنطق المسارات المحمية
+### Reusable Components
+- **Navbar**: Navigation with search functionality
+- **Row**: Horizontal scrolling movie/show lists
+- **MoviesLine**: Individual movie/show cards
+- **HomeBanner**: Hero section with featured content
+- **Trailer**: Video player integration with ReactPlayer
+- **AddBookmark**: Bookmark management functionality
 
-### إدارة البيانات
+### Authentication Flow
+- Google OAuth integration via NextAuth.js
+- Session management across all pages
+- Protected routes requiring authentication
+- Automatic user document creation in Firestore
 
-- **تكامل TMDB API**: جلب مباشر من جانب الخادم لبيانات الأفلام والمحتوى الرائج والأنواع والمعلومات التفصيلية
-- **إدارة الحالة من جانب العميل**: React hooks والسياق لتفضيلات المستخدم وحالة واجهة المستخدم
-- **تكامل Firebase**: تكامل اختياري لاستمرارية بيانات المستخدم والميزات المتقدمة
+## Data Flow
 
-## المكونات الرئيسية
+1. **Authentication**: Users sign in with Google → NextAuth creates session → User data stored in Firestore
+2. **Content Discovery**: TMDB API fetches movie/TV data → Displayed in categorized rows
+3. **Bookmarking**: User interactions → Firestore updates → Real-time UI updates
+4. **Search**: User input → TMDB search API → Filtered results display
+5. **Navigation**: Dynamic routing with Next.js router → Page transitions with Framer Motion
 
-### الصفحات والمكونات الأساسية
+## External Dependencies
 
-- **الصفحة الرئيسية**: معروضة من جانب الخادم مع جلب بيانات الأفلام
-- **مكون الصفحة الرئيسية**: لوحة التحكم الرئيسية مع صفوف الأفلام والقسم البطولي
-- **مكون تسجيل الدخول**: واجهة مصادقة Google OAuth
-- **شريط التنقل**: التنقل مع وظائف البحث وقائمة المستخدم
-- **البانر الرئيسي**: القسم البطولي مع المحتوى المميز
-- **مكون الصف**: صفوف الأفلام القابلة للتمرير الأفقي
-- **صفحات تفاصيل الأفلام**: معلومات شاملة عن الأفلام مع المقاطع الدعائية
-- **صفحات الممثلين والطاقم**: معلومات الممثلين وأعمالهم السينمائية
-- **صفحات المواسم**: تفاصيل مواسم وحلقات المسلسلات
+### APIs
+- **TMDB API**: Movie, TV show, and actor data
+- **YouTube**: Trailer video playback via ReactPlayer
 
-### تكامل بيانات الأفلام
+### Services
+- **Firebase**: User data storage and real-time updates
+- **Google OAuth**: User authentication
+- **Vercel/Netlify**: Deployment and hosting
 
-- تكامل TMDB (قاعدة بيانات الأفلام) من أجل:
-  - اكتشاف الأفلام والمسلسلات
-  - معلومات تفصيلية عن الأفلام
-  - وظائف البحث
-  - بيانات الممثلين والطاقم
-  - المقاطع الدعائية والفيديوهات
+### Key Libraries
+```json
+{
+  "next": "13.1.1",
+  "react": "18.2.0",
+  "next-auth": "^4.18.7",
+  "firebase": "^9.15.0",
+  "framer-motion": "^8.0.2",
+  "react-player": "^2.11.0",
+  "tailwindcss": "^3.2.4"
+}
+```
 
-### إدارة المستخدمين
+## Deployment Strategy
 
-- إنشاء وإدارة ملفات المستخدمين
-- وظائف قائمة المشاهدة (إضافة/إزالة الأفلام)
-- تتبع الممثلين المفضلين
-- إدارة حالة المستخدم القائمة على الجلسة
+### Environment Variables Required
+- `NEXT_PUBLIC_API_KEY`: TMDB API key
+- `NEXT_PUBLIC_AUTH_URL`: Application base URL
+- `GOOGLE_CLIENT_ID`: Google OAuth client ID
+- `GOOGLE_CLIENT_SECRET`: Google OAuth secret
+- `NEXT_PUBLIC_SECRET`: NextAuth secret
+- Firebase configuration variables (API key, project ID, etc.)
 
-### ميزات واجهة المستخدم
+### Build Process
+- Next.js optimized production build
+- Static asset optimization for images from TMDB
+- Tailwind CSS purging for minimal bundle size
+- TypeScript compilation and type checking
 
-- **التصميم المتجاوب**: محسن للعرض على سطح المكتب والهاتف المحمول
-- **موضوع مستوحى من نتفليكس**: خلفية داكنة مع ألوان حمراء مميزة
-- **الحركات السلسة**: Framer Motion لانتقالات الصفحات وتأثيرات التحويم
-- **العناصر التفاعلية**: المقاطع الدعائية للأفلام ووظائف البحث وتفضيلات المستخدم
-- **إمكانية الوصول**: HTML دلالي مناسب ودعم التنقل بلوحة المفاتيح
+### Performance Optimizations
+- Image optimization with Next.js Image component
+- Lazy loading for movie/show cards
+- Horizontal scrolling with ref-based navigation
+- Skeleton loading states for better UX
+- Responsive design for all device sizes
 
-## تدفق البيانات
-
-1. **بيانات الأفلام**: TMDB API ← مسارات Next.js API ← العرض من جانب الخادم ← عرض العميل
-2. **مصادقة المستخدم**: Google OAuth ← NextAuth.js ← إدارة الجلسة
-3. **تنقل الصفحات**: التوجيه من جانب العميل مع Next.js Router
-4. **المحتوى الديناميكي**: جلب خصائص من جانب الخادم لكل تحميل صفحة
-
-## التبعيات الخارجية
-
-### واجهات برمجة التطبيقات
-- **TMDB API**: المصدر الأساسي لبيانات الأفلام والمسلسلات
-- **Google OAuth**: مزود المصادقة لإصدار Next.js
-
-### المكتبات الرئيسية
-- **الإطار**: Next.js 13 مع TypeScript
-- **التصميم**: Tailwind CSS مع موضوع نتفليكس مخصص
-- **الحركة**: Framer Motion للانتقالات السلسة
-- **المصادقة**: NextAuth.js v4 مع مزود Google
-- **الأيقونات**: React Icons لعناصر واجهة المستخدم
-- **الوسائط**: React Player لمحتوى الفيديو
-
-### تكامل Firebase
-- مصادقة Firebase لإدارة محسنة للمستخدمين
-- تكامل Firestore اختياري لتفضيلات المستخدمين وقوائم المشاهدة
-- قدرات مزامنة البيانات في الوقت الفعلي
-
-## استراتيجية النشر
-
-### بيئة التطوير
-- **خادم تطوير Next.js**: يعمل على المنفذ 5000 مع إعادة التحميل الساخن
-- **دعم TypeScript**: فحص كامل للأنواع و IntelliSense
-- **التحديث السريع**: ردود فعل فورية أثناء التطوير
-
-### بناء الإنتاج
-- **بناء Next.js**: إنتاج ثابت محسن وعرض من جانب الخادم
-- **تحسين الأصول**: تحسين تلقائي للصور وتقسيم الكود
-- **متغيرات البيئة**: إدارة آمنة لمفاتيح API لـ TMDB والمصادقة
-
-### تحسين المنصة
-- تكوينات خاصة بـ Replit للنشر السلس
-- إدارة متغيرات البيئة عبر أسرار Replit
-- محسن لبيئة تطوير واستضافة Replit
-
-## التغييرات الأخيرة (23 يوليو 2025)
-
-### عملية النقل من Replit Agent (اليوم)
-✓ **فحص شامل للمشروع**: تم تحليل جميع الملفات والمكونات والتبعيات
-✓ **تحديث ملف التتبع**: إنشاء progress_tracker.md لمتابعة مراحل النقل
-✓ **حل مشكلة المتغيرات البيئية**: إصلاح الخطأ في .env.local الذي كان يسبب انهيار الخادم
-✓ **إعداد ملف الأسرار**: إنشاء secrets-template.env شامل ومنظم لجميع المفاتيح المطلوبة
-✓ **تأكيد عمل TMDB API**: التحقق من أن مفتاح TMDB يعمل بشكل صحيح
-✓ **اكتمال النقل**: المشروع جاهز للاستخدام في بيئة Replit
-✓ **إعادة تصميم صفحة التسجيل**: تحديث SigninBanner مع تصميم عربي محسن وحركات Framer Motion
-✓ **إنشاء صفحة تسجيل مستقلة**: إضافة /auth/signin مع نموذج متكامل ومصادقة Google
-✓ **تفعيل صفحة التسجيل كأول صفحة**: إعادة تفعيل المصادقة المطلوبة للوصول للمحتوى
-✓ **إضافة الوضع التوضيحي**: نظام ذكي للوصول بدون مفاتيح Google OAuth مع واجهة DemoAccess
-✓ **إضافة جميع المفاتيح المطلوبة**: تم نسخ Google OAuth و NextAuth و Firebase من secrets-template.env
-
-### نقل المشروع وإعداد البيئة الأساسية
-✓ **نقل المشروع**: تم نقل المشروع بنجاح من Replit Agent إلى بيئة Replit
-✓ **تثبيت الحزم**: تم تثبيت جميع تبعيات Next.js و React المطلوبة
-✓ **حل مشكلة @next/font**: تم إزالة تبعية @next/font القديمة وحل التحذيرات
-✓ **تكامل TMDB API**: تم تكوين وحفظ مفتاح TMDB API بشكل دائم في المشروع
-✓ **خادم التطوير**: خادم تطوير Next.js يعمل على المنفذ 5000 بدون أخطاء
-✓ **تحميل بيانات الأفلام**: الأفلام والمسلسلات تحمل الآن بنجاح من TMDB API
-
-### إصلاحات الكود الأساسية  
-✓ **إصلاح مشاكل الكود**: حل مشكلة GoRequestChanges، تحديث مكونات Next.js Image، إصلاح أخطاء router و TypeScript
-✓ **نظام تخزين مؤقت ذكي**: تم تنفيذ نظام تخزين مؤقت ذكي لسرعة التطوير
-✓ **تخزين مؤقت واعي بالبيئة**: تخزين مؤقت لا محدود في التطوير، معطل في الإنتاج
-
-### التحسينات الحديثة والإصلاحات المتقدمة
-✓ **إصلاح نظام التخزين المؤقت**: حل مشكلة البطء الشديد عبر إصلاح انتهاء صلاحية الكاش المستمر
-✓ **إصلاح مشاكل الصور**: حل مشكلة `upstream image response failed for undefined` بإضافة فحوصات شرطية
-✓ **تحسين أنواع TypeScript**: استبدال معظم أنواع `any` بأنواع محددة وإضافة فحوصات null/undefined
-✓ **إزالة console.error من الإنتاج**: جعل رسائل الخطأ تظهر فقط في وضع التطوير
-✓ **إصلاح الروابط المكسورة**: حل مشكلة `NEXT_PUBLIC_AUTH_URL` غير المتوفر في روابط الممثلين
-✓ **إضافة alt tags للصور**: تحسين إمكانية الوصول بإضافة نصوص بديلة للصور
-✓ **تحسين معالجة الأخطاء**: إضافة فحوصات شرطية لمنع الأخطاء في وقت التشغيل
-
-## الحالة الحالية
-
-تم نقل وتحسين نسخة نتفليكس بنجاح وهي تعمل بالكامل مع:
-
-### الميزات الأساسية المفعلة
-- إعداد كامل لـ Next.js 13 مع TypeScript يعمل على المنفذ 5000 بدون أخطاء حرجة
-- تكامل TMDB API لبيانات الأفلام الحقيقية (الأفلام تحمل بنجاح وبسرعة عالية)
-- مفتاح TMDB API محفوظ بشكل دائم في ملف البيئة
-- واجهة مستوحاة من نتفليكس مع Tailwind CSS
-- تصفح الأفلام مع فئات متعددة (الرائجة، الأعلى تقييماً، الأنواع)
-- تصميم متجاوب لجميع الأجهزة
-
-### التحسينات المطبقة
-- نظام تخزين مؤقت محسن بمدة لا محدودة أثناء التطوير
-- بيئة تطوير سريعة جداً مع بيانات أفلام مخزنة مؤقتاً
-- إصلاح مشاكل الصور المفقودة والروابط المكسورة
-- كود محسن مع أنواع TypeScript أفضل
-- رسائل خطأ محصورة في وضع التطوير فقط
-- نسخة نتفليكس جاهزة للاستخدام بأداء عالي
-
-### المشاكل المتبقية البسيطة
-- تحذيرات `fetchPriority` في React (لا تؤثر على الوظائف)
-- صفحة `/season/[id]` تحتاج إصلاح للبناء في الإنتاج
-- المصادقة متجاوزة مؤقتاً للوصول المباشر
-
-## الخطوات التالية
-
-### أولوية عالية
-→ **إصلاح صفحة المواسم**: حل مشكلة `/season/[id]` لإنجاح البناء في الإنتاج
-→ **إزالة تحذيرات fetchPriority**: تحديث مكونات Next.js Image لإزالة التحذيرات
-
-### أولوية متوسطة  
-→ **إعداد Google OAuth**: إعداد بيانات اعتماد Google OAuth عند الحاجة للمصادقة
-→ **تفعيل Firebase**: تكوين متغيرات Firebase لتفعيل ميزات المفضلة والمتابعة
-→ **اختبار صفحات التفاصيل**: اختبار جميع صفحات تفاصيل الأفلام ومعلومات الممثلين
-
-### مستقبلية
-→ **تحسين الأداء**: إضافة React.memo وuseMemo للمكونات الثقيلة
-→ **تحسين الأمان**: إضافة تحقق من صحة البيانات وmعالجة أخطاء شاملة
-→ **إعداد النشر**: جاهز لنشر الإنتاج بعد حل المشاكل المتبقية
-
-هذا الهيكل يوفر نسخة نتفليكس قوية وقابلة للتوسع مع ممارسات تطوير ويب حديثة وتجربة مستخدم مثالية.
+### Security Considerations
+- Environment variables for sensitive data
+- Firebase security rules for user data access
+- NextAuth secure session management
+- TMDB API rate limiting considerations
