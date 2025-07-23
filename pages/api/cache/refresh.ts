@@ -22,7 +22,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
       });
     } catch (error) {
-      console.error('خطأ في تحديث البيانات:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('خطأ في تحديث البيانات:', error);
+      }
       res.status(500).json({
         success: false,
         message: 'حدث خطأ أثناء تحديث البيانات',

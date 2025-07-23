@@ -13,7 +13,7 @@ function LikeActress({ person, baseUrl }: Props) {
 
   const handleNavigatePage = () => {
     router.push({
-      pathname: `${process.env.NEXT_PUBLIC_AUTH_URL}/cast/${person.id}`,
+      pathname: `/cast/${person.id}`,
       query: {
         castId: person.id.toString(),
       },
@@ -29,7 +29,7 @@ function LikeActress({ person, baseUrl }: Props) {
     >
       <img
         src={`${baseUrl}${person.profile_path}`}
-        alt=""
+        alt={person.name || "Actor"}
         className="w-48 m-auto"
       />
       <h1 className="text-gray-300 font-bold text-lg text-center py-2 line-clamp-3">

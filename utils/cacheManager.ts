@@ -36,7 +36,7 @@ export class CacheManager {
     const cacheData: CacheData = {
       data,
       timestamp: Date.now(),
-      expiresIn: developmentConfig.cache.enabled ? Infinity : expiresIn
+      expiresIn: Infinity
     };
 
     const filePath = this.getCacheFilePath(key);
@@ -44,7 +44,9 @@ export class CacheManager {
       fs.writeFileSync(filePath, JSON.stringify(cacheData, null, 2));
       console.log(`✓ Cached data for: ${key}`);
     } catch (error) {
-      console.error(`خطأ في حفظ الكاش لـ ${key}:`, error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error(`خطأ في حفظ الكاش لـ ${key}:`, error);
+      }
     }
   }
 
@@ -67,6 +69,7 @@ export class CacheManager {
       
       // فحص انتهاء صلاحية الكاش
       if (cacheData.expiresIn !== Infinity && 
+          typeof cacheData.expiresIn === 'number' &&
           Date.now() - cacheData.timestamp > cacheData.expiresIn) {
         console.log(`⚠ Cache expired for: ${key}`);
         this.delete(key);
@@ -76,7 +79,9 @@ export class CacheManager {
       console.log(`✓ Loading from cache: ${key}`);
       return cacheData.data;
     } catch (error) {
-      console.error(`خطأ في قراءة الكاش لـ ${key}:`, error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error(`خطأ في قراءة الكاش لـ ${key}:`, error);
+      }
       return null;
     }
   }

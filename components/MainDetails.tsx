@@ -23,7 +23,7 @@ function MainDetails({ movieDetails }: Props) {
             viewport={{ once: true }}
           >
             <Image
-              src={`${baseUrl}/${
+              src={`${baseUrl}${
                 movieDetails?.backdrop_path || movieDetails?.poster_path
               }`}
               alt={
