@@ -29,7 +29,8 @@ export default function Home({
   documentaries,
 }: Props) {
   const session = useSession();
-  if (!session.data) return <SignIn />;
+  // Temporarily bypass authentication to show movies directly
+  // if (!session.data) return <SignIn />;
 
   return (
     <motion.div
@@ -55,7 +56,7 @@ export default function Home({
         horrorMovies={horrorMovies}
         romanceMovies={romanceMovies}
         documentaries={documentaries}
-        session={session.data}
+        session={null}
       />
     </motion.div>
   );
