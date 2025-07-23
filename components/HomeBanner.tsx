@@ -76,8 +76,10 @@ function HomeBanner({ netflixOriginals, session, isTv }: Props) {
         <Image
           src={`${baseUrl}/${movie?.backdrop_path || movie?.poster_path}`}
           alt={movie?.title || movie?.name || movie?.original_name!}
-          layout="fill"
-          objectFit="cover"
+          fill
+          className="object-cover"
+          priority
+          sizes="100vw"
         />
         <div className="absolute w-full h-32 bg-gradient-to-t from-gray-100 to-transparent bottom-0 z-20" />
       </div>

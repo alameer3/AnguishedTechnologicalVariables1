@@ -8,7 +8,7 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 
 import { AiFillMail } from "react-icons/ai";
-import { GoRequestChanges } from "react-icons/go";
+import { GoGitPullRequest } from "react-icons/go";
 import { MdCastForEducation } from "react-icons/md";
 import { RiNetflixFill } from "react-icons/ri";
 import { firestore } from "../firebase/firebase";
@@ -74,7 +74,7 @@ function AboutFeed({}: Props) {
               onSubmit={handleSubmit}
             >
               <p className="flex justify-start items-center space-x-4 text-lg font-medium gap-4">
-                <GoRequestChanges /> Feedback
+                <GoGitPullRequest /> Feedback
               </p>
               <input
                 className="py-6 w-[500px] mt-4 bg-gray-900 placeholder:text-gray-400 rounded-md outline-none px-2.5"

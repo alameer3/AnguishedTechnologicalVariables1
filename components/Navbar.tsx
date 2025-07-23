@@ -14,6 +14,7 @@ type Props = {
 
 function Navbar({ isSearch, setSearchTerm, searchThrem }: Props) {
   const [isScrolled, setIsScrolled] = useState(false);
+  const router = useRouter();
   // Temporarily disable session check
   // const { data: session } = useSession();
 

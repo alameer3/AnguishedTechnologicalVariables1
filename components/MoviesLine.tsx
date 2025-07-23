@@ -62,9 +62,10 @@ function MoviesLine({ movie, isDetails, type, isfavourite }: Props) {
           src={`https://image.tmdb.org/t/p/w500${
             movie.backdrop_path || movie.poster_path
           }`}
-          layout="fill"
+          fill
           className="rounded-sm object-cover md:rounded"
-          alt={movie.name}
+          alt={movie.title || movie.name || "Movie"}
+          sizes="(max-width: 768px) 180px, 260px"
         />
       ) : (
         <div
