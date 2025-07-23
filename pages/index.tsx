@@ -30,7 +30,8 @@ export default function Home({
   documentaries,
   session,
 }: Props) {
-  if (!session) return <SignIn />;
+  // تجاوز المصادقة مؤقتاً للوصول المباشر
+  // if (!session) return <SignIn />;
 
   return (
     <motion.div
