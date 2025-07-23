@@ -31,7 +31,7 @@ function SigninBanner({}: Props) {
               className="h-8 px-1 sm:px-4 m-2 text-white bg-[#e50914] rounded hover:bg-[#e50914]"
               onClick={() =>
                 signIn("google", {
-                  callbackUrl: process.env.NEXT_PUBLIC_AUTH_URL,
+                  callbackUrl: "/",
                 })
               }
             >
