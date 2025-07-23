@@ -1,0 +1,17 @@
+{
+  "cacheEnabled": true,
+  "defaultCacheDuration": 1800000,
+  "maxCacheFiles": 50,
+  "lastUpdated": "2025-07-23T00:00:00.000Z",
+  "description": "إعدادات التخزين المؤقت لموقع Netflix Clone",
+  "categories": {
+    "trending_movies": { "duration": 1800000 },
+    "netflix_originals": { "duration": 3600000 },
+    "top_rated_movies": { "duration": 3600000 },
+    "action_movies": { "duration": 3600000 },
+    "comedy_movies": { "duration": 3600000 },
+    "horror_movies": { "duration": 3600000 },
+    "romance_movies": { "duration": 3600000 },
+    "documentaries": { "duration": 3600000 }
+  }
+}

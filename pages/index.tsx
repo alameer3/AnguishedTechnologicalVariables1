@@ -5,7 +5,7 @@ import Head from "next/head";
 import MainPage from "../components/MainPage";
 import SignIn from "../components/SignIn";
 import { Movie } from "../typings";
-import requests from "../utils/requests";
+import cachedRequests from "../utils/apiWithCache";
 
 type Props = {
   netflixOriginals: Movie[];
@@ -76,14 +76,14 @@ export const getServerSideProps = async (context: any) => {
       romanceMovies,
       documentaries,
     ] = await Promise.all([
-      fetch(requests.fetchNetflixOriginals).then((res) => res.json()).catch(() => ({ results: [] })),
-      fetch(requests.fetchTrending).then((res) => res.json()).catch(() => ({ results: [] })),
-      fetch(requests.fetchTopRated).then((res) => res.json()).catch(() => ({ results: [] })),
-      fetch(requests.fetchActionMovies).then((res) => res.json()).catch(() => ({ results: [] })),
-      fetch(requests.fetchComedyMovies).then((res) => res.json()).catch(() => ({ results: [] })),
-      fetch(requests.fetchHorrorMovies).then((res) => res.json()).catch(() => ({ results: [] })),
-      fetch(requests.fetchRomanceMovies).then((res) => res.json()).catch(() => ({ results: [] })),
-      fetch(requests.fetchDocumentaries).then((res) => res.json()).catch(() => ({ results: [] })),
+      cachedRequests.fetchNetflixOriginals().catch(() => ({ results: [] })),
+      cachedRequests.fetchTrending().catch(() => ({ results: [] })),
+      cachedRequests.fetchTopRated().catch(() => ({ results: [] })),
+      cachedRequests.fetchActionMovies().catch(() => ({ results: [] })),
+      cachedRequests.fetchComedyMovies().catch(() => ({ results: [] })),
+      cachedRequests.fetchHorrorMovies().catch(() => ({ results: [] })),
+      cachedRequests.fetchRomanceMovies().catch(() => ({ results: [] })),
+      cachedRequests.fetchDocumentaries().catch(() => ({ results: [] })),
     ]);
 
     return {
