@@ -1,0 +1,25 @@
+
+language: "nodejs"
+run: "npm run dev"
+entrypoint: "pages/index.tsx"
+
+modules:
+  - "nodejs-22"
+
+env:
+  NEXT_TELEMETRY_DISABLED: "1"
+
+deployment:
+  build: "npm run build"
+  run: "npm run start"
+  
+hidden:
+  - ".config"
+  - "package-lock.json" 
+  - ".next"
+  - ".swc"
+  - "node_modules"
+
+ports:
+  - localPort: 3000
+    externalPort: 80

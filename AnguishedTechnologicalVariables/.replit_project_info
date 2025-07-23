@@ -1,0 +1,32 @@
+
+# Replit Project Information
+PROJECT_NAME=Netflix Clone
+PROJECT_TYPE=Next.js Web Application
+CREATED_BY=Replit AI Agent
+FRAMEWORK=Next.js 13
+LANGUAGE=TypeScript
+STYLING=Tailwind CSS
+DATABASE=Firebase
+AUTH=NextAuth.js
+API=TMDB API
+
+# Project Structure
+MAIN_ENTRY=pages/index.tsx
+CONFIG_FILE=next.config.js
+STYLES=styles/globals.css
+
+# Environment Setup
+NODE_VERSION=22
+PORT=3000
+BUILD_COMMAND=npm run build
+DEV_COMMAND=npm run dev
+START_COMMAND=npm run start
+
+# Features
+- Netflix-like UI/UX
+- Movie and TV show browsing
+- User authentication
+- Search functionality
+- Favorites system
+- Responsive design
+- Video trailers

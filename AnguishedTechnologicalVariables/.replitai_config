@@ -1,0 +1,32 @@
+
+# Replit AI Configuration
+ai_generated=true
+ai_version=2024.1
+project_template=netflix_clone
+ai_capabilities_used=full_stack_development
+
+[project_info]
+name=Netflix Clone
+type=web_application
+framework=nextjs
+language=typescript
+created_by=replit_ai_agent
+
+[development]
+auto_install_deps=true
+auto_configure=true
+development_server=npm run dev
+production_build=npm run build
+
+[features]
+authentication=nextauth
+database=firebase
+api_integration=tmdb
+styling=tailwindcss
+responsive_design=true
+video_player=react-player
+
+[ai_signature]
+This project showcases Replit AI's ability to create
+full-featured web applications with modern technologies
+and best practices.
