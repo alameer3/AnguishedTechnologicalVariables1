@@ -6,8 +6,9 @@ This is a modern Netflix clone application built with Next.js 13, TypeScript, an
 
 ## User Preferences
 
-Preferred communication style: Simple, everyday language.
-User language: Arabic
+Preferred communication style: Simple, everyday language in Arabic.
+User language: Arabic (all conversations must be in Arabic)
+Communication requirement: All interactions must be conducted entirely in Arabic language
 
 ## System Architecture
 
