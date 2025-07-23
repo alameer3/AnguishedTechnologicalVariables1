@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { getSession, useSession } from "next-auth/react";
 import Head from "next/head";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import MainPage from "../components/MainPage";
 import SignIn from "../components/SignIn";
@@ -33,8 +33,22 @@ export default function Home({
   const { data: session } = useSession();
   const [demoMode, setDemoMode] = useState(false);
   
-  // التحقق من وجود مفاتيح Google OAuth
-  const hasGoogleKeys = process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET;
+  // التحقق من وجود مفاتيح Google OAuth - فقط في جانب العميل
+  const [hasGoogleKeys, setHasGoogleKeys] = useState(false);
+  
+  useEffect(() => {
+    // التحقق من المفاتيح في جانب العميل فقط لتجنب hydration مismatch
+    const checkKeys = async () => {
+      try {
+        const response = await fetch('/api/auth/providers');
+        const providers = await response.json();
+        setHasGoogleKeys(!!providers.google);
+      } catch {
+        setHasGoogleKeys(false);
+      }
+    };
+    checkKeys();
+  }, []);
   
   // إذا لم تكن هناك مفاتيح Google ولم يتم تفعيل الوضع التوضيحي
   if (!hasGoogleKeys && !demoMode) {
