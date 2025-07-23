@@ -1,17 +1,19 @@
 {
   "cacheEnabled": true,
-  "defaultCacheDuration": 1800000,
-  "maxCacheFiles": 50,
+  "developmentMode": true,
+  "defaultCacheDuration": "unlimited",
+  "productionCacheDuration": 1800000,
+  "maxCacheFiles": 100,
   "lastUpdated": "2025-07-23T00:00:00.000Z",
-  "description": "إعدادات التخزين المؤقت لموقع Netflix Clone",
+  "description": "إعدادات التخزين المؤقت لموقع Netflix Clone - بدون انتهاء صلاحية أثناء التطوير",
   "categories": {
-    "trending_movies": { "duration": 1800000 },
-    "netflix_originals": { "duration": 3600000 },
-    "top_rated_movies": { "duration": 3600000 },
-    "action_movies": { "duration": 3600000 },
-    "comedy_movies": { "duration": 3600000 },
-    "horror_movies": { "duration": 3600000 },
-    "romance_movies": { "duration": 3600000 },
-    "documentaries": { "duration": 3600000 }
+    "trending_movies": { "duration": "unlimited", "description": "الأفلام الرائجة" },
+    "netflix_originals": { "duration": "unlimited", "description": "أصول نتفليكس" },
+    "top_rated_movies": { "duration": "unlimited", "description": "الأفلام الأعلى تقييماً" },
+    "action_movies": { "duration": "unlimited", "description": "أفلام الأكشن" },
+    "comedy_movies": { "duration": "unlimited", "description": "أفلام الكوميديا" },
+    "horror_movies": { "duration": "unlimited", "description": "أفلام الرعب" },
+    "romance_movies": { "duration": "unlimited", "description": "أفلام الرومانسية" },
+    "documentaries": { "duration": "unlimited", "description": "الأفلام الوثائقية" }
   }
 }
