@@ -7,6 +7,7 @@ This is a modern Netflix clone application built with Next.js 13, TypeScript, an
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
+User language: Arabic
 
 ## System Architecture
 
