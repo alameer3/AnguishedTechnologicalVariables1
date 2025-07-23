@@ -1,8 +1,8 @@
-# Netflix Clone 2.0 - replit.md
+# Netflix Clone 2.0
 
 ## Overview
 
-This is a modern Netflix clone built with Next.js 13, featuring Google authentication, movie/TV show browsing, bookmarking functionality, and TMDB API integration. The application provides a full streaming service UI with user personalization features including favorites management and actor following.
+This is a Netflix clone application built with Next.js 13, featuring movie and TV show browsing, user authentication, and personalized favorites. The application replicates the Netflix user interface and functionality, allowing users to discover movies, TV shows, actors, and manage their favorite content.
 
 ## User Preferences
 
@@ -11,109 +11,108 @@ Preferred communication style: Simple, everyday language.
 ## System Architecture
 
 ### Frontend Architecture
-- **Framework**: Next.js 13 with TypeScript
-- **Styling**: Tailwind CSS with custom components
-- **Animations**: Framer Motion for smooth transitions and interactions
-- **UI Components**: Custom React components with responsive design
-- **State Management**: React hooks (useState, useEffect) and NextAuth session management
+- **Framework**: Next.js 13 with TypeScript for type safety and modern React features
+- **Styling**: Tailwind CSS for utility-first styling with custom Netflix-like dark theme
+- **UI Components**: Custom React components with consistent design patterns
+- **Animation**: Framer Motion for smooth transitions and interactive animations
+- **State Management**: React hooks (useState, useEffect) with Next.js built-in state handling
 
-### Backend Architecture
-- **API Routes**: Next.js API routes for authentication
-- **Authentication**: NextAuth.js v4 with Google OAuth provider
-- **External APIs**: TMDB (The Movie Database) API for movie/TV data
-- **Data Fetching**: Server-side rendering with getServerSideProps
+### Authentication System
+- **Provider**: NextAuth.js v4 for secure authentication
+- **OAuth**: Google Authentication integration
+- **Session Management**: Server-side session handling with automatic token refresh
+- **Protection**: Route-based authentication guards redirecting unauthenticated users
 
-### Data Storage
-- **Database**: Firebase Firestore for user data and bookmarks
-- **Collections Structure**:
-  - `netflixUsers`: User profile data
-  - `likeMovie`: User's bookmarked movies/shows
-  - `likeActress`: User's followed actors
-  - `feedBack`: User feedback submissions
+### Data Management
+- **External API**: The Movie Database (TMDB) API for movie/TV show data
+- **Database**: Firebase Firestore for user data and favorites storage
+- **Real-time Updates**: Firebase real-time listeners for instant UI updates
+- **Caching**: Next.js automatic caching for API responses
 
 ## Key Components
 
 ### Core Pages
-- **Landing Page**: Sign-in page with Netflix-style hero section
-- **Home Page**: Main dashboard with movie rows and hero banner
-- **TV Shows**: Dedicated TV series browsing
-- **People**: Actor/actress discovery and following
-- **Favorites**: User's bookmarked content
-- **Details Pages**: Individual movie/show information
-- **Cast Pages**: Actor profiles and filmography
-- **Season Pages**: TV show season details and episodes
+- **Home**: Main dashboard with trending content and recommendations
+- **TV Shows**: Dedicated TV series browsing with seasons/episodes
+- **People**: Actor and crew member discovery and details
+- **Favorites**: User's saved movies and actors collection
+- **Details**: Comprehensive movie/show information with trailers and cast
+- **Season**: Individual season details with episode listings
+- **Cast**: Actor profile pages with filmography
 
 ### Reusable Components
-- **Navbar**: Navigation with search functionality
-- **Row**: Horizontal scrolling movie/show lists
-- **MoviesLine**: Individual movie/show cards
+- **Navbar**: Responsive navigation with search functionality
 - **HomeBanner**: Hero section with featured content
-- **Trailer**: Video player integration with ReactPlayer
-- **AddBookmark**: Bookmark management functionality
+- **Row**: Horizontal scrolling content rows
+- **MoviesLine**: Individual movie/show cards
+- **Person**: Actor profile cards
+- **Trailer**: Video player integration for trailers
+- **AddBookmark**: Favorite management functionality
 
-### Authentication Flow
-- Google OAuth integration via NextAuth.js
-- Session management across all pages
-- Protected routes requiring authentication
-- Automatic user document creation in Firestore
+### Firebase Integration
+- **User Profiles**: Automatic user document creation on first login
+- **Favorites Storage**: Separate collections for liked movies and actors
+- **Real-time Sync**: Instant updates across devices for user preferences
 
 ## Data Flow
 
-1. **Authentication**: Users sign in with Google → NextAuth creates session → User data stored in Firestore
-2. **Content Discovery**: TMDB API fetches movie/TV data → Displayed in categorized rows
-3. **Bookmarking**: User interactions → Firestore updates → Real-time UI updates
-4. **Search**: User input → TMDB search API → Filtered results display
-5. **Navigation**: Dynamic routing with Next.js router → Page transitions with Framer Motion
+1. **Authentication Flow**:
+   - User clicks Sign In → Google OAuth → NextAuth session creation → Firebase user document
+   - Protected routes check session status → Redirect to sign-in if unauthenticated
+
+2. **Content Discovery**:
+   - TMDB API requests → Data transformation → Component rendering
+   - Search functionality → Real-time API calls → Filtered results display
+
+3. **Favorites Management**:
+   - User interaction → Firebase Firestore write → Real-time listener update → UI refresh
+   - Cross-device synchronization through Firebase real-time database
+
+4. **Navigation Flow**:
+   - Router-based navigation → Dynamic route parameters → Component-specific data fetching
+   - Smooth transitions with Framer Motion animations
 
 ## External Dependencies
 
-### APIs
-- **TMDB API**: Movie, TV show, and actor data
-- **YouTube**: Trailer video playback via ReactPlayer
-
-### Services
-- **Firebase**: User data storage and real-time updates
-- **Google OAuth**: User authentication
-- **Vercel/Netlify**: Deployment and hosting
+### APIs and Services
+- **TMDB API**: Movie, TV show, and actor data with high-quality images
+- **Firebase**: User authentication, real-time database, and cloud storage
+- **Google OAuth**: Secure user authentication and profile management
 
 ### Key Libraries
-```json
-{
-  "next": "13.1.1",
-  "react": "18.2.0",
-  "next-auth": "^4.18.7",
-  "firebase": "^9.15.0",
-  "framer-motion": "^8.0.2",
-  "react-player": "^2.11.0",
-  "tailwindcss": "^3.2.4"
-}
-```
+- **next-auth**: Authentication solution with multiple provider support
+- **framer-motion**: Animation library for smooth UI interactions
+- **react-player**: Video player component for trailer playback
+- **react-icons**: Comprehensive icon library for UI elements
+- **firebase**: Backend-as-a-Service for data storage and real-time updates
+
+### Development Tools
+- **TypeScript**: Type safety and enhanced developer experience
+- **Tailwind CSS**: Utility-first CSS framework with custom scrollbar plugins
+- **PostCSS**: CSS processing with autoprefixer for browser compatibility
 
 ## Deployment Strategy
 
-### Environment Variables Required
-- `NEXT_PUBLIC_API_KEY`: TMDB API key
-- `NEXT_PUBLIC_AUTH_URL`: Application base URL
-- `GOOGLE_CLIENT_ID`: Google OAuth client ID
-- `GOOGLE_CLIENT_SECRET`: Google OAuth secret
-- `NEXT_PUBLIC_SECRET`: NextAuth secret
-- Firebase configuration variables (API key, project ID, etc.)
+### Build Configuration
+- **Next.js Build**: Static generation where possible with server-side rendering fallback
+- **Image Optimization**: Next.js Image component with TMDB domain configuration
+- **Environment Variables**: Secure API key and configuration management
 
-### Build Process
-- Next.js optimized production build
-- Static asset optimization for images from TMDB
-- Tailwind CSS purging for minimal bundle size
-- TypeScript compilation and type checking
+### Production Considerations
+- **Performance**: Image lazy loading, component code splitting, and API response caching
+- **SEO**: Meta tags, structured data, and server-side rendering for better search visibility
+- **Security**: Environment variable protection and secure authentication flows
+- **Scalability**: Firebase's automatic scaling for user data and real-time features
 
-### Performance Optimizations
-- Image optimization with Next.js Image component
-- Lazy loading for movie/show cards
-- Horizontal scrolling with ref-based navigation
-- Skeleton loading states for better UX
-- Responsive design for all device sizes
+### Current Deployment
+- **Platform**: Netlify (as indicated in demo links)
+- **Domain**: Custom domain configuration with HTTPS
+- **Analytics**: Google verification setup for search console integration
 
-### Security Considerations
-- Environment variables for sensitive data
-- Firebase security rules for user data access
-- NextAuth secure session management
-- TMDB API rate limiting considerations
+## Future Enhancements
+
+The application has a roadmap for additional features including:
+- Episode-specific pages for detailed TV show content
+- User profile management and customization
+- Stripe payment integration for subscription management
+- Enhanced search filters and recommendation algorithms
