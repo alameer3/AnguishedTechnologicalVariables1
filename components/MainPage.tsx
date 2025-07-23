@@ -118,8 +118,8 @@ function MainPage({
         </main>
       )}
       <Footer />
-      {/* أدوات الكاش للتطوير - اضغط Ctrl+Shift+C لإظهارها */}
-      <CacheControls showControls={process.env.NODE_ENV === 'development'} />
+      {/* أدوات الكاش للتطوير فقط */}
+      <CacheControls showControls={true} />
     </>
   );
 }

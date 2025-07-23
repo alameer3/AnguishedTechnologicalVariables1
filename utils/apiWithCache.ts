@@ -1,10 +1,11 @@
 import cacheManager from './cacheManager';
+import { developmentConfig } from './developmentMode';
 
 const API_KEY = process.env.TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
 
-// مدة انتهاء صلاحية الكاش (لا محدود أثناء التطوير)
-const CACHE_DURATION = process.env.NODE_ENV === 'development' ? Infinity : 30 * 60 * 1000;
+// مدة انتهاء صلاحية الكاش (حسب بيئة العمل)
+const CACHE_DURATION = developmentConfig.cache.duration;
 
 interface FetchOptions {
   useCache?: boolean;
@@ -24,7 +25,7 @@ export async function fetchWithCache(
   } = options;
 
   // إذا كان forceRefresh فلا نستخدم الكاش
-  if (!forceRefresh && useCache) {
+  if (!forceRefresh && useCache && developmentConfig.cache.enabled) {
     const cachedData = cacheManager.get(cacheKey);
     if (cachedData) {
       console.log(`🚀 تحميل سريع من الكاش: ${cacheKey}`);
@@ -42,8 +43,8 @@ export async function fetchWithCache(
     
     const data = await response.json();
     
-    // حفظ البيانات في الكاش
-    if (useCache) {
+    // حفظ البيانات في الكاش (فقط في وضع التطوير)
+    if (useCache && developmentConfig.cache.enabled) {
       cacheManager.set(cacheKey, data, cacheDuration);
     }
     
@@ -51,11 +52,13 @@ export async function fetchWithCache(
   } catch (error) {
     console.error(`خطأ في جلب البيانات لـ ${cacheKey}:`, error);
     
-    // في حالة الخطأ، نحاول استخدام البيانات المحفوظة حتى لو انتهت صلاحيتها
-    const fallbackData = cacheManager.get(cacheKey);
-    if (fallbackData) {
-      console.log(`⚠ استخدام البيانات القديمة من الكاش: ${cacheKey}`);
-      return fallbackData;
+    // في حالة الخطأ، نحاول استخدام البيانات المحفوظة (فقط في التطوير)
+    if (developmentConfig.cache.enabled) {
+      const fallbackData = cacheManager.get(cacheKey);
+      if (fallbackData) {
+        console.log(`⚠ استخدام البيانات القديمة من الكاش: ${cacheKey}`);
+        return fallbackData;
+      }
     }
     
     throw error;
