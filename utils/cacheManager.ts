@@ -27,7 +27,7 @@ export class CacheManager {
   }
 
   // حفظ البيانات في الكاش
-  set(key: string, data: any, expiresIn: number = 30 * 60 * 1000): void {
+  set(key: string, data: any, expiresIn: number = Infinity): void {
     const cacheData: CacheData = {
       data,
       timestamp: Date.now(),
@@ -55,8 +55,10 @@ export class CacheManager {
       const fileContent = fs.readFileSync(filePath, 'utf8');
       const cacheData: CacheData = JSON.parse(fileContent);
       
-      // فحص انتهاء صلاحية الكاش
-      if (Date.now() - cacheData.timestamp > cacheData.expiresIn) {
+      // فحص انتهاء صلاحية الكاش (فقط في بيئة الإنتاج)
+      if (process.env.NODE_ENV === 'production' && 
+          cacheData.expiresIn !== Infinity && 
+          Date.now() - cacheData.timestamp > cacheData.expiresIn) {
         console.log(`⚠ Cache expired for: ${key}`);
         this.delete(key);
         return null;

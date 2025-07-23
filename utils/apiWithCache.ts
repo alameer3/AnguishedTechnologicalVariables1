@@ -3,8 +3,8 @@ import cacheManager from './cacheManager';
 const API_KEY = process.env.TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
 
-// مدة انتهاء صلاحية الكاش (30 دقيقة)
-const CACHE_DURATION = 30 * 60 * 1000;
+// مدة انتهاء صلاحية الكاش (لا محدود أثناء التطوير)
+const CACHE_DURATION = process.env.NODE_ENV === 'development' ? Infinity : 30 * 60 * 1000;
 
 interface FetchOptions {
   useCache?: boolean;

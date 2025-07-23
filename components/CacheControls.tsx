@@ -90,7 +90,8 @@ const CacheControls: React.FC<CacheControlsProps> = ({ showControls = false }) =
 
   return (
     <div className="fixed bottom-4 right-4 bg-gray-900 text-white p-4 rounded-lg shadow-lg z-50 min-w-[300px]">
-      <h3 className="text-lg font-bold mb-3">🚀 أدوات التخزين المؤقت</h3>
+      <h3 className="text-lg font-bold mb-2">🚀 أدوات التخزين المؤقت</h3>
+      <p className="text-xs text-green-400 mb-3">♾️ وضع التطوير: كاش دائم</p>
       
       {cacheInfo && (
         <div className="mb-3 text-sm">
