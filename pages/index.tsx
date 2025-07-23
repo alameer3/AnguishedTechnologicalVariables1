@@ -99,7 +99,9 @@ export const getServerSideProps = async (context: any) => {
       },
     };
   } catch (error) {
-    console.error('Error fetching data:', error);
+    if (process.env.NODE_ENV === 'development') {
+      console.error('Error fetching data:', error);
+    }
     return {
       props: {
         netflixOriginals: [],

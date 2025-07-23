@@ -15,7 +15,7 @@ function Person({ cast, baseUrl }: Props) {
 
   const handleNavigatePage = () => {
     router.push({
-      pathname: `${process.env.NEXT_PUBLIC_AUTH_URL}/cast/${cast.id}`,
+      pathname: `/cast/${cast.id}`,
       query: {
         castId: cast.id.toString(),
       },
@@ -38,7 +38,7 @@ function Person({ cast, baseUrl }: Props) {
         <img
           src={`${baseUrl}${cast.profile_path}`}
           className="w-36 items-center m-auto p-auto"
-          alt=""
+          alt={cast.name || cast.original_name || "Actor"}
         />
       ) : (
         <NoCast />

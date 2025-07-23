@@ -27,7 +27,9 @@ const CacheControls: React.FC<CacheControlsProps> = ({ showControls = false }) =
       const data = await response.json();
       setCacheInfo(data.cacheInfo);
     } catch (error) {
-      console.error('خطأ في جلب معلومات الكاش:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('خطأ في جلب معلومات الكاش:', error);
+      }
     }
   };
 
@@ -53,7 +55,9 @@ const CacheControls: React.FC<CacheControlsProps> = ({ showControls = false }) =
       }
     } catch (error) {
       setMessage('❌ حدث خطأ أثناء التحديث');
-      console.error('Error refreshing cache:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Error refreshing cache:', error);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -81,7 +85,9 @@ const CacheControls: React.FC<CacheControlsProps> = ({ showControls = false }) =
       }
     } catch (error) {
       setMessage('❌ حدث خطأ أثناء مسح الكاش');
-      console.error('Error clearing cache:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Error clearing cache:', error);
+      }
     } finally {
       setIsLoading(false);
     }

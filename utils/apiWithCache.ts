@@ -50,7 +50,9 @@ export async function fetchWithCache(
     
     return data;
   } catch (error) {
-    console.error(`خطأ في جلب البيانات لـ ${cacheKey}:`, error);
+    if (process.env.NODE_ENV === 'development') {
+      console.error(`خطأ في جلب البيانات لـ ${cacheKey}:`, error);
+    }
     
     // في حالة الخطأ، نحاول استخدام البيانات المحفوظة (فقط في التطوير)
     if (developmentConfig.cache.enabled) {
