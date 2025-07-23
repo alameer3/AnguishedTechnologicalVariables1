@@ -1,0 +1,33 @@
+
+{
+  "name": "Netflix Clone",
+  "description": "A Netflix clone built with Next.js, TypeScript, and Tailwind CSS",
+  "template": "nextjs",
+  "language": "nodejs",
+  "author": "Replit AI Agent",
+  "version": "1.0.0",
+  "main": "pages/index.tsx",
+  "created_by": "replit_agent",
+  "created_date": "2024-01-15",
+  "project_type": "web_application",
+  "framework": "nextjs",
+  "features": [
+    "Authentication with NextAuth.js",
+    "TMDB API integration",
+    "Firebase database",
+    "Responsive design",
+    "Movie/TV show browsing",
+    "User favorites",
+    "Search functionality"
+  ],
+  "dependencies": {
+    "runtime": "Node.js 22",
+    "package_manager": "npm",
+    "build_tool": "Next.js"
+  },
+  "deployment": {
+    "platform": "replit",
+    "auto_deploy": true,
+    "port": 3000
+  }
+}
