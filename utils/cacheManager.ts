@@ -28,7 +28,7 @@ export class CacheManager {
   }
 
   // حفظ البيانات في الكاش
-  set(key: string, data: any, expiresIn: number = developmentConfig.cache.duration): void {
+  set(key: string, data: any, expiresIn: number = Infinity): void {
     // في وضع الإنتاج، لا نحفظ الكاش
     if (!developmentConfig.cache.enabled) {
       return;
@@ -36,7 +36,7 @@ export class CacheManager {
     const cacheData: CacheData = {
       data,
       timestamp: Date.now(),
-      expiresIn
+      expiresIn: developmentConfig.cache.enabled ? Infinity : expiresIn
     };
 
     const filePath = this.getCacheFilePath(key);
