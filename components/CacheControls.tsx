@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { developmentConfig, getEnvironmentConfig } from '../utils/developmentMode';
 
 interface CacheInfo {
   totalFiles: number;
@@ -13,6 +14,12 @@ const CacheControls: React.FC<CacheControlsProps> = ({ showControls = false }) =
   const [cacheInfo, setCacheInfo] = useState<CacheInfo | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const envConfig = getEnvironmentConfig();
+  
+  // إخفاء أدوات التحكم في الإنتاج
+  if (!developmentConfig.cache.showControls) {
+    return null;
+  }
 
   const getCacheInfo = async () => {
     try {
@@ -91,7 +98,7 @@ const CacheControls: React.FC<CacheControlsProps> = ({ showControls = false }) =
   return (
     <div className="fixed bottom-4 right-4 bg-gray-900 text-white p-4 rounded-lg shadow-lg z-50 min-w-[300px]">
       <h3 className="text-lg font-bold mb-2">🚀 أدوات التخزين المؤقت</h3>
-      <p className="text-xs text-green-400 mb-3">♾️ وضع التطوير: كاش دائم</p>
+      <p className="text-xs text-green-400 mb-3">{envConfig.message}</p>
       
       {cacheInfo && (
         <div className="mb-3 text-sm">

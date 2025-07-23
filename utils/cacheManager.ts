@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { developmentConfig } from './developmentMode';
 
 export interface CacheData {
   data: any;
@@ -27,7 +28,11 @@ export class CacheManager {
   }
 
   // حفظ البيانات في الكاش
-  set(key: string, data: any, expiresIn: number = Infinity): void {
+  set(key: string, data: any, expiresIn: number = developmentConfig.cache.duration): void {
+    // في وضع الإنتاج، لا نحفظ الكاش
+    if (!developmentConfig.cache.enabled) {
+      return;
+    }
     const cacheData: CacheData = {
       data,
       timestamp: Date.now(),
@@ -45,6 +50,11 @@ export class CacheManager {
 
   // جلب البيانات من الكاش
   get(key: string): any | null {
+    // في وضع الإنتاج، لا نستخدم الكاش
+    if (!developmentConfig.cache.enabled) {
+      return null;
+    }
+    
     const filePath = this.getCacheFilePath(key);
     
     if (!fs.existsSync(filePath)) {
@@ -55,9 +65,8 @@ export class CacheManager {
       const fileContent = fs.readFileSync(filePath, 'utf8');
       const cacheData: CacheData = JSON.parse(fileContent);
       
-      // فحص انتهاء صلاحية الكاش (فقط في بيئة الإنتاج)
-      if (process.env.NODE_ENV === 'production' && 
-          cacheData.expiresIn !== Infinity && 
+      // فحص انتهاء صلاحية الكاش
+      if (cacheData.expiresIn !== Infinity && 
           Date.now() - cacheData.timestamp > cacheData.expiresIn) {
         console.log(`⚠ Cache expired for: ${key}`);
         this.delete(key);
