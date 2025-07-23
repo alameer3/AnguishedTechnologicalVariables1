@@ -5,6 +5,7 @@ import Footer from "./Footer";
 import HomeBanner from "./HomeBanner";
 import Navbar from "./Navbar";
 import Row from "./Row";
+import CacheControls from "./CacheControls";
 
 type Props = {
   netflixOriginals: Movie[];
@@ -34,7 +35,7 @@ function MainPage({
 
   const fetchData = async (searchItem: string) => {
     const movieSearchdata = await fetch(
-      `https://api.themoviedb.org/3/search/multi?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=en-US&query=${searchItem}&page=1&include_adult=false`
+      `https://api.themoviedb.org/3/search/multi?api_key=${process.env.TMDB_API_KEY}&language=en-US&query=${searchItem}&page=1&include_adult=false`
     ).then((res) => res.json());
     setSearchMovie(movieSearchdata.results);
   };
@@ -117,6 +118,8 @@ function MainPage({
         </main>
       )}
       <Footer />
+      {/* أدوات الكاش للتطوير - اضغط Ctrl+Shift+C لإظهارها */}
+      <CacheControls showControls={process.env.NODE_ENV === 'development'} />
     </>
   );
 }
