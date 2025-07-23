@@ -1,7 +1,1 @@
-{
-  "/_app": "pages/_app.js",
-  "/_error": "pages/_error.js",
-  "/_document": "pages/_document.js",
-  "/details/[id]": "pages/details/[id].js",
-  "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js"
-}
+{"/_app":"pages/_app.js","/_document":"pages/_document.js","/about":"pages/about.html","/_error":"pages/_error.js","/api/auth/[...nextauth]":"pages/api/auth/[...nextauth].js","/api/cache/refresh":"pages/api/cache/refresh.js","/api/hello":"pages/api/hello.js","/cast/[id]":"pages/cast/[id].js","/people":"pages/people.js","/":"pages/index.js","/season/[id]":"pages/season/[id].js","/details/[id]":"pages/details/[id].js","/favourite":"pages/favourite.js","/tv":"pages/tv.js","/404":"pages/404.html"}

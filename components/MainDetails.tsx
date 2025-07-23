@@ -31,8 +31,10 @@ function MainDetails({ movieDetails }: Props) {
                 movieDetails?.name ||
                 movieDetails?.original_name!
               }
-              layout="fill"
-              objectFit="cover"
+              fill
+              className="object-cover"
+              priority
+              sizes="100vw"
             />
           </motion.div>
         ) : (
