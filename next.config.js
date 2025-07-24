@@ -15,6 +15,10 @@ const nextConfig = {
     // Disable image optimization on error for better development experience
     unoptimized: process.env.NODE_ENV === 'development',
   },
+  // Configure development indicators
+  devIndicators: {
+    position: 'bottom-right',
+  },
 };
 
 module.exports = nextConfig;

@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import React from "react";
+import Image from "next/image";
 
 import { Cast } from "../typings";
 import NoCast from "./skeleton/NoCast";
@@ -35,11 +36,15 @@ function Person({ cast, baseUrl }: Props) {
       onClick={handleNavigatePage}
     >
       {cast.profile_path ? (
-        <img
-          src={`${baseUrl}${cast.profile_path}`}
-          className="w-36 items-center m-auto p-auto"
-          alt=""
-        />
+        <div className="relative w-36 h-48 mx-auto">
+          <Image
+            src={`${baseUrl}${cast.profile_path}`}
+            alt={cast.name || cast.original_name || "Actor profile"}
+            fill
+            className="object-cover rounded"
+            sizes="144px"
+          />
+        </div>
       ) : (
         <NoCast />
       )}

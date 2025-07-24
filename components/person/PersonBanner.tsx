@@ -1,12 +1,27 @@
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 import PersonBookMark from "../PersonBookMark";
 import NoCast from "../skeleton/NoCast";
 
 const baseUrl = "https://image.tmdb.org/t/p/original";
 
+interface PersonData {
+  id?: number;
+  name?: string;
+  profile_path?: string;
+  known_for_department?: string;
+  biography?: string;
+  place_of_birth?: string;
+  birthday?: string;
+  deathday?: string;
+  gender?: number;
+  popularity?: number;
+  also_known_as?: string[];
+}
+
 type Props = {
-  castPerson: any;
+  castPerson: PersonData;
 };
 
 function PersonBanner({ castPerson }: Props) {
@@ -19,11 +34,15 @@ function PersonBanner({ castPerson }: Props) {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
+              className="relative w-[300px] h-[400px]"
             >
-              <img
+              <Image
                 src={`${baseUrl}${castPerson.profile_path}`}
-                alt=""
-                className="w-[300px] rounded-tl-2xl rounded-br-2xl"
+                alt={castPerson.name || "Actor profile"}
+                fill
+                className="object-cover rounded-tl-2xl rounded-br-2xl"
+                sizes="300px"
+                priority
               />
             </motion.div>
           ) : (
@@ -81,9 +100,9 @@ function PersonBanner({ castPerson }: Props) {
               <div className="grid grid-cols-2 space-y-2">
                 {castPerson?.also_known_as
                   ?.slice(0, 10)
-                  .map((data: any, index: number) => (
+                  .map((name: string, index: number) => (
                     <div key={index}>
-                      <p className="text-sm">{data}</p>
+                      <p className="text-sm">{name}</p>
                     </div>
                   ))}
               </div>
