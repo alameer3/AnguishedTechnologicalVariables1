@@ -1,5 +1,4 @@
 import React from 'react';
-import { useTheme } from '../context/ThemeContext';
 
 interface ResponsiveContainerProps {
   children: React.ReactNode;
@@ -16,7 +15,6 @@ const ResponsiveContainer: React.FC<ResponsiveContainerProps> = ({
   padding = 'md',
   centerContent = false
 }) => {
-  const { isDark } = useTheme();
 
   const maxWidthClasses = {
     sm: 'max-w-sm',
@@ -42,7 +40,6 @@ const ResponsiveContainer: React.FC<ResponsiveContainerProps> = ({
         ${maxWidthClasses[maxWidth]} 
         ${paddingClasses[padding]}
         ${centerContent ? 'mx-auto' : ''}
-        ${isDark ? 'dark' : ''}
         transition-all duration-300 ease-in-out
         ${className}
       `}

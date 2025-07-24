@@ -5,7 +5,6 @@ import Image from "next/image";
 
 import { SearchIcon, BellIcon, NetflixIcon } from "./Icons";
 import Search from "./Search";
-import ThemeToggle from "./ThemeToggle";
 import Breadcrumbs from "./Breadcrumbs";
 
 type Props = {
@@ -38,53 +37,53 @@ function Navbar({ isSearch, setSearchTerm, searchTerm }: Props) {
   return (
     <>
       <header
-        className={`header ${isScrolled && "bg-white/90 dark:bg-[#141414]/90 backdrop-blur-md"} hover:bg-white/95 dark:hover:bg-[#141414]/95 transition-all duration-300`}
+        className={`header ${isScrolled && "bg-[#141414]"} hover:bg-[#141414]`}
       >
       <div className="flex items-center space-x-2 md:space-x-10">
-        <div className="relative w-[120px] h-[40px] cursor-pointer" onClick={() => router.push("/")}>
+        <div className="relative w-[180px] h-[50px] cursor-pointer" onClick={() => router.push("/")}>
           <Image
-            src="/Netflix-Logo.wine.png"
-            alt="Netflix Clone"
+            src="/yemen-flix-logo.png"
+            alt="YEMEN_FLIX"
             fill
             className="object-contain"
-            sizes="120px"
+            sizes="180px"
             priority
           />
         </div>
 
         <ul className="hidden md:space-x-4 md:flex cursor-pointer">
           <li
-            className="cursor-pointer text-[16px] hover:underline font-light text-gray-200 dark:text-[#e5e5e5] transition duration-[.4s] hover:text-gray-400 dark:hover:text-[#b3b3b3]"
+            className="cursor-pointer text-[16px] hover:underline font-light text-[#e5e5e5] transition duration-[.4s] hover:text-[#b3b3b3]"
             onClick={() => router.push("/")}
           >
             الرئيسية
           </li>
           <li
-            className="cursor-pointer text-[16px] hover:underline font-light text-gray-200 dark:text-[#e5e5e5] transition duration-[.4s] hover:text-gray-400 dark:hover:text-[#b3b3b3]"
+            className="cursor-pointer text-[16px] hover:underline font-light text-[#e5e5e5] transition duration-[.4s] hover:text-[#b3b3b3]"
             onClick={() => router.push("/tv")}
           >
             المسلسلات
           </li>
           <li
-            className="cursor-pointer text-[16px] hover:underline font-light text-gray-200 dark:text-[#e5e5e5] transition duration-[.4s] hover:text-gray-400 dark:hover:text-[#b3b3b3]"
+            className="cursor-pointer text-[16px] hover:underline font-light text-[#e5e5e5] transition duration-[.4s] hover:text-[#b3b3b3]"
             onClick={() => router.push("/")}
           >
             الأفلام
           </li>
           <li
-            className="cursor-pointer text-[16px] hover:underline font-light text-gray-200 dark:text-[#e5e5e5] transition duration-[.4s] hover:text-gray-400 dark:hover:text-[#b3b3b3]"
+            className="cursor-pointer text-[16px] hover:underline font-light text-[#e5e5e5] transition duration-[.4s] hover:text-[#b3b3b3]"
             onClick={() => router.push("/people")}
           >
             المشاهير
           </li>
           <li
-            className="cursor-pointer text-[16px] hover:underline font-light text-gray-200 dark:text-[#e5e5e5] transition duration-[.4s] hover:text-gray-400 dark:hover:text-[#b3b3b3]"
+            className="cursor-pointer text-[16px] hover:underline font-light text-[#e5e5e5] transition duration-[.4s] hover:text-[#b3b3b3]"
             onClick={() => router.push("/favourite")}
           >
             المفضلة
           </li>
           <li
-            className="cursor-pointer text-[16px] hover:underline font-light text-gray-200 dark:text-[#e5e5e5] transition duration-[.4s] hover:text-gray-400 dark:hover:text-[#b3b3b3]"
+            className="cursor-pointer text-[16px] hover:underline font-light text-[#e5e5e5] transition duration-[.4s] hover:text-[#b3b3b3]"
             onClick={() => router.push("/about")}
           >
             حول التطبيق
@@ -101,8 +100,7 @@ function Navbar({ isSearch, setSearchTerm, searchTerm }: Props) {
             onClick={() => router.push("/")}
           />
         )}
-        <ThemeToggle />
-        <BellIcon className="h-6 w-6 cursor-pointer text-gray-700 dark:text-gray-300" />
+        <BellIcon className="h-6 w-6 cursor-pointer" />
         <NetflixIcon className="h-6 w-6 cursor-pointer text-red-600" />
         <div onClick={() => signOut()} className="cursor-pointer">
           {session?.user?.image ? (
