@@ -40,50 +40,51 @@ function Navbar({ isSearch, setSearchTerm, searchTerm }: Props) {
         className={`header ${isScrolled && "bg-[#141414]"} hover:bg-[#141414]`}
       >
       <div className="flex items-center space-x-2 md:space-x-10">
-        <div className="relative w-[180px] h-[50px] cursor-pointer" onClick={() => router.push("/")}>
+        <div className="relative w-[280px] h-[70px] cursor-pointer transition-all duration-300 hover:scale-110 hover:drop-shadow-2xl interactive-glow" onClick={() => router.push("/")}>
           <Image
             src="/yemen-flix-logo.png"
             alt="YEMEN_FLIX"
             fill
-            className="object-contain"
-            sizes="180px"
+            className="object-contain brightness-125 drop-shadow-lg"
+            sizes="280px"
             priority
           />
+          <div className="absolute inset-0 bg-gradient-to-r from-red-500/20 via-transparent to-red-500/20 opacity-0 hover:opacity-100 transition-opacity duration-500 rounded-lg"></div>
         </div>
 
-        <ul className="hidden md:space-x-4 md:flex cursor-pointer">
+        <ul className="hidden md:space-x-6 md:flex cursor-pointer">
           <li
-            className="cursor-pointer text-[16px] hover:underline font-light text-[#e5e5e5] transition duration-[.4s] hover:text-[#b3b3b3]"
+            className="cursor-pointer text-[17px] font-medium text-white hover:text-red-400 transition-all duration-300 hover:scale-105 px-3 py-2 rounded-md hover:bg-white/10"
             onClick={() => router.push("/")}
           >
             الرئيسية
           </li>
           <li
-            className="cursor-pointer text-[16px] hover:underline font-light text-[#e5e5e5] transition duration-[.4s] hover:text-[#b3b3b3]"
+            className="cursor-pointer text-[17px] font-medium text-white hover:text-red-400 transition-all duration-300 hover:scale-105 px-3 py-2 rounded-md hover:bg-white/10"
             onClick={() => router.push("/tv")}
           >
             المسلسلات
           </li>
           <li
-            className="cursor-pointer text-[16px] hover:underline font-light text-[#e5e5e5] transition duration-[.4s] hover:text-[#b3b3b3]"
+            className="cursor-pointer text-[17px] font-medium text-white hover:text-red-400 transition-all duration-300 hover:scale-105 px-3 py-2 rounded-md hover:bg-white/10"
             onClick={() => router.push("/")}
           >
             الأفلام
           </li>
           <li
-            className="cursor-pointer text-[16px] hover:underline font-light text-[#e5e5e5] transition duration-[.4s] hover:text-[#b3b3b3]"
+            className="cursor-pointer text-[17px] font-medium text-white hover:text-red-400 transition-all duration-300 hover:scale-105 px-3 py-2 rounded-md hover:bg-white/10"
             onClick={() => router.push("/people")}
           >
             المشاهير
           </li>
           <li
-            className="cursor-pointer text-[16px] hover:underline font-light text-[#e5e5e5] transition duration-[.4s] hover:text-[#b3b3b3]"
+            className="cursor-pointer text-[17px] font-medium text-white hover:text-red-400 transition-all duration-300 hover:scale-105 px-3 py-2 rounded-md hover:bg-white/10"
             onClick={() => router.push("/favourite")}
           >
             المفضلة
           </li>
           <li
-            className="cursor-pointer text-[16px] hover:underline font-light text-[#e5e5e5] transition duration-[.4s] hover:text-[#b3b3b3]"
+            className="cursor-pointer text-[17px] font-medium text-white hover:text-red-400 transition-all duration-300 hover:scale-105 px-3 py-2 rounded-md hover:bg-white/10"
             onClick={() => router.push("/about")}
           >
             حول التطبيق
@@ -91,31 +92,31 @@ function Navbar({ isSearch, setSearchTerm, searchTerm }: Props) {
         </ul>
       </div>
 
-      <div className="font-light flex items-center space-x-4 text-sm">
+      <div className="font-medium flex items-center space-x-5 text-sm">
         {isSearch ? (
           <Search searchTerm={searchTerm || ""} setSearchTerm={setSearchTerm || (() => {})} />
         ) : (
           <SearchIcon
-            className="hidden sm:inline sm:w-6 sm:h-6 cursor-pointer"
+            className="hidden sm:inline sm:w-7 sm:h-7 cursor-pointer hover:text-red-400 transition-colors duration-300 text-white"
             onClick={() => router.push("/")}
           />
         )}
-        <BellIcon className="h-6 w-6 cursor-pointer" />
-        <NetflixIcon className="h-6 w-6 cursor-pointer text-red-600" />
-        <div onClick={() => signOut()} className="cursor-pointer">
+        <BellIcon className="h-7 w-7 cursor-pointer hover:text-red-400 transition-colors duration-300 text-white" />
+        <NetflixIcon className="h-7 w-7 cursor-pointer text-red-500 hover:text-red-400 transition-colors duration-300" />
+        <div onClick={() => signOut()} className="cursor-pointer group">
           {session?.user?.image ? (
-            <div className="relative w-8 h-8">
+            <div className="relative w-10 h-10 group-hover:scale-110 transition-transform duration-300">
               <Image
                 src={session.user.image}
                 alt={session.user.name || "User profile"}
                 fill
-                className="object-cover rounded-sm"
-                sizes="32px"
+                className="object-cover rounded-md ring-2 ring-transparent group-hover:ring-red-500"
+                sizes="40px"
               />
             </div>
           ) : (
-            <div className="w-8 h-8 bg-gray-600 rounded-sm flex items-center justify-center">
-              <span className="text-white text-xs">👤</span>
+            <div className="w-12 h-12 bg-gradient-to-br from-red-600 via-red-500 to-red-400 rounded-xl flex items-center justify-center group-hover:scale-110 transition-all duration-300 shadow-2xl ring-2 ring-red-500/30 group-hover:ring-red-400/60">
+              <span className="text-white text-xl font-bold drop-shadow-lg">👤</span>
             </div>
           )}
         </div>
