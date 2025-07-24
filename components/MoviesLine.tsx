@@ -40,33 +40,60 @@ function MoviesLine({ movie, isDetails, type, isfavourite }: Props) {
   };
 
   return (
-    <div
+    <motion.div
       onClick={handleChangePage}
       className={
         isDetails
-          ? `netflix-card h-28 min-w-[180px] cursor-pointer md:h-36 md:min-w-[240px]`
-          : `netflix-card h-28 min-w-[180px] cursor-pointer md:h-36 md:min-w-[240px]`
+          ? `movie-card netflix-card-enhanced relative h-28 min-w-[180px] cursor-pointer md:h-36 md:min-w-[240px]`
+          : `movie-card netflix-card-enhanced relative h-28 min-w-[180px] cursor-pointer md:h-36 md:min-w-[240px]`
       }
+      whileHover={{ 
+        scale: 1.05,
+        y: -8,
+        transition: { duration: 0.3 }
+      }}
+      whileTap={{ scale: 0.98 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
     >
+      {/* تأثير التوهج عند الهوفر */}
+      <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-red-500/20 via-transparent to-red-600/10 opacity-0 transition-opacity duration-300 hover:opacity-100 pointer-events-none" />
+      
       {movie.backdrop_path || movie.poster_path ? (
-        <Image
-          src={`https://image.tmdb.org/t/p/w500${
-            movie.backdrop_path || movie.poster_path
-          }`}
-          fill
-          className="object-cover rounded-md"
-          alt={movie.title || movie.name || movie.original_name || "Movie poster"}
-          sizes="(max-width: 768px) 180px, 240px"
-          loading="lazy"
-        />
+        <div className="relative w-full h-full overflow-hidden rounded-lg">
+          <Image
+            src={`https://image.tmdb.org/t/p/w500${
+              movie.backdrop_path || movie.poster_path
+            }`}
+            fill
+            className="object-cover transition-transform duration-300 hover:scale-110"
+            alt={movie.title || movie.name || movie.original_name || "Movie poster"}
+            sizes="(max-width: 768px) 180px, 240px"
+            loading="lazy"
+          />
+          
+          {/* تدرج لوني من الأسفل */}
+          <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60" />
+          
+          {/* عنوان الفيلم */}
+          <div className="absolute bottom-2 left-2 right-2 opacity-0 hover:opacity-100 transition-opacity duration-300">
+            <h3 className="text-white text-xs md:text-sm font-semibold truncate text-shadow-soft">
+              {movie.title || movie.name || movie.original_name}
+            </h3>
+            {movie.vote_average > 0 && (
+              <div className="flex items-center mt-1">
+                <span className="text-yellow-400 text-xs">★</span>
+                <span className="text-white text-xs ml-1">{movie.vote_average.toFixed(1)}</span>
+              </div>
+            )}
+          </div>
+        </div>
       ) : (
-        <div
-          role="status"
-          className="space-y-8 animate-pulse md:space-y-0 md:space-x-8 md:flex md:items-center"
-        >
-          <div className="flex items-center justify-center w-full h-48 bg-gray-300 rounded sm:w-96 dark:bg-gray-700">
+        <div className="relative w-full h-full rounded-lg overflow-hidden bg-gray-800 netflix-shimmer">
+          <div className="flex items-center justify-center w-full h-full">
             <svg
-              className="w-12 h-12 text-gray-200"
+              className="w-8 h-8 md:w-12 md:h-12 text-gray-400"
               xmlns="http://www.w3.org/2000/svg"
               aria-hidden="true"
               fill="currentColor"
@@ -77,7 +104,7 @@ function MoviesLine({ movie, isDetails, type, isfavourite }: Props) {
           </div>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }
 

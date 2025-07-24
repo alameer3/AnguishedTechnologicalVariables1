@@ -52,33 +52,33 @@ function Navbar({ isSearch, setSearchTerm, searchTerm }: Props) {
           />
         </div>
 
-        <ul className="hidden md:space-x-6 md:flex cursor-pointer">
+        <ul className="hidden md:space-x-8 md:flex cursor-pointer">
           <li
-            className="cursor-pointer text-sm font-light text-[#e5e5e5] transition-colors duration-200 hover:text-[#b3b3b3]"
+            className="nav-link netflix-nav-item"
             onClick={() => router.push("/")}
           >
             الرئيسية
           </li>
           <li
-            className="cursor-pointer text-sm font-light text-[#e5e5e5] transition-colors duration-200 hover:text-[#b3b3b3]"
+            className="nav-link netflix-nav-item"
             onClick={() => router.push("/tv")}
           >
             المسلسلات
           </li>
           <li
-            className="cursor-pointer text-sm font-light text-[#e5e5e5] transition-colors duration-200 hover:text-[#b3b3b3]"
+            className="nav-link netflix-nav-item"
             onClick={() => router.push("/")}
           >
             الأفلام
           </li>
           <li
-            className="cursor-pointer text-sm font-light text-[#e5e5e5] transition-colors duration-200 hover:text-[#b3b3b3]"
+            className="nav-link netflix-nav-item"
             onClick={() => router.push("/people")}
           >
             المشاهير
           </li>
           <li
-            className="cursor-pointer text-sm font-light text-[#e5e5e5] transition-colors duration-200 hover:text-[#b3b3b3]"
+            className="nav-link netflix-nav-item"
             onClick={() => router.push("/favourite")}
           >
             المفضلة
