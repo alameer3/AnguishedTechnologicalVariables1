@@ -47,7 +47,7 @@ function KnownFor({ castData }: Props) {
       >
         {castData ? (
           <>
-            {castData?.map((crewData: any, index: number) => (
+            {castData?.map((crewData: CastDataTyping, index: number) => (
               <SingleCast key={`crew-${crewData.id}-${index}`} crewData={crewData} baseUrl={baseUrl} />
             ))}
           </>

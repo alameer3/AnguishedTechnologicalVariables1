@@ -12,7 +12,7 @@ type Props = {
   type: string;
   isSearch?: boolean;
   isfavourite?: boolean;
-  likeMovies?: any[];
+  likeMovies?: { id: string; data: () => Movie }[];
 };
 
 function Row({
@@ -77,7 +77,7 @@ function Row({
                 : `flex items-center scrollbar-hide space-x-0.5 overflow-x-scroll md:space-x-2.5 md:p-2`
             }
           >
-            {likeMovies!.map((movie: any) => (
+            {likeMovies!.map((movie: { id: string; data: () => Movie }) => (
               <MoviesLine
                 key={movie.id}
                 movie={movie.data()}

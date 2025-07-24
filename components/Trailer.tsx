@@ -22,7 +22,7 @@ function Trailer({ movieTrailer, movieDetails }: Props) {
       <div className="flex items-center scrollbar-hide space-x-0.5 overflow-x-scroll md:space-x-1.0 md:p-2 h-[350px] overflow-y-hidden">
         {movieTrailer?.results ? (
           <>
-            {movieTrailer?.results?.map((trailer: any) => (
+            {movieTrailer?.results?.map((trailer: { key?: string; site?: string; type?: string; name?: string; id?: string }) => (
               <motion.div
                 initial={{ opacity: 0, scale: 0.5 }}
                 animate={{ opacity: 1, scale: 1 }}
