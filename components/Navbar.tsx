@@ -37,16 +37,16 @@ function Navbar({ isSearch, setSearchTerm, searchTerm }: Props) {
   return (
     <>
       <header
-        className={`header ${isScrolled && "bg-[#141414]"} hover:bg-[#141414]`}
+        className={`header ${isScrolled ? "scrolled" : ""}`}
       >
       <div className="flex items-center space-x-2 md:space-x-10">
-        <div className="relative w-[120px] h-[32px] cursor-pointer transition duration-300 hover:scale-110" onClick={() => router.push("/")}>
+        <div className="relative w-[92px] h-[25px] cursor-pointer" onClick={() => router.push("/")}>
           <Image
             src="/yemen-flix-logo.png"
             alt="YEMEN_FLIX"
             fill
             className="object-contain"
-            sizes="120px"
+            sizes="92px"
             priority
           />
         </div>

@@ -40,19 +40,12 @@ function MoviesLine({ movie, isDetails, type, isfavourite }: Props) {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.5 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{
-        duration: 0.8,
-        delay: 0.5,
-        ease: [0, 0.71, 0.2, 1.01],
-      }}
+    <div
       onClick={handleChangePage}
       className={
         isDetails
-          ? `relative h-28 min-w-[180px] cursor-pointer transition-transform duration-200 ease-out md:h-36 md:min-w-[240px] md:hover:scale-105`
-          : `relative h-28 min-w-[180px] cursor-pointer transition-transform duration-200 ease-out md:h-36 md:min-w-[240px] md:hover:scale-105`
+          ? `netflix-card h-28 min-w-[180px] cursor-pointer md:h-36 md:min-w-[240px]`
+          : `netflix-card h-28 min-w-[180px] cursor-pointer md:h-36 md:min-w-[240px]`
       }
     >
       {movie.backdrop_path || movie.poster_path ? (
@@ -61,7 +54,7 @@ function MoviesLine({ movie, isDetails, type, isfavourite }: Props) {
             movie.backdrop_path || movie.poster_path
           }`}
           fill
-          className="rounded-sm object-cover md:rounded"
+          className="object-cover rounded-md"
           alt={movie.title || movie.name || movie.original_name || "Movie poster"}
           sizes="(max-width: 768px) 180px, 240px"
           loading="lazy"
@@ -84,7 +77,7 @@ function MoviesLine({ movie, isDetails, type, isfavourite }: Props) {
           </div>
         </div>
       )}
-    </motion.div>
+    </div>
   );
 }
 
