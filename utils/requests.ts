@@ -1,6 +1,11 @@
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
 
+// Ensure API key exists
+if (!API_KEY) {
+  throw new Error('NEXT_PUBLIC_API_KEY is not defined in environment variables');
+}
+
 const requests = {
   fetchTrending: `${BASE_URL}/trending/all/week?api_key=${API_KEY}&language=en-US`,
   fetchNetflixOriginals: `${BASE_URL}/discover/movie?api_key=${API_KEY}&with_networks=213`,

@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 type Props = {};
 
@@ -57,17 +58,25 @@ function Footer({}: Props) {
           </li>
         </ul>
         <button className="flex justify-center items-center font-medium h-12 w-36 border border-[#737373]">
-          <img
-            className="w-4 m-3  "
-            src="https://drive.google.com/uc?export=download&id=1XZOSXtzEIp_7qhCN3vVnFEXroUaR-qfr"
-            alt="globe"
-          />
+          <div className="relative w-4 h-4 m-3">
+            <Image
+              src="/assets/globe (1).png"
+              alt="globe"
+              fill
+              className="object-contain"
+              sizes="16px"
+            />
+          </div>
           English
-          <img
-            className="w-3 m-2 pt-0.5"
-            src="/assets/down-filled-triangular-arrow.png"
-            alt="drop-down"
-          />
+          <div className="relative w-3 h-3 m-2">
+            <Image
+              src="/assets/down-filled-triangular-arrow.png"
+              alt="drop-down"
+              fill
+              className="object-contain"
+              sizes="12px"
+            />
+          </div>
         </button>
         <p className="my-4 text-xs font-medium">Netflix</p>
         <p className="my-4 text-xs font-medium">

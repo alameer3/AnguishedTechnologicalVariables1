@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import React from "react";
+import Image from "next/image";
 
 import { CastDataTyping } from "../../typings";
 import ImageSkelten from "../skeleton/ImageSkelten";
@@ -33,11 +34,15 @@ function SingleCast({ crewData, baseUrl }: Props) {
       onClick={handleChangePage}
     >
       {crewData.poster_path ? (
-        <img
-          src={`${baseUrl}${crewData.poster_path}`}
-          alt=""
-          className="w-[200px]"
-        />
+        <div className="relative w-[200px] h-[300px]">
+          <Image
+            src={`${baseUrl}${crewData.poster_path}`}
+            alt={crewData.title || "Cast member"}
+            fill
+            className="object-cover rounded"
+            sizes="200px"
+          />
+        </div>
       ) : (
         <ImageSkelten />
       )}

@@ -16,23 +16,25 @@ function MainDetails({ movieDetails }: Props) {
   return (
     <div className="flex flex-col space-y-2 py-16 md:space-y-4 lg:h-[65vh] lg:justify-end lg:pb-12 lg:pl-24">
       <div className="absolute top-0 left-0 h-[100vh] w-screen -z-10">
-        {movieDetails?.backdrop_path || movieDetails?.poster_path ? (
+        {(movieDetails?.backdrop_path || movieDetails?.poster_path) ? (
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
           >
             <Image
-              src={`${baseUrl}/${
-                movieDetails?.backdrop_path || movieDetails?.poster_path
+              src={`${baseUrl}${
+                movieDetails.backdrop_path || movieDetails.poster_path
               }`}
               alt={
                 movieDetails?.title ||
                 movieDetails?.name ||
-                movieDetails?.original_name!
+                movieDetails?.original_name || "Movie details"
               }
-              layout="fill"
-              objectFit="cover"
+              fill
+              className="object-cover"
+              sizes="100vw"
+              priority
             />
           </motion.div>
         ) : (
