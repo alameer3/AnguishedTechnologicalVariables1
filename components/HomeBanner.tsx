@@ -10,6 +10,7 @@ import { Movie } from "../typings";
 import { SessionType } from "../types/session";
 import LoadingSpinner from "./LoadingSpinner";
 import ImprovedSkeleton from "./ImprovedSkeleton";
+import EnhancedButton from "./EnhancedButton";
 
 const baseUrl = "https://image.tmdb.org/t/p/original";
 
@@ -84,7 +85,7 @@ function HomeBanner({ netflixOriginals, session, isTv }: Props) {
   }
 
   return (
-    <div className="flex flex-col space-y-2 py-16 md:space-y-4 lg:h-[65vh] lg:justify-end lg:pb-12 lg:pl-24">
+    <div className="flex flex-col space-y-4 py-20 md:space-y-6 lg:h-[70vh] lg:justify-end lg:pb-16 lg:pl-28">
       <div className="absolute top-0 left-0 h-[95vh] w-screen -z-10 relative">
         {(movie?.backdrop_path || movie?.poster_path) ? (
           <motion.div
@@ -107,14 +108,14 @@ function HomeBanner({ netflixOriginals, session, isTv }: Props) {
             <LoadingSpinner size="large" text="جاري تحميل المحتوى..." />
           </div>
         )}
-        <div className="absolute w-full h-32 bg-gradient-to-t from-gray-100 to-transparent bottom-0 z-20" />
+        <div className="absolute w-full h-40 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent bottom-0 z-20" />
       </div>
 
       <motion.h1 
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.8 }}
-        className="text-2xl md:text-4xl lg:text-7xl font-bold drop-shadow-xl text-white"
+        className="text-3xl md:text-5xl lg:text-8xl font-black text-white text-shadow-enhanced"
       >
         {movie?.title || movie?.name || movie?.original_name}
       </motion.h1>
@@ -122,7 +123,7 @@ function HomeBanner({ netflixOriginals, session, isTv }: Props) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.7, duration: 0.8 }}
-        className="max-w-xs text-shadow-md text-xs md:max-w-lg md:text-lg lg:max-w-2xl line-clamp-5 text-gray-100 drop-shadow-lg"
+        className="max-w-sm text-base md:max-w-xl md:text-xl lg:max-w-3xl lg:text-2xl line-clamp-4 text-white font-medium text-shadow-enhanced leading-relaxed"
       >
         {movie?.overview}
       </motion.p>
@@ -131,26 +132,25 @@ function HomeBanner({ netflixOriginals, session, isTv }: Props) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.9, duration: 0.8 }}
-        className="flex space-x-3"
+        className="flex flex-col sm:flex-row gap-4 sm:gap-6 mt-8"
       >
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="cursor-pointer flex items-center gap-x-2 rounded px-5 py-1.5 text-sm font-semibold transition hover:opacity-75 md:py-2.5 md:px-8 md:text-xl bg-white text-black shadow-lg hover:shadow-xl"
+        <EnhancedButton
+          variant="primary"
+          size="lg"
           onClick={handleChangePage}
+          icon={<PlayCircleIcon className="h-6 w-6 md:h-8 md:w-8" />}
         >
-          <PlayCircleIcon className="h-4 w-4 text-black md:h-7 md:w-7" />
-          تشغيل
-        </motion.button>
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="cursor-pointer flex items-center gap-x-2 rounded px-5 py-1.5 text-sm font-semibold transition hover:opacity-75 md:py-2.5 md:px-8 md:text-xl bg-gray-600/70 backdrop-blur-sm text-white shadow-lg hover:shadow-xl"
+          ▶ تشغيل الآن
+        </EnhancedButton>
+        
+        <EnhancedButton
+          variant="outline"
+          size="lg"
           onClick={handleChangePage}
+          icon={<InformationCircleIcon className="h-6 w-6 md:h-8 md:w-8" />}
         >
-          المزيد من المعلومات{" "}
-          <InformationCircleIcon className="h-5 w-5 md:h-8 md:w-8" />
-        </motion.button>
+          ℹ المزيد من التفاصيل
+        </EnhancedButton>
       </motion.div>
     </div>
   );
