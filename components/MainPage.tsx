@@ -67,7 +67,7 @@ function MainPage({
       <Navbar
         isSearch={true}
         setSearchTerm={setSearchTerm}
-        searchThrem={searchTerm}
+        searchTerm={searchTerm}
       />
       {searchTerm ? (
         <main className="pl-4 pb-4 lg:space-y-24">

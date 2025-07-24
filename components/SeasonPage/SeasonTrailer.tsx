@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import React from "react";
-import ReactPlayer from "react-player";
 
 import { MovieTrailer } from "../../typings";
 import TrailerSkeleton from "../skeleton/TrailerSkeleton";
@@ -31,15 +30,14 @@ function SeasonTrailer({ movieDetails, movieTrailer }: Props) {
                 key={trailer.id}
                 className="w-[500px] h-[300px] relative min-w-[180px] cursor-pointer items-center ease-out md:h-[300px] md:min-w-[500px] px-2 py-2 rounded-md hover:shadow-lg"
               >
-                <ReactPlayer
-                  {...{
-                    url: `https://www.youtube.com/watch?v=${trailer.key}`,
-                    width: "100%",
-                    height: "100%",
-                    playing: false,
-                    muted: false,
-                    controls: true
-                  } as unknown as { playing: boolean; muted: boolean; volume: number; width: string; height: string }}
+                <iframe
+                  src={`https://www.youtube.com/embed/${trailer.key}`}
+                  width="100%"
+                  height="100%"
+                  frameBorder="0"
+                  allowFullScreen
+                  title={trailer.name}
+                  className="rounded-md"
                 />
                 <p className="text-lg">{trailer.name}</p>
               </motion.div>
