@@ -19,8 +19,7 @@ type Props = {
 };
 
 function Favorite({ session }: Props) {
-  // Skip authentication check for demo
-  // if (!session) return <SignIn />;
+  if (!session) return <SignIn />;
 
   return (
     <motion.div
@@ -41,21 +40,12 @@ function Favorite({ session }: Props) {
 
 export default Favorite;
 
-export const getServerSideProps = async (context: { query?: { id?: string } }) => {
-  // Create mock session to bypass authentication
-  const mockSession = {
-    user: {
-      name: "Demo User",
-      email: "demo@netflix.com",
-      image: "https://i.imgur.com/HeIi0wU.png",
-      username: "demouser",
-      uid: "demo-uid-12345"
-    }
-  };
+export const getServerSideProps = async (context: { req: any; res: any }) => {
+  const session = await getSession(context);
 
   return {
     props: {
-      session: mockSession,
+      session,
     },
   };
 };

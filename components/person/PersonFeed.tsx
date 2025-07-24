@@ -12,7 +12,7 @@ interface CastMovie {
   id: number;
   title?: string;
   name?: string;
-  poster_path?: string;
+  poster_path: string;
   backdrop_path?: string;
   vote_average?: number;
   release_date?: string;
@@ -73,7 +73,7 @@ function PersonFeed({}: Props) {
   return (
     <main className="relative pl-4 pb-24 lg:space-y-24 overflow-x-hidden">
       {castPerson && <PersonBanner castPerson={castPerson} />}
-      <KnownFor castData={castData as any} />
+      <KnownFor castData={castData} />
     </main>
   );
 }

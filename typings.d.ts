@@ -101,7 +101,12 @@ export interface PopularTyping {
 export interface CastDataTyping {
   id: number;
   poster_path: string;
-  title: string;
+  title?: string;
+  name?: string;
+  character?: string;
+  vote_average?: number;
+  release_date?: string;
+  first_air_date?: string;
 }
 
 export interface Episode {
