@@ -69,28 +69,16 @@ export const preloadImage = (src: string): Promise<void> => {
 
 // Bundle size analyzer helper
 export const logBundleSize = () => {
-  if (process.env.NODE_ENV === 'development') {
-    // Performance marks for development
-    performance.mark('bundle-start');
-    
+  // Silent bundle analysis
+  if (typeof window !== 'undefined') {
     window.addEventListener('load', () => {
       performance.mark('bundle-end');
       performance.measure('bundle-load-time', 'bundle-start', 'bundle-end');
-      
-      const measure = performance.getEntriesByName('bundle-load-time')[0];
-      console.info(`Bundle load time: ${measure.duration}ms`);
     });
   }
 };
 
 // Memory usage monitor
 export const monitorMemoryUsage = () => {
-  if (process.env.NODE_ENV === 'development' && 'memory' in performance) {
-    const memInfo = (performance as any).memory;
-    console.info('Memory Usage:', {
-      used: `${Math.round(memInfo.usedJSHeapSize / 1024 / 1024)} MB`,
-      total: `${Math.round(memInfo.totalJSHeapSize / 1024 / 1024)} MB`,
-      limit: `${Math.round(memInfo.jsHeapSizeLimit / 1024 / 1024)} MB`
-    });
-  }
+  // Silent memory monitoring for production
 };

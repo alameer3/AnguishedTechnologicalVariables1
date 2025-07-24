@@ -150,7 +150,7 @@ const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
                 <label className="block text-sm font-medium text-gray-300 mb-2">نوع المحتوى</label>
                 <select
                   value={filters.type}
-                  onChange={(e) => handleFilterChange('type', e.target.value as any)}
+                  onChange={(e) => handleFilterChange('type', e.target.value as 'all' | 'movie' | 'tv' | 'person')}
                   className="w-full bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white focus:border-red-500 focus:outline-none"
                 >
                   {contentTypes.map(option => (
@@ -220,7 +220,7 @@ const AdvancedSearchFilters: React.FC<AdvancedSearchFiltersProps> = ({
                 <label className="block text-sm font-medium text-gray-300 mb-2">ترتيب حسب</label>
                 <select
                   value={filters.sortBy}
-                  onChange={(e) => handleFilterChange('sortBy', e.target.value as any)}
+                  onChange={(e) => handleFilterChange('sortBy', e.target.value as 'popularity.desc' | 'release_date.desc' | 'vote_average.desc' | 'title.asc')}
                   className="w-full bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white focus:border-red-500 focus:outline-none"
                 >
                   {sortOptions.map(option => (

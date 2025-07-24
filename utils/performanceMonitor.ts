@@ -20,9 +20,7 @@ export class PerformanceMonitor {
     
     this.metrics.get(componentName)!.push(loadTime);
     
-    if (process.env.NODE_ENV === 'development') {
-      console.log(`${componentName} loaded in ${loadTime.toFixed(2)}ms`);
-    }
+    // Silent performance tracking
   }
 
   // قياس وقت استجابة API
@@ -36,9 +34,7 @@ export class PerformanceMonitor {
     
     this.metrics.get(key)!.push(responseTime);
     
-    if (process.env.NODE_ENV === 'development') {
-      console.log(`API ${endpoint} responded in ${responseTime.toFixed(2)}ms`);
-    }
+    // Silent API performance tracking
   }
 
   // احصائيات الأداء

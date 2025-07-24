@@ -18,7 +18,7 @@ const pageVariants = {
     scale: 1,
     transition: {
       duration: 0.5,
-      ease: "easeOut",
+      ease: "easeOut" as const,
       staggerChildren: 0.1
     }
   },
@@ -28,7 +28,7 @@ const pageVariants = {
     scale: 1.02,
     transition: {
       duration: 0.3,
-      ease: "easeIn"
+      ease: "easeIn" as const
     }
   }
 };
@@ -38,7 +38,7 @@ const childVariants = {
   animate: { 
     opacity: 1, 
     y: 0,
-    transition: { duration: 0.4, ease: "easeOut" }
+    transition: { duration: 0.4, ease: "easeOut" as const }
   }
 };
 

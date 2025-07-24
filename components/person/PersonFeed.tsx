@@ -56,9 +56,6 @@ function PersonFeed({}: Props) {
       setCastPerson(movieCastPersonData || null);
     } catch (error) {
       // Handle API errors gracefully
-      if (process.env.NODE_ENV === 'development') {
-        console.warn('Failed to fetch person data:', error);
-      }
       setCastData([]);
       setCastPerson(null);
     }

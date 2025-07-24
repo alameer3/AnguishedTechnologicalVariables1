@@ -38,7 +38,7 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
 
   const dotTransition = {
     duration: 0.5,
-    ease: "easeInOut",
+    ease: "easeInOut" as const,
     repeat: Infinity,
     repeatType: "reverse" as const
   };

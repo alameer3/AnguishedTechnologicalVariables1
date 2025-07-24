@@ -24,10 +24,7 @@ class GlobalErrorBoundary extends Component<Props, State> {
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     logError(error, 'Global Error Boundary');
     
-    // Log component stack for debugging
-    if (process.env.NODE_ENV === 'development') {
-      console.error('Component Stack:', errorInfo.componentStack);
-    }
+    // Silent error handling in production
   }
 
   render() {

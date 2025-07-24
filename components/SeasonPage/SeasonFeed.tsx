@@ -33,9 +33,6 @@ function SeasonFeed({}: Props) {
       const apiKey = process.env.NEXT_PUBLIC_API_KEY;
       if (!apiKey) {
         // API key missing - silent fail for production
-        if (process.env.NODE_ENV === 'development') {
-          // API key missing - silent fail for production
-        }
         return;
       }
 
@@ -51,9 +48,6 @@ function SeasonFeed({}: Props) {
       setSeasonVideo(seasonsVideo.results || []);
     } catch (error) {
       // Handle API errors gracefully
-      if (process.env.NODE_ENV === 'development') {
-        console.warn('Failed to fetch season data:', error);
-      }
       setSeasons(null);
       setSeasonVideo([]);
     }

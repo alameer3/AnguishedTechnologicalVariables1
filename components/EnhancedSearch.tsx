@@ -67,7 +67,7 @@ const EnhancedSearch: React.FC<EnhancedSearchProps> = ({
 
       setIsLoading(true);
       try {
-        const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+        const apiKey = process.env.NEXT_PUBLIC_API_KEY || process.env.TMDB_API_KEY;
         if (!apiKey) {
           setSuggestions([]);
           return;
@@ -84,9 +84,7 @@ const EnhancedSearch: React.FC<EnhancedSearchProps> = ({
         const data = await response.json();
         setSuggestions(data.results?.slice(0, 12) || []);
       } catch (error) {
-        if (process.env.NODE_ENV === 'development') {
-          console.warn('خطأ في البحث:', error);
-        }
+        // Silent error handling
         setSuggestions([]);
       } finally {
         setIsLoading(false);

@@ -54,10 +54,7 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
         const data = await response.json();
         setSuggestions(data.results?.slice(0, 8) || []);
       } catch (error) {
-        // تسجيل الخطأ للمطورين فقط
-        if (process.env.NODE_ENV === 'development') {
-          console.warn('خطأ في البحث:', error);
-        }
+        // Silent error handling
         setSuggestions([]);
       } finally {
         setIsLoading(false);

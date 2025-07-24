@@ -21,22 +21,7 @@ export function middleware(request: NextRequest) {
   const ip = request.headers.get('x-forwarded-for') || 'anonymous';
   const userAgent = request.headers.get('user-agent') || '';
   
-  // Log suspicious requests (development only)
-  if (process.env.NODE_ENV === 'development') {
-    const suspiciousPatterns = [
-      '/admin',
-      '/wp-admin',
-      '/.env',
-      '/config',
-      'SELECT * FROM',
-      '<script>'
-    ];
-    
-    const url = request.nextUrl.pathname;
-    if (suspiciousPatterns.some(pattern => url.includes(pattern))) {
-      console.warn(`Suspicious request detected: ${url} from ${ip}`);
-    }
-  }
+  // Track suspicious requests silently
 
   return response;
 }

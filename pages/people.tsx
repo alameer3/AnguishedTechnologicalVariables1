@@ -23,8 +23,19 @@ type Props = {
 };
 
 function People({ popular, session }: Props) {
-  // Skip authentication check for demo
-  // if (!session) return <SignIn />;
+  // تخطي صفحة التسجيل أثناء التطوير
+  const isDevMode = process.env.NODE_ENV === 'development';
+  const mockSession = {
+    user: {
+      uid: 'dev-user-123',
+      name: 'مطور Yemen Flix',
+      email: 'developer@yemenflix.com'
+    }
+  };
+  
+  const currentSession = isDevMode ? (session || mockSession) : session;
+  
+  if (!currentSession && !isDevMode) return <SignIn />;
 
   return (
     <motion.div
