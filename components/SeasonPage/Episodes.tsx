@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import React from "react";
+import Image from "next/image";
 
 import { Episode } from "../../typings";
 import baseUrl from "../../utils/baseUrl";
@@ -30,17 +31,22 @@ function Episodes({ episode }: Props) {
 
       <div className="inline-block md:flex justify-start items-center gap-8">
         {episode.still_path ? (
-          <img
-            src={`${baseUrl}${episode.still_path}`}
-            alt={episode.name}
-            className="w-[400px] min-w-[400px] rounded-sm object-cover md:rounded"
-          />
+          <div className="relative w-[400px] min-w-[400px] h-[225px]">
+            <Image
+              src={`${baseUrl}${episode.still_path}`}
+              alt={episode.name || "Episode thumbnail"}
+              fill
+              className="rounded-sm object-cover md:rounded"
+              sizes="400px"
+            />
+          </div>
         ) : (
-          <img
-            src="https://i0.wp.com/authormarystone.com/wp-content/uploads/2019/01/comingsoon.jpg?resize=576%2C864"
-            alt="img/no"
-            className="rounded-sm object-cover md:rounded w-[180px] animate-pulse"
-          />
+          <div className="w-[400px] min-w-[400px] h-[225px] bg-gray-700 rounded-sm flex items-center justify-center animate-pulse">
+            <div className="text-center text-gray-400">
+              <div className="text-4xl mb-2">📺</div>
+              <div className="text-sm">Episode Coming Soon</div>
+            </div>
+          </div>
         )}
         <div className="space-y-6">
           <p
@@ -50,7 +56,7 @@ function Episodes({ episode }: Props) {
           >
             Episode Number:{" "}
             <span className="text-white">
-              {episode.episode_number ? episode.episode_number : "Not Yet"}
+              {episode.episode_number ? episode.episode_number : "TBA"}
             </span>
           </p>
           <p
@@ -61,7 +67,7 @@ function Episodes({ episode }: Props) {
             Overview:
             <br />
             <span className="text-white">
-              {episode.overview ? episode.overview : "Not Yet"}
+              {episode.overview ? episode.overview : "Synopsis coming soon..."}
             </span>
           </p>
           <p
@@ -71,7 +77,7 @@ function Episodes({ episode }: Props) {
           >
             Air Date:{" "}
             <span className="text-white">
-              {episode.air_date ? episode.air_date : "Not Yet"}
+              {episode.air_date ? episode.air_date : "TBA"}
             </span>
           </p>
           <p
@@ -81,7 +87,7 @@ function Episodes({ episode }: Props) {
           >
             Run Time:{" "}
             <span className="text-white">
-              {episode.runtime ? episode.runtime : "Not Yet"}
+              {episode.runtime ? `${episode.runtime} min` : "TBA"}
             </span>
           </p>
           <div className="flex justify-between">
@@ -92,7 +98,7 @@ function Episodes({ episode }: Props) {
             >
               Vote Average:{" "}
               <span className="text-white">
-                {episode.vote_average ? episode.vote_average : "Not Yet"}
+                {episode.vote_average ? `${episode.vote_average}/10` : "TBA"}
               </span>
             </p>
             <p
@@ -102,7 +108,7 @@ function Episodes({ episode }: Props) {
             >
               Vote Count:{" "}
               <span className="text-white">
-                {episode.vote_count ? episode.vote_count : "Not Yet"}
+                {episode.vote_count ? `${episode.vote_count} votes` : "TBA"}
               </span>
             </p>
           </div>

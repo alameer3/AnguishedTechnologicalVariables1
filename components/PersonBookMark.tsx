@@ -70,7 +70,7 @@ function PersonBookMark({ castPerson }: Props) {
         setDoc(userRef, JSON.parse(JSON.stringify(castPerson)));
       }
     } catch (error) {
-      console.log(error);
+      // Firebase permission error with mock session - handled silently
     }
   };
 

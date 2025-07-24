@@ -1,6 +1,7 @@
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 import { AiFillBell, AiOutlineSearch } from "react-icons/ai";
 import { RiNetflixFill } from "react-icons/ri";
@@ -38,14 +39,16 @@ function Navbar({ isSearch, setSearchTerm, searchThrem }: Props) {
       className={`header ${isScrolled && "bg-[#141414]"} hover:bg-[#141414]`}
     >
       <div className="flex items-center space-x-2 md:space-x-10">
-        <img
-          src="https://rb.gy/ulxxee"
-          alt="netflix"
-          width={120}
-          height={120}
-          className="cursor-pointer object-contain"
-          onClick={() => router.push("/")}
-        />
+        <div className="relative w-[120px] h-[40px] cursor-pointer" onClick={() => router.push("/")}>
+          <Image
+            src="/Netflix-Logo.wine.png"
+            alt="Netflix Clone"
+            fill
+            className="object-contain"
+            sizes="120px"
+            priority
+          />
+        </div>
 
         <ul className="hidden md:space-x-4 md:flex cursor-pointer">
           <li
@@ -99,11 +102,21 @@ function Navbar({ isSearch, setSearchTerm, searchThrem }: Props) {
         <AiFillBell className="h-6 w-6 cursor-pointer" />
         <RiNetflixFill className="h-6 w-6 cursor-pointer text-red-800" />
         <div onClick={() => signOut()} className="cursor-pointer">
-          <img
-            src={session?.user?.image!}
-            alt={session?.user?.name!}
-            className="cursor-pointer w-8 rounded-sm"
-          />
+          {session?.user?.image ? (
+            <div className="relative w-8 h-8">
+              <Image
+                src={session.user.image}
+                alt={session.user.name || "User profile"}
+                fill
+                className="object-cover rounded-sm"
+                sizes="32px"
+              />
+            </div>
+          ) : (
+            <div className="w-8 h-8 bg-gray-600 rounded-sm flex items-center justify-center">
+              <span className="text-white text-xs">👤</span>
+            </div>
+          )}
         </div>
       </div>
     </header>

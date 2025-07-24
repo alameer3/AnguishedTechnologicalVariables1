@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 type Props = {};
 
@@ -14,11 +15,13 @@ function Children({}: Props) {
           made just for them—free with your membership.
         </h2>
       </div>
-      <div>
-        <img
-          className="my-6 md:max-w-[35rem] lg:w-[27rem] md:ml-[12%] lg:ml-0"
-          src="./assets/children.png"
-          alt="children"
+      <div className="relative w-full max-w-[35rem] lg:w-[27rem] h-80 my-6 md:ml-[12%] lg:ml-0">
+        <Image
+          src="/assets/children.png"
+          alt="Children watching Netflix on various devices"
+          fill
+          className="object-contain"
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 35rem, 27rem"
         />
       </div>
     </div>
