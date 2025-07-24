@@ -4,6 +4,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "./Icons";
 
 import { Movie } from "../typings";
 import MoviesLine from "./MoviesLine";
+import InfiniteScroll from "./InfiniteScroll";
 
 type Props = {
   movies?: Movie[];

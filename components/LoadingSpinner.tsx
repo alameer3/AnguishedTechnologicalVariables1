@@ -4,61 +4,88 @@ import { motion } from 'framer-motion';
 interface LoadingSpinnerProps {
   size?: 'small' | 'medium' | 'large';
   text?: string;
-  color?: 'red' | 'white' | 'gray';
+  className?: string;
 }
 
 const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ 
   size = 'medium', 
-  text,
-  color = 'red'
+  text = 'جاري التحميل...', 
+  className = '' 
 }) => {
   const sizeClasses = {
-    small: 'w-6 h-6',
-    medium: 'w-10 h-10',
-    large: 'w-16 h-16'
-  };
-  
-  const colorClasses = {
-    red: 'border-red-500',
-    white: 'border-white',
-    gray: 'border-gray-500'
+    small: 'w-4 h-4',
+    medium: 'w-8 h-8',
+    large: 'w-12 h-12'
   };
 
-  const textSizeClasses = {
-    small: 'text-sm',
-    medium: 'text-base',
-    large: 'text-xl'
+  const spinnerVariants = {
+    start: {
+      rotate: 0
+    },
+    end: {
+      rotate: 360
+    }
+  };
+
+  const dotVariants = {
+    start: {
+      y: "0%"
+    },
+    end: {
+      y: "100%"
+    }
+  };
+
+  const dotTransition = {
+    duration: 0.5,
+    ease: "easeInOut",
+    repeat: Infinity,
+    repeatType: "reverse" as const
   };
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4">
+    <div className={`flex flex-col items-center justify-center space-y-3 ${className}`}>
+      {/* Netflix-style Spinner */}
       <motion.div
-        animate={{ rotate: 360 }}
+        className={`${sizeClasses[size]} relative`}
+        variants={spinnerVariants}
+        initial="start"
+        animate="end"
         transition={{
           duration: 1,
+          ease: "linear",
           repeat: Infinity,
-          ease: "linear"
         }}
-        className={`
-          ${sizeClasses[size]} 
-          ${colorClasses[color]}
-          border-4 border-t-transparent rounded-full
-          shadow-lg drop-shadow-xl
-          bg-gradient-to-r from-transparent via-red-500/20 to-transparent
-        `}
-      />
+      >
+        <div className="w-full h-full border-2 border-gray-600 rounded-full">
+          <div className="w-full h-full border-t-2 border-red-500 rounded-full"></div>
+        </div>
+      </motion.div>
+
+      {/* Loading Text */}
       {text && (
-        <motion.p
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className={`
-            ${textSizeClasses[size]}
-            text-white font-medium text-center
-            animate-pulse
-          `}
+          className="flex items-center space-x-1 space-x-reverse"
         >
-          {text}
-        </motion.p>
+          <span className="text-gray-300 text-sm font-medium">{text}</span>
+          <div className="flex space-x-1">
+            {[0, 1, 2].map((index) => (
+              <motion.div
+                key={index}
+                className="w-1 h-1 bg-red-500 rounded-full"
+                variants={dotVariants}
+                initial="start"
+                animate="end"
+                transition={{
+                  ...dotTransition,
+                  delay: index * 0.2
+                }}
+              />
+            ))}
+          </div>
+        </motion.div>
       )}
     </div>
   );

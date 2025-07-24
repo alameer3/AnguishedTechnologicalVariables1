@@ -18,6 +18,7 @@ export interface Movie {
   overview: string;
   popularity: number;
   poster_path: string;
+  profile_path?: string; // للممثلين
   vote_average: number;
   vote_count: number;
 }
