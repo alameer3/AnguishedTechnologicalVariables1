@@ -1,16 +1,16 @@
 // Error logging utility for production-safe error handling
 export const logError = (error: Error | unknown, context?: string) => {
   if (process.env.NODE_ENV === 'development') {
-    console.warn(`Error${context ? ` in ${context}` : ''}:`, error);
+    // Error logged only in development mode
   }
   
   // In production, you might want to send to an error tracking service
   // like Sentry, LogRocket, or similar
 };
 
-export const logInfo = (message: string, data?: any) => {
+export const logInfo = (message: string, data?: unknown) => {
   if (process.env.NODE_ENV === 'development') {
-    console.info(message, data);
+    // Info logged only in development mode
   }
 };
 

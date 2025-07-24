@@ -13,7 +13,7 @@ import { BookmarkDashIcon, BookmarkCheckIcon, RemoveCircleIcon, AddCircleIcon } 
 import { firestore } from "../firebase/firebase";
 
 type Props = {
-  castPerson: { id: number; name?: string; profile_path?: string; [key: string]: any };
+  castPerson: { id: number; name?: string; profile_path?: string; [key: string]: unknown };
 };
 
 interface LikeDocument {
@@ -32,12 +32,12 @@ function PersonBookMark({ castPerson }: Props) {
         collection(
           firestore,
           "netflixUsers",
-          (session?.user as any)?.uid || "demouser",
+          (session?.user as { uid?: string })?.uid || "demouser",
           "likeActress"
         ),
-        (snapshot) => setLikes(snapshot.docs as any[])
+        (snapshot) => setLikes(snapshot.docs as unknown as LikeDocument[])
       ),
-    [firestore, (session?.user as any)?.uid]
+    [firestore, (session?.user as { uid?: string })?.uid]
   );
 
   useEffect(
@@ -55,7 +55,7 @@ function PersonBookMark({ castPerson }: Props) {
           doc(
             firestore,
             "netflixUsers",
-            (session?.user as any)?.uid || "demouser",
+            (session?.user as { uid?: string })?.uid || "demouser",
             "likeActress",
             castPerson?.id.toString()
           )
@@ -64,7 +64,7 @@ function PersonBookMark({ castPerson }: Props) {
         const userRef = doc(
           firestore,
           "netflixUsers",
-          (session?.user as any)?.uid || "demouser",
+          (session?.user as { uid?: string })?.uid || "demouser",
           "likeActress",
           castPerson?.id.toString()
         );

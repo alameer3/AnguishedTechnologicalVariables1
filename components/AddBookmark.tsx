@@ -43,7 +43,7 @@ function AddBookmark({ movieDetails }: Props) {
 
   useEffect(() => {
     try {
-      const uid = (session?.user as any)?.uid || "demouser";
+      const uid = (session?.user as { uid?: string })?.uid || "demouser";
       const unsubscribe = onSnapshot(
         collection(firestore, "netflixUsers", uid, "likeMovie"),
         (snapshot) => setLikes(snapshot.docs)
@@ -70,7 +70,7 @@ function AddBookmark({ movieDetails }: Props) {
           doc(
             firestore,
             "netflixUsers",
-            (session?.user as any)?.uid || "demouser",
+            (session?.user as { uid?: string })?.uid || "demouser",
             "likeMovie",
             movieDetails?.id?.toString() || "unknown"
           )
@@ -79,7 +79,7 @@ function AddBookmark({ movieDetails }: Props) {
         const userRef = doc(
           firestore,
           "netflixUsers",
-          (session?.user as any)?.uid || "demouser",
+          (session?.user as { uid?: string })?.uid || "demouser",
           "likeMovie",
           movieDetails?.id?.toString() || "unknown"
         );

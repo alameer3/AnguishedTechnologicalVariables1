@@ -9,7 +9,13 @@ import PersonFeed from "../components/person/PersonFeed";
 import SignIn from "../components/SignIn";
 
 type Props = {
-  session: any;
+  session: {
+    user?: {
+      uid?: string;
+      name?: string;
+      email?: string;
+    };
+  } | null;
 };
 
 function CastPage({ session }: Props) {
@@ -42,7 +48,7 @@ function CastPage({ session }: Props) {
 
 export default CastPage;
 
-export const getServerSideProps = async (context: any) => {
+export const getServerSideProps = async (context: { query: { id: string } }) => {
   // Create mock session to bypass authentication
   const mockSession = {
     user: {

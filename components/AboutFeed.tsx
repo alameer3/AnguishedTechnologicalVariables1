@@ -16,7 +16,7 @@ function AboutFeed({}: Props) {
   const { data: session } = useSession();
   const [feedback, setFeedback] = useState("");
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (feedback && session) {
       try {
@@ -77,7 +77,7 @@ function AboutFeed({}: Props) {
               />
               <button
                 disabled={!feedback}
-                onClick={(e) => handleSubmit(e as any)}
+                onClick={handleSubmit}
                 type="submit"
                 className="bg-gray-800 text-sm px-2.5 py-2.5 font-medium hover:bg-gray-500 text-gray-100 hover:text-gray-900 mt-2 rounded-lg cursor-pointer disabled:cursor-not-allowed disabled:text-gray-500"
               >
