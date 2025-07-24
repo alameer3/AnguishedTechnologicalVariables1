@@ -1,20 +1,42 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { addSecurityHeaders, enforceHTTPS } from './utils/securityHeaders';
 
-// Security headers middleware
+// Enhanced security middleware
 export function middleware(request: NextRequest) {
+  // Check for HTTPS enforcement first
+  const httpsRedirect = enforceHTTPS(request);
+  if (httpsRedirect) {
+    return httpsRedirect;
+  }
+  
   const response = NextResponse.next();
 
-  // Add security headers (CSP is handled by next.config.js)
-  response.headers.set('X-Frame-Options', 'DENY');
-  response.headers.set('X-Content-Type-Options', 'nosniff');
-  response.headers.set('Referrer-Policy', 'origin-when-cross-origin');
-
-  // Rate limiting headers (basic implementation)
-  const ip = request.headers.get('x-forwarded-for') || 'anonymous';
-  const userAgent = request.headers.get('user-agent') || '';
+  // Add comprehensive security headers
+  addSecurityHeaders(response);
   
   // Add request tracking headers
   response.headers.set('X-Request-ID', Date.now().toString());
+  
+  // Basic rate limiting tracking
+  const ip = request.headers.get('x-forwarded-for') || 'anonymous';
+  const userAgent = request.headers.get('user-agent') || '';
+  
+  // Log suspicious requests (development only)
+  if (process.env.NODE_ENV === 'development') {
+    const suspiciousPatterns = [
+      '/admin',
+      '/wp-admin',
+      '/.env',
+      '/config',
+      'SELECT * FROM',
+      '<script>'
+    ];
+    
+    const url = request.nextUrl.pathname;
+    if (suspiciousPatterns.some(pattern => url.includes(pattern))) {
+      console.warn(`Suspicious request detected: ${url} from ${ip}`);
+    }
+  }
 
   return response;
 }
