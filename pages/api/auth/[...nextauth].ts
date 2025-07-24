@@ -15,16 +15,16 @@ interface CustomSession extends Session {
   };
 }
 
-export default NextAuth({
+const authOptions = {
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      clientId: process.env.GOOGLE_CLIENT_ID || "placeholder",
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "placeholder",
     }),
   ],
 
   callbacks: {
-    async session({ session, token }) {
+    async session({ session, token }: { session: Session; token: JWT }) {
       const customSession: CustomSession = {
         ...session,
         expires: session.expires,
@@ -41,5 +41,12 @@ export default NextAuth({
     },
   },
 
-  secret: process.env.NEXTAUTH_SECRET!,
-});
+  secret: process.env.NEXTAUTH_SECRET || "fallback-secret-yemen-flix-2025",
+  
+  // السماح بالوصول للموقع بدون تسجيل دخول
+  pages: {
+    signIn: '/signin', // صفحة تسجيل دخول مخصصة
+  },
+};
+
+export default NextAuth(authOptions);
