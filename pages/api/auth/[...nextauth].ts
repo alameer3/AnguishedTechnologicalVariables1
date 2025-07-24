@@ -18,8 +18,8 @@ interface CustomSession extends Session {
 export default NextAuth({
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID || 'demo',
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET || 'demo',
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
 
@@ -41,5 +41,5 @@ export default NextAuth({
     },
   },
 
-  secret: process.env.NEXTAUTH_SECRET || 'demo-secret',
+  secret: process.env.NEXTAUTH_SECRET!,
 });

@@ -88,7 +88,8 @@ export class PerformanceMonitor {
           value?: number; 
           duration?: number; 
         };
-        const fid = (performanceEntry as any).processingStart - performanceEntry.startTime;
+        const fidEntry = performanceEntry as PerformanceEntry & { processingStart?: number };
+        const fid = (fidEntry.processingStart || 0) - performanceEntry.startTime;
         if (process.env.NODE_ENV === 'development') {
           // FID logged only in development - removed console.log for production
         }

@@ -29,7 +29,7 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
     }
   }, [isOpen]);
 
-  // تأخير البحث لتحسين الأداء
+  // تأخير البحث لتحسين الأداء مع TypeScript آمن
   const debounce = (func: (query: string) => Promise<void>, delay: number) => {
     let timeoutId: NodeJS.Timeout;
     return (query: string) => {
@@ -49,7 +49,7 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
       setIsLoading(true);
       try {
         const response = await fetch(
-          `https://api.themoviedb.org/3/search/multi?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=ar&query=${encodeURIComponent(query)}&page=1`
+          `https://api.themoviedb.org/3/search/multi?api_key=${process.env.NEXT_PUBLIC_API_KEY || process.env.TMDB_API_KEY}&language=ar&query=${encodeURIComponent(query)}&page=1`
         );
         const data = await response.json();
         setSuggestions(data.results?.slice(0, 8) || []);
