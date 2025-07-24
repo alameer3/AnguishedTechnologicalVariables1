@@ -1,9 +1,10 @@
-import NextAuth from "next-auth";
+import NextAuth from "next-auth/next";
 import { Session, User } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import GoogleProvider from "next-auth/providers/google";
 
 interface CustomSession extends Session {
+  expires: string;
   user: {
     id: string;
     name?: string | null;
@@ -23,16 +24,19 @@ export default NextAuth({
   ],
 
   callbacks: {
-    async session({ session, token }): Promise<CustomSession> {
-      const customSession = session as CustomSession;
-      customSession.user.id = token.sub || 'demo-user-123';
-      if (customSession.user?.name) {
-        customSession.user.username = customSession.user.name
-          .split(" ")
-          .join("")
-          .toLowerCase();
-      }
-      customSession.user.uid = token.sub || 'demo-user-123';
+    async session({ session, token }) {
+      const customSession: CustomSession = {
+        ...session,
+        expires: session.expires,
+        user: {
+          id: token.sub || 'demo-user-123',
+          name: session.user?.name || null,
+          email: session.user?.email || null,
+          image: session.user?.image || null,
+          username: session.user?.name?.split(" ").join("").toLowerCase() || 'demo-user',
+          uid: token.sub || 'demo-user-123'
+        }
+      };
       return customSession;
     },
   },

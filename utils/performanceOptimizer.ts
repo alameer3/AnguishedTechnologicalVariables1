@@ -19,7 +19,7 @@ export const useDebounce = <T>(value: T, delay: number): T => {
 };
 
 // Throttle function for scroll events
-export const useThrottle = <T extends (...args: any[]) => void>(
+export const useThrottle = <T extends (...args: unknown[]) => void>(
   callback: T,
   delay: number
 ): T => {

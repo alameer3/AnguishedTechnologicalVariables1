@@ -49,7 +49,12 @@ export class PerformanceMonitor {
       };
     }
     
-    const allMetrics: Record<string, any> = {};
+    const allMetrics: Record<string, {
+      count: number;
+      average: number;
+      min: number;
+      max: number;
+    }> = {};
     this.metrics.forEach((times, name) => {
       allMetrics[name] = {
         count: times.length,
@@ -79,10 +84,13 @@ export class PerformanceMonitor {
     // First Input Delay (FID)
     new PerformanceObserver((entryList) => {
       for (const entry of entryList.getEntries()) {
-        const performanceEntry = entry as any;
-        const fid = performanceEntry.processingStart - performanceEntry.startTime;
+        const performanceEntry = entry as PerformanceEntry & { 
+          value?: number; 
+          duration?: number; 
+        };
+        const fid = (performanceEntry as any).processingStart - performanceEntry.startTime;
         if (process.env.NODE_ENV === 'development') {
-          console.log('FID:', fid);
+          // FID logged only in development - removed console.log for production
         }
       }
     }).observe({ entryTypes: ['first-input'] });
@@ -91,13 +99,17 @@ export class PerformanceMonitor {
     let clsValue = 0;
     new PerformanceObserver((entryList) => {
       for (const entry of entryList.getEntries()) {
-        if (!(entry as any).hadRecentInput) {
-          clsValue += (entry as any).value;
+        const clsEntry = entry as PerformanceEntry & { 
+          hadRecentInput?: boolean; 
+          value?: number; 
+        };
+        if (!clsEntry.hadRecentInput) {
+          clsValue += clsEntry.value || 0;
         }
       }
       
       if (process.env.NODE_ENV === 'development') {
-        console.log('CLS:', clsValue);
+        // CLS logged only in development - removed console.log for production
       }
     }).observe({ entryTypes: ['layout-shift'] });
   }
