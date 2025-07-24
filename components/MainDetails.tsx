@@ -15,7 +15,7 @@ type Props = {
 function MainDetails({ movieDetails }: Props) {
   return (
     <div className="flex flex-col space-y-2 py-16 md:space-y-4 lg:h-[65vh] lg:justify-end lg:pb-12 lg:pl-24">
-      <div className="absolute top-0 left-0 h-[100vh] w-screen -z-10">
+      <div className="absolute top-0 left-0 h-[100vh] w-screen -z-10 relative">
         {(movieDetails?.backdrop_path || movieDetails?.poster_path) ? (
           <motion.div
             initial={{ opacity: 0 }}

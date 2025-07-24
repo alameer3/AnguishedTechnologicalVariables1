@@ -4,7 +4,7 @@ const nextConfig = {
   experimental: {
     allowedRevalidateHeaderKeys: ['x-revalidate'],
   },
-  allowedDevOrigins: ['127.0.0.1', 'localhost', '*.replit.dev', '*.replit.co'],
+  allowedDevOrigins: ['127.0.0.1', 'localhost', '*.replit.dev', '*.replit.co', '*.spock.replit.dev'],
   eslint: {
     ignoreDuringBuilds: true,
   },

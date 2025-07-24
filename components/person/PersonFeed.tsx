@@ -19,9 +19,6 @@ function PersonFeed({}: Props) {
       const apiKey = process.env.NEXT_PUBLIC_API_KEY;
       if (!apiKey) {
         // API key missing - silent fail for production
-        if (process.env.NODE_ENV === 'development') {
-          console.warn('NEXT_PUBLIC_API_KEY is missing');
-        }
         return;
       }
 
@@ -37,9 +34,6 @@ function PersonFeed({}: Props) {
       setCastPerson(movieCastPersonData || {});
     } catch (error) {
       // Handle API errors gracefully
-      if (process.env.NODE_ENV === 'development') {
-        console.warn('Failed to fetch person data:', error);
-      }
       setCastData([]);
       setCastPerson({} as { id: number; name?: string; profile_path?: string; biography?: string; birthday?: string; place_of_birth?: string });
     }
