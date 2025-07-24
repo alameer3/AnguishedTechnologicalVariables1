@@ -49,7 +49,7 @@ function Row({
           : `h-40 space-y-0.5 md:space-y-2 px-4 md:px-12`
       }
     >
-      <h2 className="netflix-title text-xl font-bold mb-4 md:text-2xl">
+      <h2 className="subtitle-enhanced responsive-subtitle font-bold mb-4 transition duration-300 hover:text-white">
         {title}
       </h2>
       <div className="group relative md:-ml-2">

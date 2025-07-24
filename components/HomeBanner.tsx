@@ -115,10 +115,13 @@ function HomeBanner({ netflixOriginals, session, isTv }: Props) {
         <div className="absolute w-full h-32 bg-gradient-to-t from-black to-transparent bottom-0 z-20" />
       </div>
 
-      <h1 className="title-enhanced text-3xl font-bold md:text-5xl lg:text-6xl max-w-xs md:max-w-lg lg:max-w-2xl relative z-20">
+      <h1 
+        className="title-enhanced responsive-title font-bold max-w-xs md:max-w-lg lg:max-w-2xl relative z-20"
+        data-text={movie?.title || movie?.name || movie?.original_name}
+      >
         {movie?.title || movie?.name || movie?.original_name}
       </h1>
-      <p className="description-enhanced max-w-xs text-xs md:max-w-lg md:text-lg lg:max-w-2xl line-clamp-3 relative z-20">
+      <p className="description-enhanced responsive-body max-w-xs md:max-w-lg lg:max-w-2xl line-clamp-3 relative z-20">
         {movie?.overview}
       </p>
 
