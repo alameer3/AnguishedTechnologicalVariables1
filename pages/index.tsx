@@ -17,7 +17,13 @@ type Props = {
   horrorMovies: Movie[];
   romanceMovies: Movie[];
   documentaries: Movie[];
-  session: any;
+  session: {
+    user?: {
+      uid?: string;
+      name?: string;
+      email?: string;
+    };
+  } | null;
 };
 
 export default function Home({
@@ -59,7 +65,7 @@ export default function Home({
   );
 }
 
-export const getServerSideProps = async (context: any) => {
+export const getServerSideProps = async (context: { query?: { id?: string } }) => {
   // Create mock session to bypass authentication
   const mockSession = {
     user: {

@@ -12,7 +12,7 @@ type Props = {
   type: string;
   isSearch?: boolean;
   isfavourite?: boolean;
-  likeMovies?: any;
+  likeMovies?: any[];
 };
 
 function Row({
@@ -72,7 +72,7 @@ function Row({
           <div
             ref={rowRef}
             className={
-              likeMovies?.length >= 4
+              (likeMovies?.length || 0) >= 4
                 ? `gap-x-10 grid overflow-x-hidden gap-y-6 sm:gap-x-14 lg:gap-x-14 md:gap-x-10`
                 : `flex items-center scrollbar-hide space-x-0.5 overflow-x-scroll md:space-x-2.5 md:p-2`
             }
