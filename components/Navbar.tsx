@@ -7,6 +7,7 @@ import { SearchIcon, BellIcon, NetflixIcon } from "./Icons";
 import Search from "./Search";
 import Breadcrumbs from "./Breadcrumbs";
 import ProfileDropdown from "./ProfileDropdown";
+import EnhancedSearch from "./EnhancedSearch";
 
 type Props = {
   isSearch?: boolean;
@@ -16,6 +17,7 @@ type Props = {
 
 function Navbar({ isSearch, setSearchTerm, searchTerm }: Props) {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const { data: session } = useSession();
   const router = useRouter();
 
@@ -91,8 +93,8 @@ function Navbar({ isSearch, setSearchTerm, searchTerm }: Props) {
           <Search searchTerm={searchTerm || ""} setSearchTerm={setSearchTerm || (() => {})} />
         ) : (
           <SearchIcon
-            className="hidden sm:inline sm:w-6 sm:h-6 cursor-pointer"
-            onClick={() => router.push("/")}
+            className="hidden sm:inline sm:w-6 sm:h-6 cursor-pointer hover:text-red-400 transition-colors"
+            onClick={() => setIsSearchOpen(true)}
           />
         )}
         <BellIcon className="h-6 w-6 cursor-pointer" />
@@ -104,6 +106,14 @@ function Navbar({ isSearch, setSearchTerm, searchTerm }: Props) {
       <div className="px-4 md:px-8 pt-20 pb-2">
         <Breadcrumbs />
       </div>
+
+      {/* Enhanced Search Modal */}
+      <EnhancedSearch
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+        searchTerm={searchTerm || ""}
+        setSearchTerm={setSearchTerm || (() => {})}
+      />
     </>
   );
 }
