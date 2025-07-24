@@ -2,7 +2,18 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'image.tmdb.org',
+        port: '',
+        pathname: '/t/p/**',
+      },
+    ],
+    // Fallback for older Next.js versions
     domains: ["image.tmdb.org"],
+    // Disable image optimization on error for better development experience
+    unoptimized: process.env.NODE_ENV === 'development',
   },
 };
 

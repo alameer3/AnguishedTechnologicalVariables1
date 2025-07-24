@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 type Props = {};
 
@@ -15,11 +16,15 @@ function EnjoyOnTv({}: Props) {
         </h2>
       </div>
       <div className="relative">
-        <img
-          className="my-6 md:max-w-[40rem] lg:w-[30rem] md:ml-[12%] lg:ml-0 object-contain"
-          src="./assets/tv.png"
-          alt="img1"
-        />
+        <div className="relative my-6 md:max-w-[40rem] lg:w-[30rem] md:ml-[12%] lg:ml-0 h-80">
+          <Image
+            src="/assets/tv.png"
+            alt="Smart TV"
+            fill
+            className="object-contain"
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 30rem, 40rem"
+          />
+        </div>
 
         <div className="top-[85px] left-[52px] sm:top-[122px] sm:left-[80px] absolute lg:top-[100px] lg:left-[62px] md:top-[125px] md:left-[185px] z-0">
           <video

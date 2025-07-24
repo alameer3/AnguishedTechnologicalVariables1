@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import React from "react";
+import Image from "next/image";
 import { PopularTyping } from "../typings";
 
 type Props = {
@@ -27,11 +28,21 @@ function LikeActress({ person, baseUrl }: Props) {
       viewport={{ once: true }}
       onClick={handleNavigatePage}
     >
-      <img
-        src={`${baseUrl}${person.profile_path}`}
-        alt=""
-        className="w-48 m-auto"
-      />
+      {person.profile_path ? (
+        <div className="relative w-48 h-72 mx-auto">
+          <Image
+            src={`${baseUrl}${person.profile_path}`}
+            alt={person.name || "Actor profile"}
+            fill
+            className="object-cover rounded"
+            sizes="192px"
+          />
+        </div>
+      ) : (
+        <div className="w-48 h-72 mx-auto bg-gray-700 rounded flex items-center justify-center">
+          <span className="text-gray-400">No Image</span>
+        </div>
+      )}
       <h1 className="text-gray-300 font-bold text-lg text-center py-2 line-clamp-3">
         {person.name}
       </h1>
