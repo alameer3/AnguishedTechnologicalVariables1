@@ -39,6 +39,7 @@ type Props = {
 function AddBookmark({ movieDetails }: Props) {
   const [hasLikes, setHasLikes] = useState(false);
   const { data: session } = useSession() as { data: CustomSession | null };
+  const isGuest = !session;
   const [likes, setLikes] = useState<QueryDocumentSnapshot<DocumentData>[]>([]);
 
   useEffect(() => {
@@ -64,13 +65,18 @@ function AddBookmark({ movieDetails }: Props) {
   }, [likes, movieDetails?.id]);
 
   const likeMovie = async () => {
+    if (isGuest) {
+      // عرض prompt للتسجيل
+      return;
+    }
+    
     try {
       if (hasLikes) {
         await deleteDoc(
           doc(
             firestore,
             "netflixUsers",
-            (session?.user as { uid?: string })?.uid || "demouser",
+            session?.user?.uid || "demouser",
             "likeMovie",
             movieDetails?.id?.toString() || "0"
           )
@@ -79,7 +85,7 @@ function AddBookmark({ movieDetails }: Props) {
         const userRef = doc(
           firestore,
           "netflixUsers",
-          (session?.user as { uid?: string })?.uid || "demouser",
+          session?.user?.uid || "demouser",
           "likeMovie",
           movieDetails?.id?.toString() || "0"
         );
@@ -89,6 +95,22 @@ function AddBookmark({ movieDetails }: Props) {
       // Firebase permission error with mock session - handled silently
     }
   };
+
+  if (isGuest) {
+    return (
+      <div className="flex justify-start px-8 bg-transparent items-center h-[100px] w-[550px] pb-0 rounded-lg shadow-xl z-[99] pt-4">
+        <div className="text-center text-gray-400">
+          <p className="text-lg mb-2">سجل دخولك لحفظ المفضلة</p>
+          <button 
+            onClick={() => window.location.href = '/signin'}
+            className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold"
+          >
+            تسجيل دخول
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex justify-start px-8 bg-transparent items-center h-[100px] w-[550px] pb-0 rounded-lg shadow-xl z-[99] pt-4">
@@ -102,7 +124,7 @@ function AddBookmark({ movieDetails }: Props) {
         </button>
         <div className="w-[250px]">
           <p className="text-xl font-medium">
-            {hasLikes ? "Remove Your Favourite" : "Add Your Favourite"}
+            {hasLikes ? "إزالة من المفضلة" : "إضافة للمفضلة"}
           </p>
         </div>
       </div>

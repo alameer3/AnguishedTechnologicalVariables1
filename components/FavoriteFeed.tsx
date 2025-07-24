@@ -20,6 +20,7 @@ interface MovieDocument {
 function FavoriteFeed({ session }: Props) {
   const [likeMovies, setLikeMovies] = useState<MovieDocument[]>([]);
   const [isMovie, setIsMovie] = useState<boolean>(true);
+  const isGuest = !session;
 
   useEffect(() => {
     try {
@@ -46,6 +47,25 @@ function FavoriteFeed({ session }: Props) {
       // Firebase permission error with mock session - handled silently
     }
   }, [firestore, session?.user]);
+
+  if (isGuest) {
+    return (
+      <main className="pl-4 pb-4 lg:space-y-24">
+        <section className="md:space-y-16 pt-36 pb-4 mb-4">
+          <div className="text-center py-20">
+            <h2 className="text-3xl font-bold text-white mb-4">صفحة المفضلة</h2>
+            <p className="text-gray-400 mb-8">سجل دخولك لمشاهدة قائمة المفضلة الخاصة بك</p>
+            <button 
+              onClick={() => window.location.href = '/signin'}
+              className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-lg font-semibold text-lg"
+            >
+              تسجيل دخول
+            </button>
+          </div>
+        </section>
+      </main>
+    );
+  }
 
   return (
     <main className="pl-4 pb-4 lg:space-y-24">

@@ -19,6 +19,7 @@ function Navbar({ isSearch, setSearchTerm, searchTerm }: Props) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const { data: session } = useSession();
+  const isGuest = !session;
   const router = useRouter();
 
   useEffect(() => {
@@ -97,8 +98,20 @@ function Navbar({ isSearch, setSearchTerm, searchTerm }: Props) {
             onClick={() => setIsSearchOpen(true)}
           />
         )}
-        <BellIcon className="h-6 w-6 cursor-pointer" />
-        <ProfileDropdown />
+        
+        {!isGuest && <BellIcon className="h-6 w-6 cursor-pointer" />}
+        
+        {isGuest ? (
+          <button
+            onClick={() => router.push('/signin')}
+            className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg 
+                     font-semibold transition-colors duration-200 text-sm"
+          >
+            تسجيل دخول
+          </button>
+        ) : (
+          <ProfileDropdown />
+        )}
       </div>
       </header>
       
