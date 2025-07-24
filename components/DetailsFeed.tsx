@@ -13,6 +13,23 @@ import Row from "./Row";
 import Seasons from "./Seasons";
 import Trailer from "./Trailer";
 
+interface MovieDetails {
+  id: number;
+  title?: string;
+  name?: string;
+  poster_path?: string;
+  backdrop_path?: string;
+  overview?: string;
+  release_date?: string;
+  first_air_date?: string;
+  vote_average?: number;
+  runtime?: number;
+  genres?: Array<{ id: number; name: string }>;
+  production_companies?: Array<{ id: number; name: string; logo_path?: string }>;
+  spoken_languages?: Array<{ english_name: string }>;
+  seasons?: Array<any>;
+}
+
 type Props = {
   netflixOriginals: Movie[];
 };
@@ -20,26 +37,36 @@ type Props = {
 function DetailsFeed({ netflixOriginals }: Props) {
   const router = useRouter();
   const { movieId, type } = router.query;
-  const [movieTrailer, setMovieTrailer] = useState([]);
-  const [movieCast, setMovieCast] = useState([]);
-  const [movieDetails, setMovieDetails] = useState<any>();
+  const [movieTrailer, setMovieTrailer] = useState<any[]>([]);
+  const [movieCast, setMovieCast] = useState<any[]>([]);
+  const [movieDetails, setMovieDetails] = useState<MovieDetails | null>(null);
 
-  const fetchData = async (id: any, type: any) => {
-    const movieVideo = await fetch(
-      `https://api.themoviedb.org/3/${type}/${id}/videos?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=en-US`
-    ).then((res) => res.json());
+  const fetchData = async (id: string | number, type: string) => {
+    try {
+      const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+      if (!apiKey) {
+        console.error('API key is missing');
+        return;
+      }
 
-    const movieCast = await fetch(
-      `https://api.themoviedb.org/3/${type}/${id}/credits?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=en-US`
-    ).then((res) => res.json());
+      const movieVideo = await fetch(
+        `https://api.themoviedb.org/3/${type}/${id}/videos?api_key=${apiKey}&language=en-US`
+      ).then((res) => res.json());
 
-    const movieDetails = await fetch(
-      `https://api.themoviedb.org/3/${type}/${id}?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=en-US`
-    ).then((res) => res.json());
+      const movieCast = await fetch(
+        `https://api.themoviedb.org/3/${type}/${id}/credits?api_key=${apiKey}&language=en-US`
+      ).then((res) => res.json());
 
-    setMovieTrailer(movieVideo);
-    setMovieCast(movieCast);
-    setMovieDetails(movieDetails);
+      const movieDetails = await fetch(
+        `https://api.themoviedb.org/3/${type}/${id}?api_key=${apiKey}&language=en-US`
+      ).then((res) => res.json());
+
+      setMovieTrailer(movieVideo);
+      setMovieCast(movieCast);
+      setMovieDetails(movieDetails);
+    } catch (error) {
+      console.error('Error fetching movie data:', error);
+    }
   };
 
   useEffect(() => {

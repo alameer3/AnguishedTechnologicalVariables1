@@ -8,7 +8,7 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 
 import { AiFillMail } from "react-icons/ai";
-import { GoRequestChanges } from "react-icons/go";
+import { GoGitPullRequest } from "react-icons/go";
 import { MdCastForEducation } from "react-icons/md";
 import { RiNetflixFill } from "react-icons/ri";
 import { firestore } from "../firebase/firebase";
@@ -52,13 +52,13 @@ function AboutFeed({}: Props) {
           </div>
           <div className="items-center space-y-4">
             <p className="flex justify-start items-center gap-4 text-xl font-semibold">
-              <RiNetflixFill /> Netflix Clone
+              <RiNetflixFill size={24} /> Netflix Clone
             </p>
             <p className="flex justify-start items-center gap-4 text-lg font-semibold">
-              <MdCastForEducation /> For Educational Purposes Only
+              <MdCastForEducation size={24} /> For Educational Purposes Only
             </p>
             <p className="flex justify-start items-center gap-4 text-lg font-semibold">
-              <AiFillMail /> Contact:
+              <AiFillMail size={24} /> Contact:
               <br />{" "}
               <span className="text-sm text-gray-400">
                 sashenjayathilaka95@gmail.com
@@ -69,7 +69,7 @@ function AboutFeed({}: Props) {
               onSubmit={handleSubmit}
             >
               <p className="flex justify-start items-center space-x-4 text-lg font-medium gap-4">
-                <GoRequestChanges /> Feedback
+                <GoGitPullRequest size={24} /> Feedback
               </p>
               <input
                 className="py-6 w-[500px] mt-4 bg-gray-900 placeholder:text-gray-400 rounded-md outline-none px-2.5"

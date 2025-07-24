@@ -3,10 +3,10 @@ import { getSession } from "next-auth/react";
 import Head from "next/head";
 import React from "react";
 
-import Footer from "../../components/Footer";
-import Navbar from "../../components/Navbar";
-import PersonFeed from "../../components/person/PersonFeed";
-import SignIn from "../../components/SignIn";
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
+import PersonFeed from "../components/person/PersonFeed";
+import SignIn from "../components/SignIn";
 
 type Props = {
   session: any;

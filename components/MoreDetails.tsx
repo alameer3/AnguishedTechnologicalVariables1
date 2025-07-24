@@ -30,7 +30,7 @@ function MoreDetails({ movieDetails }: Props) {
           </div>
           <div className="flex justify-start gap-10 px-3 py-3 items-center text-center">
             {movieDetails?.genres?.map((genres: Genre, index: number) => (
-              <p key={index}>{genres.name}</p>
+              <p key={`genre-${genres.id || index}`}>{genres.name}</p>
             ))}
           </div>
           <div className="px-3 py-3">
@@ -39,7 +39,7 @@ function MoreDetails({ movieDetails }: Props) {
           <div className="flex justify-start gap-10 px-3 py-3 items-center text-center">
             {movieDetails?.spoken_languages?.map(
               (language: Languages, index: number) => (
-                <p key={index}>
+                <p key={`language-${index}`}>
                   {index + 1}: {language.english_name}
                 </p>
               )

@@ -14,22 +14,36 @@ function SeasonFeed({}: Props) {
   const router = useRouter();
   const { seasonId, seasonNumber } = router.query;
 
-  const fetchData = async (seasonId: any, seasonNumber: any) => {
-    const seasonsData = await fetch(
-      `https://api.themoviedb.org/3/tv/${seasonId}/season/${seasonNumber}?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=en-US`
-    ).then((res) => res.json());
+  const fetchData = async (seasonId: string | number, seasonNumber: string | number) => {
+    try {
+      const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+      if (!apiKey) {
+        console.error('API key is missing');
+        return;
+      }
 
-    const seasonsVideo = await fetch(
-      `https://api.themoviedb.org/3/tv/${seasonId}/season/${seasonNumber}/videos?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=en-US`
-    ).then((res) => res.json());
+      const seasonsData = await fetch(
+        `https://api.themoviedb.org/3/tv/${seasonId}/season/${seasonNumber}?api_key=${apiKey}&language=en-US`
+      ).then((res) => res.json());
 
-    setSeasons(seasonsData);
-    setSeasonVideo(seasonsVideo.results);
+      const seasonsVideo = await fetch(
+        `https://api.themoviedb.org/3/tv/${seasonId}/season/${seasonNumber}/videos?api_key=${apiKey}&language=en-US`
+      ).then((res) => res.json());
+
+      setSeasons(seasonsData);
+      setSeasonVideo(seasonsVideo.results || []);
+    } catch (error) {
+      console.error('Error fetching season data:', error);
+    }
   };
 
   useEffect(() => {
-    fetchData(seasonId, seasonNumber);
-  }, [seasonId, seasonNumber, seasons]);
+    if (seasonId && seasonNumber) {
+      const id = Array.isArray(seasonId) ? seasonId[0] : seasonId;
+      const num = Array.isArray(seasonNumber) ? seasonNumber[0] : seasonNumber;
+      fetchData(id, num);
+    }
+  }, [seasonId, seasonNumber]);
 
   return (
     <div className="overflow-x-hidden">

@@ -16,11 +16,11 @@ function MoviesLine({ movie, isDetails, type, isfavourite }: Props) {
   const router = useRouter();
 
   const handleChangePage = () => {
+    const detailsPath = `/details/${movie.id}`;
+    
     if (isfavourite) {
       router.push({
-        pathname: isDetails
-          ? `${process.env.NEXT_PUBLIC_AUTH_URL}/details/${movie.id}`
-          : `details/${movie.id}`,
+        pathname: isDetails ? detailsPath : `details/${movie.id}`,
         query: {
           movieId: movie.id.toString(),
           type: movie?.title ? "movie" : "tv",
@@ -28,9 +28,7 @@ function MoviesLine({ movie, isDetails, type, isfavourite }: Props) {
       });
     } else {
       router.push({
-        pathname: isDetails
-          ? `${process.env.NEXT_PUBLIC_AUTH_URL}/details/${movie.id}`
-          : `details/${movie.id}`,
+        pathname: isDetails ? detailsPath : `details/${movie.id}`,
         query: {
           movieId: movie.id.toString(),
           type: movie.media_type?.toString()

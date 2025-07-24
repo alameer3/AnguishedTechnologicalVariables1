@@ -4,6 +4,8 @@ import {
   doc,
   onSnapshot,
   setDoc,
+  DocumentData,
+  QueryDocumentSnapshot,
 } from "firebase/firestore";
 import { motion } from "framer-motion";
 import { useSession } from "next-auth/react";
@@ -16,32 +18,51 @@ import {
 import { IoIosAddCircle, IoIosRemoveCircle } from "react-icons/io";
 import { firestore } from "../firebase/firebase";
 
+interface MovieDetails {
+  id: number;
+  title?: string;
+  name?: string;
+  poster_path?: string;
+  overview?: string;
+  release_date?: string;
+  first_air_date?: string;
+}
+
+interface CustomSession {
+  user?: {
+    uid?: string;
+    name?: string;
+    email?: string;
+  };
+}
+
 type Props = {
-  movieDetails: any;
+  movieDetails: MovieDetails;
 };
 
 function AddBookmark({ movieDetails }: Props) {
   const [hasLikes, setHasLikes] = useState(false);
-  const { data: session }: any = useSession();
-  const [likes, setLikes] = useState<any[]>([]);
+  const { data: session } = useSession() as { data: CustomSession | null };
+  const [likes, setLikes] = useState<QueryDocumentSnapshot<DocumentData>[]>([]);
 
-  useEffect(
-    () =>
-      onSnapshot(
-        collection(firestore, "netflixUsers", session?.user?.uid, "likeMovie"),
-        (snapshot) => setLikes(snapshot.docs)
-      ),
-    [firestore, session?.user?.uid]
-  );
+  useEffect(() => {
+    if (!session?.user?.uid) return;
+    
+    const unsubscribe = onSnapshot(
+      collection(firestore, "netflixUsers", session.user.uid, "likeMovie"),
+      (snapshot) => setLikes(snapshot.docs)
+    );
+    
+    return () => unsubscribe();
+  }, [session?.user?.uid]);
 
-  useEffect(
-    () =>
+  useEffect(() => {
+    if (movieDetails?.id) {
       setHasLikes(
-        likes.findIndex((like) => like.id === movieDetails?.id.toString()!) !==
-          -1
-      ),
-    [likes]
-  );
+        likes.findIndex((like) => like.id === movieDetails.id.toString()) !== -1
+      );
+    }
+  }, [likes, movieDetails?.id]);
 
   const likeMovie = async () => {
     try {
@@ -75,9 +96,9 @@ function AddBookmark({ movieDetails }: Props) {
       <div className="flex justify-between items-center text-center">
         <button className="px-4 items-center text-center">
           {hasLikes ? (
-            <BsFillBookmarkDashFill className="h-8 w-8 text-red-500" />
+            <BsFillBookmarkDashFill size={32} className="text-red-500" />
           ) : (
-            <BsFillBookmarkCheckFill className="h-8 w-8 text-green-500" />
+            <BsFillBookmarkCheckFill size={32} className="text-green-500" />
           )}
         </button>
         <div className="w-[250px]">
@@ -94,7 +115,7 @@ function AddBookmark({ movieDetails }: Props) {
             className="ml-24 cursor-pointer px-2.5 py-2.5 bg-gray-900 rounded-full items-center hover:bg-red-300"
             onClick={() => likeMovie()}
           >
-            <IoIosRemoveCircle className="h-6 w-6 text-red-500" />
+            <IoIosRemoveCircle size={24} className="text-red-500" />
           </motion.button>
         ) : (
           <motion.button
@@ -103,7 +124,7 @@ function AddBookmark({ movieDetails }: Props) {
             className="ml-24 cursor-pointer px-2.5 py-2.5 bg-gray-900 rounded-full items-center hover:bg-green-300"
             onClick={() => likeMovie()}
           >
-            <IoIosAddCircle className="h-6 w-6 text-green-500" />
+            <IoIosAddCircle size={24} className="text-green-500" />
           </motion.button>
         )}
       </div>

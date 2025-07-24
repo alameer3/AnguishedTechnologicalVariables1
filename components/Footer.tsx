@@ -1,94 +1,105 @@
 import React from "react";
 import Image from "next/image";
 
-type Props = {};
-
-function Footer({}: Props) {
+const Footer: React.FC = () => {
   return (
-    <div>
-      <div className="flex flex-col text-[#737373] px-14 md:px-28 lg:px-40 xl:px-64 mt-14">
-        <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 my-4">
-          <li className="my-1 md:mr-4 hover:underline cursor-pointer text-sm font-medium">
-            FAQ
-          </li>
-          <li className="my-1 md:mr-4 hover:underline cursor-pointer text-sm font-medium">
-            Investor Relations
-          </li>
-          <li className="my-1 md:mr-4 hover:underline cursor-pointer text-sm font-medium">
-            Privacy
-          </li>
-          <li className="my-1 md:mr-4 hover:underline cursor-pointer text-sm font-medium">
-            Speed Test
-          </li>
-          <li className="my-1 md:mr-4 hover:underline cursor-pointer text-xs font-medium">
-            Help Centre
-          </li>
-          <li className="my-1 md:mr-4 hover:underline cursor-pointer text-xs font-medium">
-            Jobs
-          </li>
-          <li className="my-1 md:mr-4 hover:underline cursor-pointer text-xs font-medium">
-            Cookie Preferences
-          </li>
-          <li className="my-1 md:mr-4 hover:underline cursor-pointer text-xs font-medium">
-            Legal Notices
-          </li>
-          <li className="my-1 md:mr-4 hover:underline cursor-pointer text-xs font-medium">
-            Account
-          </li>
-          <li className="my-1 md:mr-4 hover:underline cursor-pointer text-xs font-medium">
-            Ways to Watch
-          </li>
-          <li className="my-1 md:mr-4 hover:underline cursor-pointer text-xs font-medium">
-            Corporate Information
-          </li>
-          <li className="my-1 md:mr-4 hover:underline cursor-pointer text-xs font-medium">
-            Only on Netflix
-          </li>
-          <li className="my-1 md:mr-4 hover:underline cursor-pointer text-xs font-medium">
-            Media Centre
-          </li>
-          <li className="my-1 md:mr-4 hover:underline cursor-pointer text-xs font-medium">
-            Terms of Use
-          </li>
-          <li className="my-1 md:mr-4 hover:underline cursor-pointer text-xs font-medium">
-            {" "}
-            <a href="https://www.linkedin.com/in/naveen-polasa/">
-              Contact Us
-            </a>{" "}
-          </li>
-        </ul>
-        <button className="flex justify-center items-center font-medium h-12 w-36 border border-[#737373]">
-          <div className="relative w-4 h-4 m-3">
-            <Image
-              src="/assets/globe (1).png"
-              alt="globe"
-              fill
-              className="object-contain"
-              sizes="16px"
-            />
+    <footer className="bg-black text-gray-300 py-16 px-8">
+      <div className="max-w-6xl mx-auto">
+        {/* Main Footer Content */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+          {/* Company Info */}
+          <div className="space-y-4">
+            <div className="relative w-32 h-8">
+              <Image
+                src="/Netflix-Logo.wine.png"
+                alt="Netflix Clone Logo"
+                fill
+                className="object-contain"
+                sizes="128px"
+              />
+            </div>
+            <p className="text-sm text-gray-400">
+              نسخة نتفليكس - تطبيق مبني بـ Next.js لتصفح الأفلام والمسلسلات
+            </p>
           </div>
-          English
-          <div className="relative w-3 h-3 m-2">
-            <Image
-              src="/assets/down-filled-triangular-arrow.png"
-              alt="drop-down"
-              fill
-              className="object-contain"
-              sizes="12px"
-            />
-          </div>
-        </button>
-        <p className="my-4 text-xs font-medium">Netflix</p>
-        <p className="my-4 text-xs font-medium">
-          sashenjayathilaka95@gmail.com
-        </p>
-      </div>
 
-      <div className="h-9 py-1 text-white text-center bg-[#333333]">
-        For Educational Purposes Only
+          {/* Navigation Links */}
+          <div>
+            <h3 className="font-semibold text-white mb-4">Navigation</h3>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <a href="/" className="hover:text-white transition-colors">
+                  الرئيسية
+                </a>
+              </li>
+              <li>
+                <a href="/tv" className="hover:text-white transition-colors">
+                  المسلسلات
+                </a>
+              </li>
+              <li>
+                <a href="/people" className="hover:text-white transition-colors">
+                  الأشخاص
+                </a>
+              </li>
+              <li>
+                <a href="/favourite" className="hover:text-white transition-colors">
+                  المفضلة
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Support */}
+          <div>
+            <h3 className="font-semibold text-white mb-4">Support</h3>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <a href="/about" className="hover:text-white transition-colors">
+                  حول التطبيق
+                </a>
+              </li>
+              <li>
+                <span className="text-gray-400">الدعم الفني</span>
+              </li>
+              <li>
+                <span className="text-gray-400">الأسئلة الشائعة</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Legal */}
+          <div>
+            <h3 className="font-semibold text-white mb-4">Legal</h3>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <span className="text-gray-400">سياسة الخصوصية</span>
+              </li>
+              <li>
+                <span className="text-gray-400">شروط الاستخدام</span>
+              </li>
+              <li>
+                <span className="text-gray-400">ملفات تعريف الارتباط</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="border-t border-gray-700 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <p className="text-sm text-gray-400 mb-4 md:mb-0">
+              © 2025 Netflix Clone. تطبيق تعليمي مبني بـ Next.js
+            </p>
+            <div className="flex space-x-6 text-sm">
+              <span className="text-gray-400">المملكة العربية السعودية</span>
+              <span className="text-gray-400">العربية</span>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </footer>
   );
-}
+};
 
 export default Footer;

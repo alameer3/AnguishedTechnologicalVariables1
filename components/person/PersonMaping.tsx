@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import React from "react";
+import Image from "next/image";
 
 import { PopularTyping } from "../../typings";
 
@@ -14,7 +15,7 @@ function PersonMaping({ person, baseUrl }: Props) {
 
   const handleNavigatePage = () => {
     router.push({
-      pathname: `${process.env.NEXT_PUBLIC_AUTH_URL}/cast/${person.id}`,
+      pathname: `/cast/${person.id}`,
       query: {
         castId: person.id.toString(),
       },
@@ -29,11 +30,21 @@ function PersonMaping({ person, baseUrl }: Props) {
       viewport={{ once: true }}
       onClick={handleNavigatePage}
     >
-      <img
-        src={`${baseUrl}${person.profile_path}`}
-        alt=""
-        className="w-56 m-auto"
-      />
+      {person.profile_path ? (
+        <div className="relative w-56 h-80 mx-auto">
+          <Image
+            src={`${baseUrl}${person.profile_path}`}
+            alt={person.name || "Actor profile"}
+            fill
+            className="object-cover rounded"
+            sizes="224px"
+          />
+        </div>
+      ) : (
+        <div className="w-56 h-80 bg-gray-700 rounded flex items-center justify-center mx-auto">
+          <span className="text-gray-400 text-sm">No Image</span>
+        </div>
+      )}
       <h1 className="text-gray-300 font-bold text-xl text-center py-2 line-clamp-3">
         {person.name}
       </h1>

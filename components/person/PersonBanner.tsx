@@ -101,7 +101,7 @@ function PersonBanner({ castPerson }: Props) {
                 {castPerson?.also_known_as
                   ?.slice(0, 10)
                   .map((name: string, index: number) => (
-                    <div key={index}>
+                    <div key={`known-for-${index}`}>
                       <p className="text-sm">{name}</p>
                     </div>
                   ))}
