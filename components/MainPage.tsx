@@ -29,8 +29,8 @@ function MainPage({
   documentaries,
   session,
 }: Props) {
-  const [searchThrem, setSearchTerm] = useState<string>("");
-  const [searchMovie, setSearchMovie] = useState([]);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [searchMovie, setSearchMovie] = useState<Movie[]>([]);
 
   const fetchData = async (searchItem: string) => {
     try {
@@ -57,19 +57,19 @@ function MainPage({
   };
 
   useEffect(() => {
-    if (searchThrem) {
-      fetchData(searchThrem.toLowerCase());
+    if (searchTerm) {
+      fetchData(searchTerm.toLowerCase());
     } else return;
-  }, [searchThrem]);
+  }, [searchTerm]);
 
   return (
     <>
       <Navbar
         isSearch={true}
         setSearchTerm={setSearchTerm}
-        searchThrem={searchThrem}
+        searchThrem={searchTerm}
       />
-      {searchThrem ? (
+      {searchTerm ? (
         <main className="pl-4 pb-4 lg:space-y-24">
           <section className="md:space-y-16 pt-36 pb-4 mb-4">
             <Row

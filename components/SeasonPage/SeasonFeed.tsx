@@ -6,11 +6,13 @@ import Footer from "../Footer";
 import Navbar from "../Navbar";
 import SeasonDetails from "./SeasonDetails";
 
-type Props = {};
+interface Props {
+  // Props interface for SeasonFeed component
+}
 
 function SeasonFeed({}: Props) {
-  const [seasons, setSeasons] = useState({});
-  const [seasonVideo, setSeasonVideo] = useState([]);
+  const [seasons, setSeasons] = useState<any>({});
+  const [seasonVideo, setSeasonVideo] = useState<any[]>([]);
   const router = useRouter();
   const { seasonId, seasonNumber } = router.query;
 
