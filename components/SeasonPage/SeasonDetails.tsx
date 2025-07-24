@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 import { MovieTrailer, SeasonDetail } from "../../typings";
 import baseUrl from "../../utils/baseUrl";
@@ -21,11 +22,15 @@ function SeasonDetails({ seasons, seasonVideo }: Props) {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
+              className="relative w-[300px] h-[450px]"
             >
-              <img
+              <Image
                 src={`${baseUrl}${seasons.poster_path}`}
-                alt=""
-                className="w-[300px] rounded-tl-2xl rounded-br-2xl"
+                alt={seasons.name || "Season poster"}
+                fill
+                className="object-cover rounded-tl-2xl rounded-br-2xl"
+                sizes="300px"
+                priority
               />
             </motion.div>
           ) : (

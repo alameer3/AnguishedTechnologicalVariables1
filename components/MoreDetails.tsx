@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import React from "react";
+import Image from "next/image";
 
 import { Companies, Details, Genre, Languages } from "../typings";
 
@@ -50,11 +51,21 @@ function MoreDetails({ movieDetails }: Props) {
           <div className="flex justify-start gap-10 px-3 py-3 items-center text-center">
             {movieDetails?.production_companies?.map((companies: Companies) => (
               <div key={companies.id} className="shadow-lg">
-                <img
-                  src={`${baseUrl}${companies.logo_path}`}
-                  alt=""
-                  className="w-36"
-                />
+                {companies.logo_path ? (
+                  <div className="relative w-36 h-20">
+                    <Image
+                      src={`${baseUrl}${companies.logo_path}`}
+                      alt={companies.name || "Production company logo"}
+                      fill
+                      className="object-contain"
+                      sizes="144px"
+                    />
+                  </div>
+                ) : (
+                  <div className="w-36 h-20 bg-gray-700 rounded flex items-center justify-center">
+                    <span className="text-gray-400 text-sm text-center">{companies.name}</span>
+                  </div>
+                )}
                 <p className="pt-8">{companies.name}</p>
               </div>
             ))}

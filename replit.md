@@ -112,6 +112,24 @@
 
 ## التغييرات الأخيرة
 
+### إصلاحات شاملة للتوافق مع Replit (يوليو 2025)
+- **إصلاح next-auth**: تراجع من النسخة 5.0.0-beta.25 إلى 4.24.11 لحل مشاكل التوافق مع Next.js 15
+- **تحديث الصور**: استبدال جميع `<img>` tags بـ Next.js `<Image>` components في:
+  - Membership.tsx, MoreDetails.tsx, Person.tsx, PersonBanner.tsx, SeasonDetails.tsx
+- **إزالة @next/font**: حذف الحزمة المهجورة واستخدام `next/font` المدمج بدلاً منها
+- **تحسين TypeScript**: إضافة أنواع بيانات صحيحة لـ PersonData وإزالة استخدام `any`
+- **تحديث الحزم الرئيسية**: 
+  - Firebase 9.15.0 → 12.0.0
+  - Framer Motion 8.0.2 → 12.23.7  
+  - React Icons 4.7.1 → 5.5.0
+  - React Player 2.11.0 → 3.3.1
+  - TailwindCSS إلى 3.4.17 (متوافق مع الحزم الحالية)
+  - TypeScript 4.9.4 → 5.8.3
+- **تحسين معالجة الأخطاء**: تقييد console.error في ErrorBoundary لبيئة التطوير فقط
+- **تحسين next.config.js**: إزالة التحذيرات وتحسين التكوين للنسخة الجديدة
+
+## التغييرات الأخيرة
+
 ### إصلاحات شاملة للمشاكل التقنية (يوليو 2025)
 - **إصلاح TypeScript الحرج**: حل مشكلة Companies.tsx باستخدام type-only imports
 - **تحويل شامل للصور**: استبدال جميع `<img>` tags بـ Next.js `<Image>` components في:

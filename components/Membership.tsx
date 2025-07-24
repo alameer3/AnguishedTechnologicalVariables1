@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 type Props = {};
 
@@ -19,10 +20,12 @@ function Membership({}: Props) {
         />
         <button className="flex self-center w-32 md:w-52 items-center bg-red-600 hover:bg-[#e50914] pl-4 md:pl-7 h-10 md:h-14 xl:h-16 m-2 md:m-0 md:text-2xl rounded">
           Get Started
-          <img
-            className="w-4 md:w-7 pt-1 text-white"
-            src="./assets/right-arrow-angle.png"
-            alt="right-angle"
+          <Image
+            src="/assets/right-arrow-angle.png"
+            alt="Start membership arrow"
+            width={28}
+            height={28}
+            className="w-4 md:w-7 pt-1"
           />
         </button>
       </div>
