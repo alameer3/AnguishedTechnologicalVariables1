@@ -8,11 +8,16 @@ import LikeActress from "./LikeActress";
 const baseUrl = "https://image.tmdb.org/t/p/original";
 
 type Props = {
-  session: any;
+  session: { user?: { uid?: string; name?: string; email?: string } } | null;
 };
 
+interface ActressDocument {
+  id: string;
+  data: () => { id: number; name: string; profile_path?: string; popularity: number };
+}
+
 function Actress({ session }: Props) {
-  const [likeActress, setLikeAlikeActress] = useState<any[]>([]);
+  const [likeActress, setLikeAlikeActress] = useState<ActressDocument[]>([]);
 
   useEffect(
     () =>

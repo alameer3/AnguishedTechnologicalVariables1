@@ -1,6 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // Configure allowed dev origins to fix CORS warnings  
+  experimental: {
+    allowedRevalidateHeaderKeys: ['x-revalidate']
+  },
   images: {
     remotePatterns: [
       {

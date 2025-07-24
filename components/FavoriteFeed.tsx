@@ -8,11 +8,16 @@ import EmptyMovie from "./EmptyMovie";
 import Row from "./Row";
 
 type Props = {
-  session: any;
+  session: { user?: { uid?: string; name?: string; email?: string } } | null;
 };
 
+interface MovieDocument {
+  id: string;
+  data: () => { id: number; title: string; name?: string; poster_path?: string; vote_average: number };
+}
+
 function FavoriteFeed({ session }: Props) {
-  const [likeMovies, setLikeMovies] = useState<any[]>([]);
+  const [likeMovies, setLikeMovies] = useState<MovieDocument[]>([]);
   const [isMovie, setIsMovie] = useState<boolean>(true);
 
   useEffect(

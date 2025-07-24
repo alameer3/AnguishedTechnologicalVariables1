@@ -18,7 +18,10 @@ function SeasonFeed({}: Props) {
     try {
       const apiKey = process.env.NEXT_PUBLIC_API_KEY;
       if (!apiKey) {
-        console.error('API key is missing');
+        // API key missing - silent fail for production
+        if (process.env.NODE_ENV === 'development') {
+          console.warn('TMDB API key is missing');
+        }
         return;
       }
 
@@ -33,7 +36,12 @@ function SeasonFeed({}: Props) {
       setSeasons(seasonsData);
       setSeasonVideo(seasonsVideo.results || []);
     } catch (error) {
-      console.error('Error fetching season data:', error);
+      // Handle API errors gracefully
+      if (process.env.NODE_ENV === 'development') {
+        console.warn('Failed to fetch season data:', error);
+      }
+      setSeasons({});
+      setSeasonVideo([]);
     }
   };
 

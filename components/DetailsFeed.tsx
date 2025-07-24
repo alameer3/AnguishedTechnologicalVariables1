@@ -27,7 +27,7 @@ interface MovieDetails {
   genres?: Array<{ id: number; name: string }>;
   production_companies?: Array<{ id: number; name: string; logo_path?: string }>;
   spoken_languages?: Array<{ english_name: string }>;
-  seasons?: Array<any>;
+  seasons?: Array<{ id: number; name: string; season_number: number; poster_path?: string; episode_count: number }>;
 }
 
 type Props = {
@@ -37,15 +37,18 @@ type Props = {
 function DetailsFeed({ netflixOriginals }: Props) {
   const router = useRouter();
   const { movieId, type } = router.query;
-  const [movieTrailer, setMovieTrailer] = useState<any[]>([]);
-  const [movieCast, setMovieCast] = useState<any[]>([]);
+  const [movieTrailer, setMovieTrailer] = useState<{ results: Array<{ id: string; key: string; name: string; type: string }> }>({ results: [] });
+  const [movieCast, setMovieCast] = useState<{ cast: Array<{ id: number; name: string; character: string; profile_path?: string }> }>({ cast: [] });
   const [movieDetails, setMovieDetails] = useState<MovieDetails | null>(null);
 
   const fetchData = async (id: string | number, type: string) => {
     try {
       const apiKey = process.env.NEXT_PUBLIC_API_KEY;
       if (!apiKey) {
-        console.error('API key is missing');
+        // API key missing - silent fail for production
+        if (process.env.NODE_ENV === 'development') {
+          console.warn('TMDB API key is missing');
+        }
         return;
       }
 
@@ -65,12 +68,21 @@ function DetailsFeed({ netflixOriginals }: Props) {
       setMovieCast(movieCast);
       setMovieDetails(movieDetails);
     } catch (error) {
-      console.error('Error fetching movie data:', error);
+      // Handle API errors gracefully
+      if (process.env.NODE_ENV === 'development') {
+        console.warn('Failed to fetch movie data:', error);
+      }
+      // Set empty states to prevent crashes
+      setMovieTrailer({ results: [] });
+      setMovieCast({ cast: [] });
+      setMovieDetails(null);
     }
   };
 
   useEffect(() => {
-    fetchData(movieId, type);
+    if (movieId && type && typeof movieId === 'string' && typeof type === 'string') {
+      fetchData(movieId, type);
+    }
   }, [movieId, type]);
 
   return (
