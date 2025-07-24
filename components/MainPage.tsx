@@ -34,7 +34,7 @@ function MainPage({
 
   const fetchData = async (searchItem: string) => {
     try {
-      const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+      const apiKey = process.env.NEXT_PUBLIC_API_KEY || process.env.TMDB_API_KEY;
       if (!apiKey) {
         // API key missing - silent fail for production
         if (process.env.NODE_ENV === 'development') {

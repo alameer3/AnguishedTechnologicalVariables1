@@ -38,7 +38,7 @@ function PersonFeed({}: Props) {
 
   const fetchData = async (id: string | number) => {
     try {
-      const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+      const apiKey = process.env.NEXT_PUBLIC_API_KEY || process.env.TMDB_API_KEY;
       if (!apiKey) {
         // API key missing - silent fail for production
         return;
