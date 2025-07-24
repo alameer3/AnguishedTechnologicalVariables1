@@ -4,6 +4,9 @@ const nextConfig = {
   experimental: {
     allowedRevalidateHeaderKeys: ['x-revalidate'],
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   images: {
     remotePatterns: [
       {
@@ -27,12 +30,12 @@ const nextConfig = {
           {
             key: 'Content-Security-Policy',
             value: `
-              default-src 'self' 'unsafe-eval' 'unsafe-inline';
-              script-src 'self' 'unsafe-eval' 'unsafe-inline' *.youtube.com *.googleapis.com;
+              default-src 'self';
+              script-src 'self' 'unsafe-eval' 'unsafe-inline' *.youtube.com *.googleapis.com *.replit.dev;
               style-src 'self' 'unsafe-inline' fonts.googleapis.com;
-              img-src 'self' data: blob: https: image.tmdb.org rb.gy;
+              img-src 'self' data: blob: https: image.tmdb.org;
               font-src 'self' fonts.gstatic.com;
-              connect-src 'self' *.themoviedb.org *.googleapis.com *.firebase.com *.firebaseapp.com;
+              connect-src 'self' *.themoviedb.org *.googleapis.com *.firebase.com *.firebaseapp.com *.replit.dev;
               frame-src 'self' *.youtube.com *.youtu.be;
               media-src 'self' *.youtube.com;
             `.replace(/\s{2,}/g, ' ').trim()

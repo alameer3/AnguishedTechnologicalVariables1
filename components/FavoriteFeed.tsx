@@ -1,4 +1,4 @@
-import { onSnapshot, query, collection, orderBy } from "firebase/firestore";
+import { onSnapshot, query, collection, orderBy, QueryDocumentSnapshot, DocumentData } from "firebase/firestore";
 import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 
@@ -27,12 +27,12 @@ function FavoriteFeed({ session }: Props) {
           collection(
             firestore,
             "netflixUsers",
-            (session?.user as any)?.uid || "demouser",
+            (session?.user as { uid?: string })?.uid || "demouser",
             "likeMovie"
           ),
           orderBy("vote_average", "desc")
         ),
-        (snapshot) => setLikeMovies(snapshot.docs as any[])
+        (snapshot) => setLikeMovies(snapshot.docs as unknown as MovieDocument[])
       );
       return unsubscribe;
     } catch (error) {

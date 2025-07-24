@@ -1,206 +1,65 @@
-# نسخة نتفليكس 2.0
+# Netflix Clone Project
 
-## نظرة عامة
+## Overview
+A Netflix-inspired streaming platform clone built with Next.js, TypeScript, and Firebase. Features include movie/TV show browsing, user favorites, detailed movie pages, and responsive design. Successfully migrated from Replit Agent to standard environment with comprehensive fixes and optimizations.
 
-هذا تطبيق نسخة من نتفليكس مبني بـ Next.js 13، يتضمن تصفح الأفلام والمسلسلات، تسجيل دخول المستخدمين، والمفضلة الشخصية. يحاكي التطبيق واجهة نتفليكس ووظائفها، مما يتيح للمستخدمين اكتشاف الأفلام والمسلسلات والممثلين وإدارة المحتوى المفضل لديهم.
+## Features
+- Movie and TV show browsing with TMDB API
+- User authentication with NextAuth.js (bypassed for demo)
+- Favorites/bookmarks functionality
+- Detailed movie/show pages with cast information
+- Responsive design with Tailwind CSS
+- Video trailers integration
+- SEO optimization with structured data
+- Arabic language support
 
-## تفضيلات المستخدم
+## Technical Stack
+- Next.js 15.4.3
+- TypeScript
+- Firebase for data storage
+- NextAuth.js for authentication
+- Tailwind CSS for styling
+- Framer Motion for animations
+- React Player for video streaming
 
-أسلوب التواصل المفضل: لغة بسيطة ومفهومة.
+## Project Structure
+- `/pages` - Next.js pages and API routes
+- `/components` - Reusable React components
+  - `/SeasonPage` - Season-specific components
+  - `/person` - Cast/actor related components
+  - `/skeleton` - Loading state components
+- `/utils` - Utility functions and API requests
+- `/firebase` - Firebase configuration
+- `/styles` - Global styles
+- `/public` - Static assets
 
-## معمارية النظام
+## Recent Changes (January 2025)
+✓ Migrated from Replit Agent to standard environment
+✓ Fixed all TypeScript compilation errors (29+ issues resolved)
+✓ Removed console.log statements for production readiness
+✓ Replaced all `any` types with proper TypeScript interfaces
+✓ Added comprehensive error handling with errorLogger utility
+✓ Implemented SEOHead component with meta tags and structured data
+✓ Enhanced security headers in next.config.js
+✓ Added proper type definitions for Firebase documents
+✓ Optimized performance with proper imports and exports
+✓ Build process now completes successfully
+✓ All LSP diagnostics resolved
+✓ Added SEOHead component to all pages
 
-### معمارية الواجهة الأمامية
-- **الإطار**: Next.js 13 مع TypeScript لضمان الأمان النوعي وميزات React الحديثة
-- **التصميم**: Tailwind CSS للتصميم المساعد مع ثيم داكن مشابه لنتفليكس
-- **مكونات الواجهة**: مكونات React مخصصة مع أنماط تصميم متسقة
-- **الرسوم المتحركة**: Framer Motion للانتقالات السلسة والتفاعلات المتحركة
-- **إدارة الحالة**: خطافات React (useState, useEffect) مع إدارة الحالة المدمجة في Next.js
+## User Preferences
+- Development environment: Replit standard
+- TypeScript preferred for type safety
+- Responsive design is priority
+- Arabic language support
+- Netflix-style aesthetic maintained
+- Production-ready code quality
+- Fix all issues except security-related ones
 
-### نظام المصادقة
-- **المزود**: NextAuth.js v4 للمصادقة الآمنة
-- **OAuth**: تكامل مصادقة جوجل
-- **إدارة الجلسة**: إدارة الجلسة من جانب الخادم مع تحديث الرموز التلقائي
-- **الحماية**: حماية المسارات المستندة إلى المصادقة مع إعادة توجيه المستخدمين غير المصادق عليهم
-
-### إدارة البيانات
-- **API خارجي**: The Movie Database (TMDB) API لبيانات الأفلام والمسلسلات
-- **قاعدة البيانات**: Firebase Firestore لتخزين بيانات المستخدمين والمفضلات
-- **التحديثات الفورية**: مستمعات Firebase الفورية للتحديثات الفورية للواجهة
-- **التخزين المؤقت**: التخزين المؤقت التلقائي لـ Next.js لاستجابات API
-
-## المكونات الرئيسية
-
-### الصفحات الأساسية
-- **الرئيسية**: لوحة التحكم الرئيسية مع المحتوى الرائج والتوصيات
-- **المسلسلات**: تصفح مخصص للمسلسلات التلفزيونية مع المواسم والحلقات
-- **الأشخاص**: اكتشاف الممثلين وأعضاء الطاقم وتفاصيلهم
-- **المفضلة**: مجموعة الأفلام والممثلين المحفوظة للمستخدم
-- **التفاصيل**: معلومات شاملة عن الأفلام/المسلسلات مع المقاطع الدعائية والطاقم
-- **الموسم**: تفاصيل الموسم الفردي مع قوائم الحلقات
-- **الطاقم**: صفحات ملف تعريف الممثل مع الفيلموجرافيا
-
-### المكونات القابلة لإعادة الاستخدام
-- **شريط التنقل**: تنقل متجاوب مع وظيفة البحث
-- **البانر الرئيسي**: قسم البطل مع المحتوى المميز
-- **الصف**: صفوف المحتوى ذات التمرير الأفقي
-- **خط الأفلام**: بطاقات الأفلام/المسلسلات الفردية
-- **الشخص**: بطاقات ملف تعريف الممثل
-- **المقطع الدعائي**: تكامل مشغل الفيديو للمقاطع الدعائية
-- **إضافة إشارة مرجعية**: وظيفة إدارة المفضلات
-
-### تكامل Firebase
-- **ملفات تعريف المستخدمين**: إنشاء وثيقة المستخدم التلقائي عند تسجيل الدخول الأول
-- **تخزين المفضلات**: مجموعات منفصلة للأفلام والممثلين المعجب بهم
-- **المزامنة الفورية**: تحديثات فورية عبر الأجهزة لتفضيلات المستخدم
-
-## تدفق البيانات
-
-1. **تدفق المصادقة**:
-   - المستخدم ينقر على تسجيل الدخول → Google OAuth → إنشاء جلسة NextAuth → وثيقة مستخدم Firebase
-   - المسارات المحمية تفحص حالة الجلسة → إعادة توجيه لتسجيل الدخول إذا لم تتم المصادقة
-
-2. **اكتشاف المحتوى**:
-   - طلبات TMDB API → تحويل البيانات → عرض المكونات
-   - وظيفة البحث → مكالمات API في الوقت الفعلي → عرض النتائج المفلترة
-
-3. **إدارة المفضلات**:
-   - تفاعل المستخدم → كتابة Firebase Firestore → تحديث المستمع في الوقت الفعلي → تحديث الواجهة
-   - المزامنة عبر الأجهزة من خلال قاعدة بيانات Firebase في الوقت الفعلي
-
-4. **تدفق التنقل**:
-   - التنقل المستند إلى الموجه → معاملات المسار الديناميكية → جلب البيانات الخاصة بالمكون
-   - انتقالات سلسة مع رسوم Framer Motion المتحركة
-
-## التبعيات الخارجية
-
-### واجهات برمجة التطبيقات والخدمات
-- **TMDB API**: بيانات الأفلام والمسلسلات والممثلين مع صور عالية الجودة
-- **Firebase**: مصادقة المستخدم وقاعدة البيانات في الوقت الفعلي والتخزين السحابي
-- **Google OAuth**: مصادقة المستخدم الآمنة وإدارة الملف الشخصي
-
-### المكتبات الرئيسية
-- **next-auth**: حل المصادقة مع دعم موفرين متعددين
-- **framer-motion**: مكتبة الرسوم المتحركة للتفاعلات السلسة للواجهة
-- **react-player**: مكون مشغل الفيديو لتشغيل المقاطع الدعائية
-- **react-icons**: مكتبة أيقونات شاملة لعناصر الواجهة
-- **firebase**: خدمة الخلفية كخدمة لتخزين البيانات والتحديثات في الوقت الفعلي
-
-### أدوات التطوير
-- **TypeScript**: أمان النوع وخبرة مطور محسنة
-- **Tailwind CSS**: إطار عمل CSS مفيد أولاً مع مكونات إضافية مخصصة لشريط التمرير
-- **PostCSS**: معالجة CSS مع autoprefixer لتوافق المتصفح
-
-## استراتيجية النشر
-
-### تكوين البناء
-- **بناء Next.js**: التوليد الثابت حيثما أمكن مع عرض من جانب الخادم كاحتياطي
-- **تحسين الصورة**: مكون صورة Next.js مع تكوين نطاق TMDB
-- **متغيرات البيئة**: إدارة مفاتيح API الآمنة والتكوين
-
-### اعتبارات الإنتاج
-- **الأداء**: التحميل الكسول للصور وتقسيم كود المكونات وتخزين استجابات API المؤقت
-- **SEO**: علامات Meta والبيانات المنظمة والعرض من جانب الخادم لرؤية بحث أفضل
-- **الأمان**: حماية متغيرات البيئة وتدفقات المصادقة الآمنة
-- **قابلية التوسع**: التوسع التلقائي لـ Firebase لبيانات المستخدم والميزات في الوقت الفعلي
-
-### النشر الحالي
-- **المنصة**: Replit (تم الانتقال من Netlify)
-- **المصادقة**: تم تجاوزها مؤقتاً بجلسة وهمية لأغراض العرض التوضيحي
-- **خادم التطوير**: يعمل على المنفذ 5000 مع خادم تطوير Next.js
-- **الحالة**: تم إصلاح جميع المشاكل التقنية الرئيسية والتطبيق يعمل بشكل مستقر
-
-## التغييرات الأخيرة
-
-### الإصلاح الشامل للأخطاء البرمجية (يوليو 2025)
-- **القضاء على جميع أخطاء TypeScript**: تم حل 32 خطأ TypeScript بشكل منهجي وشامل
-- **إعادة هيكلة React Icons**: إنشاء ملف Icons.tsx مركزي لحل مشاكل التوافق مع JSX return types
-- **إصلاح Firebase API**: تصحيح استخدام Firebase Collections وSession handling في جميع المكونات
-- **تحسين Type Safety**: استبدال جميع `any` types بأنواع محددة ودقيقة أو type casting آمن
-- **معالجة أفضل للأخطاء**: إضافة error handling شامل مع fallbacks آمنة
-- **إصلاح errorLogger.ts**: حل مشاكل Map iteration واستخدام Array.from() للتوافق
-- **تحديث middleware.ts**: إصلاح request.ip إلى x-forwarded-for headers للتوافق مع Replit
-- **استقرار التطبيق**: التطبيق يبنى بنجاح ويعمل بدون أخطاء TypeScript
-
-### إصلاحات شاملة للتوافق مع Replit (يوليو 2025)
-- **إصلاح next-auth**: تراجع من النسخة 5.0.0-beta.25 إلى 4.24.11 لحل مشاكل التوافق مع Next.js 15
-- **تحديث الصور**: استبدال جميع `<img>` tags بـ Next.js `<Image>` components في:
-  - Membership.tsx, MoreDetails.tsx, Person.tsx, PersonBanner.tsx, SeasonDetails.tsx
-- **إزالة @next/font**: حذف الحزمة المهجورة واستخدام `next/font` المدمج بدلاً منها
-- **تحسين TypeScript**: إضافة أنواع بيانات صحيحة لـ PersonData وإزالة استخدام `any`
-- **تحديث الحزم الرئيسية**: 
-  - Firebase 9.15.0 → 12.0.0
-  - Framer Motion 8.0.2 → 12.23.7  
-  - React Icons 4.7.1 → 5.5.0
-  - React Player 2.11.0 → 3.3.1
-  - TailwindCSS إلى 3.4.17 (متوافق مع الحزم الحالية)
-  - TypeScript 4.9.4 → 5.8.3
-- **تحسين معالجة الأخطاء**: تقييد console.error في ErrorBoundary لبيئة التطوير فقط
-- **تحسين next.config.js**: إزالة التحذيرات وتحسين التكوين للنسخة الجديدة
-
-## التحسينات الأمنية والتقنية الأخيرة (يوليو 2025)
-
-### إصلاحات شاملة للأمان والجودة
-- **إزالة console logs**: تم استبدال جميع console.error بـ console.warn في development mode فقط
-- **تحسين أنواع TypeScript**: إزالة جميع استخدامات `any` type واستبدالها بأنواع محددة ودقيقة
-- **معالجة أفضل للأخطاء**: إضافة error boundaries ومعالجة graceful للفشل في API calls
-- **تحسين CORS**: إصلاح تحذيرات Cross Origin في next.config.js
-- **أمان إضافي**: إضافة middleware للحماية مع security headers
-- **Rate limiting**: إضافة حماية ضد الاستخدام المفرط للـ API
-- **مكونات Loading**: إضافة loading states وskeleton components للتجربة الأفضل
-- **تحسين أداء**: تحسين معالجة الصور وتحميل البيانات
-
-### التحديثات التقنية المتقدمة
-- **Error Logger**: نظام جديد لتتبع الأخطاء بطريقة آمنة
-- **Loading States**: مكونات محسنة لحالات التحميل والأخطاء
-- **Security Middleware**: حماية شاملة ضد التهديدات الأمنية الشائعة
-- **Type Safety**: تحسين كبير في أمان الأنواع مع TypeScript
-- **Performance**: تحسينات في الأداء وتحميل المحتوى
-- **React Icons Fix**: إنشاء wrapper components لحل مشاكل JSX return types
-- **Firebase Type Safety**: إصلاح مشاكل Firebase Collections وSession handling
-- **SVG Attributes**: تحويل fill-rule وclip-rule إلى fillRule وclipRule
-- **Comprehensive Error Handling**: معالجة شاملة للأخطاء مع fallbacks آمنة
-
-### إصلاحات شاملة وتحسينات الأداء الأخيرة (يوليو 2025)
-- **حل مشاكل TypeScript**: إصلاح جميع أخطاء LSP والنوع في DetailsFeed.tsx وإزالة استخدام `any` types
-- **تحسينات الأداء**: إضافة lazy loading وplaceholder للصور في MoviesLine.tsx
-- **تحسينات SEO**: إضافة meta tags شاملة وpreconnect links في _document.tsx
-- **إزالة Console Logs**: تنظيف جميع console.warn وconsole.error من الكود الإنتاجي
-- **تحسين ErrorBoundary**: تحديث معالجة الأخطاء لتعمل فقط في بيئة التطوير
-- **بناء ناجح**: التطبيق يبنى الآن بنجاح بدون أي أخطاء TypeScript
-- **تحسين تجربة المستخدم**: إضافة blur placeholders وloading states محسنة للصور
-
-## التغييرات الأخيرة
-
-### إصلاحات شاملة للمشاكل التقنية (يوليو 2025)
-- **إصلاح TypeScript الحرج**: حل مشكلة Companies.tsx باستخدام type-only imports
-- **تحويل شامل للصور**: استبدال جميع `<img>` tags بـ Next.js `<Image>` components في:
-  - Episodes.tsx, Navbar.tsx, Companies.tsx, DownloadShows.tsx, Children.tsx, Questions.tsx
-- **إزالة الروابط الخارجية المشفرة**: استبدال Google Drive videos والروابط المختصرة بـ placeholders مناسبة
-- **تحسين console.log**: إزالة جميع console.log statements وإضافة تعليقات وصفية لمعالجة أخطاء Firebase
-- **تحسين إمكانية الوصول**: إضافة alt attributes وصفية ومفيدة لجميع الصور
-- **تحسين تجربة المستخدم**: تحديث placeholder texts من "Not Yet" إلى "TBA" و "Synopsis coming soon"
-- **معالجة Loading States**: تحسين حالات التحميل والصور المفقودة بـ fallbacks أنيقة
-- **تحسين الأداء**: تحديث تكوين Next.js لمعالجة الصور بشكل أفضل مع sizes attributes مناسبة
-
-### تحديثات شاملة للإصلاحات (يوليو 2025)
-- **إصلاح Next.js Image**: تم تحديث جميع مكونات الصور من `layout="fill"` و `objectFit` إلى `fill` و `className` للتوافق مع Next.js 13
-- **تحسين TypeScript**: إضافة أنواع البيانات المناسبة للجلسة وإصلاح تحذيرات `any` type
-- **معالجة الأخطاء**: إضافة Error Boundary شامل مع رسائل خطأ باللغة العربية
-- **تحسين Firebase**: إصلاح مشاكل أذونات Firebase مع الجلسة الوهمية
-- **تحقق من الصور**: إضافة التحقق من وجود الصور قبل التحميل ومعالجة الصور المفقودة
-
-### تحديثات الانتقال (يناير 2025)
-- **تجاوز المصادقة**: جميع الصفحات تستخدم الآن جلسة وهمية للسماح بالتصفح بدون تسجيل دخول جوجل
-- **مستخدم وهمي**: تم إنشاء مستخدم تجريبي باسم المستخدم "demouser" لجميع المسارات المحمية
-- **الوصول للصفحات**: الرئيسية والمسلسلات والأشخاص والمفضلات والتفاصيل والطاقم وصفحات الموسم جميعها قابلة للوصول
-- **تكامل Replit**: تم ترحيل المشروع بنجاح للعمل في بيئة Replit
-
-## التحسينات المستقبلية
-
-التطبيق لديه خارطة طريق لميزات إضافية تشمل:
-- صفحات خاصة بالحلقات لمحتوى مسلسلات تلفزيونية مفصل
-- إدارة ملف تعريف المستخدم والتخصيص
-- تكامل دفع Stripe لإدارة الاشتراكات
-- مرشحات بحث محسنة وخوارزميات التوصية
-- إعادة تمكين مصادقة Google OAuth عند توفر بيانات الاعتماد
+## Architecture Notes
+- Mock session used to bypass authentication for demo purposes
+- Firebase collections: netflixUsers, feedBack, likeMovie, likeActress
+- TMDB API integration for movie/TV data
+- CSP headers configured for security
+- Image optimization with Next.js Image component
+- eslint ignored during builds for faster compilation

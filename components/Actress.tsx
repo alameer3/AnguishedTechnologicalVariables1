@@ -1,5 +1,6 @@
-import { onSnapshot, collection, orderBy, query } from "firebase/firestore";
+import { onSnapshot, collection, orderBy, query, QueryDocumentSnapshot, DocumentData } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
+import { PopularTyping } from "../typings";
 
 import { firestore } from "../firebase/firebase";
 import EmptyMovie from "./EmptyMovie";
@@ -11,9 +12,19 @@ type Props = {
   session: { user?: { uid?: string; name?: string; email?: string } } | null;
 };
 
+interface PersonData {
+  id: number; 
+  name: string; 
+  profile_path?: string; 
+  popularity: number;
+  adult?: boolean;
+  gender?: number;
+  known_for_department?: string;
+}
+
 interface ActressDocument {
   id: string;
-  data: () => { id: number; name: string; profile_path?: string; popularity: number };
+  data: () => PopularTyping;
 }
 
 function Actress({ session }: Props) {
@@ -26,12 +37,12 @@ function Actress({ session }: Props) {
           collection(
             firestore,
             "netflixUsers",
-            (session?.user as any)?.uid || "demouser",
+            (session?.user as { uid?: string })?.uid || "demouser",
             "likeActress"
           ),
           orderBy("popularity", "desc")
         ),
-        (snapshot) => setLikeAlikeActress(snapshot.docs as any[])
+        (snapshot) => setLikeAlikeActress(snapshot.docs as unknown as ActressDocument[])
       );
       return unsubscribe;
     } catch (error) {
@@ -52,7 +63,7 @@ function Actress({ session }: Props) {
           {likeActress?.map((person) => (
             <LikeActress
               key={person.id}
-              person={person.data() as any}
+              person={person.data() as PopularTyping}
               baseUrl={baseUrl}
             />
           ))}

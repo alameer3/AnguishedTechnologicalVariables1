@@ -38,7 +38,7 @@ function MainPage({
       if (!apiKey) {
         // API key missing - silent fail for production
         if (process.env.NODE_ENV === 'development') {
-          console.warn('TMDB API key is missing');
+          // API key missing - silent fail for production
         }
         return;
       }
@@ -50,7 +50,7 @@ function MainPage({
     } catch (error) {
       // Handle search errors gracefully
       if (process.env.NODE_ENV === 'development') {
-        console.warn('Failed to search movies:', error);
+        // Failed to search movies - silent fail for production
       }
       setSearchMovie([]);
     }
