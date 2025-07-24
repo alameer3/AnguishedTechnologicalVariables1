@@ -9,10 +9,10 @@ import Search from "./Search";
 type Props = {
   isSearch?: boolean;
   setSearchTerm?: (term: string) => void;
-  searchThrem?: string;
+  searchTerm?: string;
 };
 
-function Navbar({ isSearch, setSearchTerm, searchThrem }: Props) {
+function Navbar({ isSearch, setSearchTerm, searchTerm }: Props) {
   const [isScrolled, setIsScrolled] = useState(false);
   const { data: session } = useSession();
   const router = useRouter();
@@ -91,7 +91,7 @@ function Navbar({ isSearch, setSearchTerm, searchThrem }: Props) {
 
       <div className="font-light flex items-center space-x-4 text-sm">
         {isSearch ? (
-          <Search searchThrem={searchThrem || ""} setSearchTerm={setSearchTerm || (() => {})} />
+          <Search searchTerm={searchTerm || ""} setSearchTerm={setSearchTerm || (() => {})} />
         ) : (
           <SearchIcon
             className="hidden sm:inline sm:w-6 sm:h-6 cursor-pointer"

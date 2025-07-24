@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import { BookmarkDashIcon, BookmarkCheckIcon, RemoveCircleIcon, AddCircleIcon } from "./Icons";
-
+import { PopularTyping } from "../typings";
 import { firestore } from "../firebase/firebase";
 
 type Props = {
@@ -18,7 +18,7 @@ type Props = {
 
 interface LikeDocument {
   id: string;
-  data: () => { id: number; name: string; profile_path?: string };
+  data: () => PopularTyping;
 }
 
 function PersonBookMark({ castPerson }: Props) {
@@ -35,7 +35,13 @@ function PersonBookMark({ castPerson }: Props) {
           (session?.user as { uid?: string })?.uid || "demouser",
           "likeActress"
         ),
-        (snapshot) => setLikes(snapshot.docs as unknown as LikeDocument[])
+        (snapshot) => {
+          const documents: LikeDocument[] = snapshot.docs.map(doc => ({
+            id: doc.id,
+            data: () => doc.data() as PopularTyping
+          }));
+          setLikes(documents);
+        }
       ),
     [firestore, (session?.user as { uid?: string })?.uid]
   );

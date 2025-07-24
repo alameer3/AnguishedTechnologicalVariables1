@@ -5,7 +5,7 @@ import KnownFor from "./KnownFor";
 import PersonBanner from "./PersonBanner";
 
 interface Props {
-  // Props interface for PersonFeed component
+  // No props needed for PersonFeed - gets data from router
 }
 
 function PersonFeed({}: Props) {

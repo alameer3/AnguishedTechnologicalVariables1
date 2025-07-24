@@ -7,7 +7,7 @@ import Navbar from "../Navbar";
 import SeasonDetails from "./SeasonDetails";
 
 interface Props {
-  // Props interface for SeasonFeed component
+  // No props needed for SeasonFeed - gets data from router
 }
 
 function SeasonFeed({}: Props) {

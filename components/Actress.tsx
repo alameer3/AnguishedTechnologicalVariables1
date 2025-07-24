@@ -42,7 +42,13 @@ function Actress({ session }: Props) {
           ),
           orderBy("popularity", "desc")
         ),
-        (snapshot) => setLikeAlikeActress(snapshot.docs as unknown as ActressDocument[])
+        (snapshot) => {
+          const documents: ActressDocument[] = snapshot.docs.map(doc => ({
+            id: doc.id,
+            data: () => doc.data() as PopularTyping
+          }));
+          setLikeAlikeActress(documents);
+        }
       );
       return unsubscribe;
     } catch (error) {

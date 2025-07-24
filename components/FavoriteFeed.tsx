@@ -1,6 +1,7 @@
 import { onSnapshot, query, collection, orderBy, QueryDocumentSnapshot, DocumentData } from "firebase/firestore";
 import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
+import { Movie } from "../typings";
 
 import { firestore } from "../firebase/firebase";
 import Actress from "./Actress";
@@ -13,7 +14,7 @@ type Props = {
 
 interface MovieDocument {
   id: string;
-  data: () => { id: number; title: string; name?: string; poster_path?: string; vote_average: number };
+  data: () => Movie;
 }
 
 function FavoriteFeed({ session }: Props) {
@@ -32,7 +33,13 @@ function FavoriteFeed({ session }: Props) {
           ),
           orderBy("vote_average", "desc")
         ),
-        (snapshot) => setLikeMovies(snapshot.docs as unknown as MovieDocument[])
+        (snapshot) => {
+          const documents: MovieDocument[] = snapshot.docs.map(doc => ({
+            id: doc.id,
+            data: () => doc.data() as Movie
+          }));
+          setLikeMovies(documents);
+        }
       );
       return unsubscribe;
     } catch (error) {
@@ -69,7 +76,7 @@ function FavoriteFeed({ session }: Props) {
           <>
             {likeMovies.length > 0 ? (
               <Row
-                likeMovies={likeMovies as any[]}
+                likeMovies={likeMovies}
                 isDetails={true}
                 type="movie"
                 isSearch={true}
