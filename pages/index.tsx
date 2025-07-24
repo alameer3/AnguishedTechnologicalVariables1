@@ -37,8 +37,7 @@ export default function Home({
   documentaries,
   session,
 }: Props) {
-  // تجاوز المصادقة مؤقتاً للوصول المباشر
-  // if (!session) return <SignIn />;
+  if (!session) return <SignIn />;
 
   return (
     <motion.div
@@ -65,18 +64,8 @@ export default function Home({
   );
 }
 
-export const getServerSideProps = async (context: { query?: { id?: string } }) => {
-  // Create mock session to bypass authentication
-  const mockSession = {
-    user: {
-      name: "Demo User",
-      email: "demo@netflix.com",
-      image: "https://i.imgur.com/HeIi0wU.png",
-      username: "demouser",
-      uid: "demo-uid-12345"
-    }
-  };
-  const session = mockSession;
+export const getServerSideProps = async (context: { req: any; res: any }) => {
+  const session = await getSession(context);
   const [
     netflixOriginals,
     trendingNow,

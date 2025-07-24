@@ -30,14 +30,11 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
   }, [isOpen]);
 
   // تأخير البحث لتحسين الأداء
-  const debounce = <T extends (...args: any[]) => any>(
-    func: T,
-    delay: number
-  ): ((...args: Parameters<T>) => void) => {
+  const debounce = (func: (query: string) => Promise<void>, delay: number) => {
     let timeoutId: NodeJS.Timeout;
-    return (...args: Parameters<T>) => {
+    return (query: string) => {
       clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => func(...args), delay);
+      timeoutId = setTimeout(() => func(query), delay);
     };
   };
 

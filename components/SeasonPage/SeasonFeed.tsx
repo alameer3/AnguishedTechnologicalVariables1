@@ -16,6 +16,10 @@ interface VideoResult {
   name: string;
   site: string;
   type: string;
+  iso_639_1: string;
+  official: boolean;
+  published_at: string;
+  size: number;
 }
 
 function SeasonFeed({}: Props) {
@@ -70,7 +74,7 @@ function SeasonFeed({}: Props) {
         {seasons && (
           <SeasonDetails
             seasons={seasons}
-            seasonVideo={seasonVideo as any}
+            seasonVideo={seasonVideo}
           />
         )}
       </main>
