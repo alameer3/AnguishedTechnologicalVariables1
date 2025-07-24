@@ -8,11 +8,33 @@ interface Props {
   // No props needed for PersonFeed - gets data from router
 }
 
+interface CastMovie {
+  id: number;
+  title?: string;
+  name?: string;
+  poster_path?: string;
+  backdrop_path?: string;
+  vote_average?: number;
+  release_date?: string;
+  first_air_date?: string;
+  character?: string;
+}
+
+interface PersonData {
+  id: number;
+  name?: string;
+  profile_path?: string;
+  biography?: string;
+  birthday?: string;
+  place_of_birth?: string;
+  known_for_department?: string;
+}
+
 function PersonFeed({}: Props) {
   const router = useRouter();
   const { castId } = router.query;
-  const [castData, setCastData] = useState<any[]>([]);
-  const [castPerson, setCastPerson] = useState<{ id: number; name?: string; profile_path?: string; biography?: string; birthday?: string; place_of_birth?: string }>({} as { id: number; name?: string; profile_path?: string; biography?: string; birthday?: string; place_of_birth?: string });
+  const [castData, setCastData] = useState<CastMovie[]>([]);
+  const [castPerson, setCastPerson] = useState<PersonData | null>(null);
 
   const fetchData = async (id: string | number) => {
     try {
@@ -31,11 +53,14 @@ function PersonFeed({}: Props) {
       ).then((res) => res.json());
 
       setCastData(movieCastData.cast || []);
-      setCastPerson(movieCastPersonData || {});
+      setCastPerson(movieCastPersonData || null);
     } catch (error) {
       // Handle API errors gracefully
+      if (process.env.NODE_ENV === 'development') {
+        console.warn('Failed to fetch person data:', error);
+      }
       setCastData([]);
-      setCastPerson({} as { id: number; name?: string; profile_path?: string; biography?: string; birthday?: string; place_of_birth?: string });
+      setCastPerson(null);
     }
   };
 
@@ -47,8 +72,8 @@ function PersonFeed({}: Props) {
 
   return (
     <main className="relative pl-4 pb-24 lg:space-y-24 overflow-x-hidden">
-      <PersonBanner castPerson={castPerson as { id: number; name?: string; profile_path?: string; biography?: string; birthday?: string; place_of_birth?: string }} />
-      <KnownFor castData={castData} />
+      {castPerson && <PersonBanner castPerson={castPerson} />}
+      <KnownFor castData={castData as any} />
     </main>
   );
 }

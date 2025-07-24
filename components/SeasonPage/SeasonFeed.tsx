@@ -10,9 +10,17 @@ interface Props {
   // No props needed for SeasonFeed - gets data from router
 }
 
+interface VideoResult {
+  id: string;
+  key: string;
+  name: string;
+  site: string;
+  type: string;
+}
+
 function SeasonFeed({}: Props) {
-  const [seasons, setSeasons] = useState<any>({});
-  const [seasonVideo, setSeasonVideo] = useState<any[]>([]);
+  const [seasons, setSeasons] = useState<SeasonDetail | null>(null);
+  const [seasonVideo, setSeasonVideo] = useState<VideoResult[]>([]);
   const router = useRouter();
   const { seasonId, seasonNumber } = router.query;
 
@@ -40,9 +48,9 @@ function SeasonFeed({}: Props) {
     } catch (error) {
       // Handle API errors gracefully
       if (process.env.NODE_ENV === 'development') {
-        // Failed to fetch season data - silent fail for production
+        console.warn('Failed to fetch season data:', error);
       }
-      setSeasons({});
+      setSeasons(null);
       setSeasonVideo([]);
     }
   };
@@ -59,10 +67,12 @@ function SeasonFeed({}: Props) {
     <div className="overflow-x-hidden">
       <Navbar />
       <main className="relative pl-4 pb-24 lg:space-y-24">
-        <SeasonDetails
-          seasons={seasons as SeasonDetail}
-          seasonVideo={seasonVideo}
-        />
+        {seasons && (
+          <SeasonDetails
+            seasons={seasons}
+            seasonVideo={seasonVideo as any}
+          />
+        )}
       </main>
       <Footer />
     </div>

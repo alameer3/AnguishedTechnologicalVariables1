@@ -64,14 +64,14 @@ function MainDetails({ movieDetails }: Props) {
             <span className="bg-red-600 text-white px-3 py-1 rounded-full font-semibold text-shadow-soft">
               {movieDetails.release_date ? `سنة الإصدار: ${new Date(movieDetails.release_date).getFullYear()}` : 'تاريخ غير متوفر'}
             </span>
-            {(movieDetails as any).vote_average && (
+            {movieDetails.vote_average && (
               <span className="bg-yellow-500 text-black px-3 py-1 rounded-full font-semibold">
-                ⭐ {((movieDetails as any).vote_average as number).toFixed(1)}
+                ⭐ {movieDetails.vote_average.toFixed(1)}
               </span>
             )}
-            {(movieDetails as any).runtime && (
+            {movieDetails.runtime && (
               <span className="bg-blue-600 text-white px-3 py-1 rounded-full font-semibold text-shadow-soft">
-                🕒 {(movieDetails as any).runtime} دقيقة
+                🕒 {movieDetails.runtime} دقيقة
               </span>
             )}
           </div>

@@ -47,6 +47,8 @@ export interface Details {
   original_name: string;
   spoken_languages: Languages[];
   seasons: Seasons[];
+  vote_average?: number;
+  runtime?: number;
 }
 
 export interface Seasons {
