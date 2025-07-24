@@ -4,7 +4,7 @@ const nextConfig = {
   experimental: {
     allowedRevalidateHeaderKeys: ['x-revalidate'],
   },
-  allowedDevOrigins: ['127.0.0.1', 'localhost', '*.replit.dev', '*.replit.co', '*.spock.replit.dev', '*.picard.replit.dev', '*.worf.replit.dev', '*.kirk.replit.dev'],
+  allowedDevOrigins: ['127.0.0.1', 'localhost', '*.replit.dev', '*.replit.co', '*.spock.replit.dev', '*.picard.replit.dev', '*.worf.replit.dev', '*.kirk.replit.dev', '*.sisko.replit.dev'],
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -32,11 +32,11 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: `
               default-src 'self';
-              script-src 'self' 'unsafe-eval' 'unsafe-inline' *.youtube.com *.googleapis.com *.replit.dev;
+              script-src 'self' 'unsafe-eval' 'unsafe-inline' *.youtube.com *.googleapis.com *.replit.dev *.replit.co;
               style-src 'self' 'unsafe-inline' fonts.googleapis.com;
-              img-src 'self' data: blob: https: image.tmdb.org;
+              img-src 'self' data: blob: image.tmdb.org *.googleapis.com *.gstatic.com;
               font-src 'self' fonts.gstatic.com;
-              connect-src 'self' *.themoviedb.org *.googleapis.com *.firebase.com *.firebaseapp.com *.replit.dev;
+              connect-src 'self' *.themoviedb.org *.googleapis.com *.firebase.com *.firebaseapp.com *.replit.dev *.replit.co;
               frame-src 'self' *.youtube.com *.youtu.be;
               media-src 'self' *.youtube.com;
             `.replace(/\s{2,}/g, ' ').trim()

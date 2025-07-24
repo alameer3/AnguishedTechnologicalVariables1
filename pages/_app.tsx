@@ -1,17 +1,16 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
-import ErrorBoundary from "../components/ErrorBoundary";
-import ErrorFallback from "../components/ErrorFallback";
+import GlobalErrorBoundary from "../components/GlobalErrorBoundary";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <ErrorBoundary fallback={ErrorFallback}>
+    <GlobalErrorBoundary>
       <SessionProvider session={pageProps.session}>
         <div className="min-h-screen bg-gray-900 text-white">
           <Component {...pageProps} />
         </div>
       </SessionProvider>
-    </ErrorBoundary>
+    </GlobalErrorBoundary>
   );
 }

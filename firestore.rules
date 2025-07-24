@@ -1,27 +1,38 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Public read access for all users
+    // Default: require authentication for all operations
     match /{document=**} {
+      allow read, write: if false; // Default deny all
+    }
+    
+    // User-specific data: only owner can read/write
+    match /netflixUsers/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Feedback: authenticated users can write, anyone can read
+    match /feedBack/{feedbackId} {
       allow read: if true;
       allow write: if request.auth != null;
     }
     
-    // Specific rules for Netflix collections
-    match /netflixUsers/{userId} {
-      allow read, write: if true; // Allow all for demo purposes
-    }
-    
-    match /feedBack/{feedbackId} {
-      allow read, write: if true; // Allow all for demo purposes
-    }
-    
+    // Like Movie: user can only manage their own likes
     match /likeMovie/{likeId} {
-      allow read, write: if true; // Allow all for demo purposes
+      allow read: if true; // Public read for movie like counts
+      allow write: if request.auth != null && 
+        request.auth.uid == resource.data.userId;
+      allow create: if request.auth != null && 
+        request.auth.uid == request.resource.data.userId;
     }
     
+    // Like Actress: user can only manage their own likes
     match /likeActress/{actressId} {
-      allow read, write: if true; // Allow all for demo purposes
+      allow read: if true; // Public read for actress like counts
+      allow write: if request.auth != null && 
+        request.auth.uid == resource.data.userId;
+      allow create: if request.auth != null && 
+        request.auth.uid == request.resource.data.userId;
     }
   }
 }
