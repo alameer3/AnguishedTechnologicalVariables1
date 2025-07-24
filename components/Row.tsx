@@ -5,6 +5,8 @@ import { ChevronLeftIcon, ChevronRightIcon } from "./Icons";
 import { Movie } from "../typings";
 import MoviesLine from "./MoviesLine";
 import InfiniteScroll from "./InfiniteScroll";
+import PremiumFeaturePrompt from "./PremiumFeaturePrompt";
+import { useAuth } from "./AuthProvider";
 
 type Props = {
   movies?: Movie[];
@@ -27,6 +29,7 @@ function Row({
 }: Props) {
   const rowRef = useRef<HTMLDivElement>(null);
   const [isMoved, setIsMoved] = useState(false);
+  const { isGuest } = useAuth();
 
   const handleClick = (direction: string) => {
     setIsMoved(true);
@@ -64,24 +67,38 @@ function Row({
         )}
 
         {isfavourite ? (
-          <div
-            ref={rowRef}
-            className={
-              (likeMovies?.length || 0) >= 4
-                ? `gap-x-10 grid overflow-x-hidden gap-y-6 sm:gap-x-14 lg:gap-x-14 md:gap-x-10`
-                : `flex items-center scrollbar-netflix space-x-1 overflow-x-scroll md:space-x-2 md:p-2`
-            }
-          >
-            {likeMovies!.map((movie: { id: string; data: () => Movie }) => (
-              <MoviesLine
-                key={movie.id}
-                movie={movie.data()}
-                isDetails={isDetails}
-                type={type}
-                isfavourite={isfavourite}
-              />
-            ))}
-          </div>
+          isGuest ? (
+            <PremiumFeaturePrompt feature="favorites">
+              <div
+                ref={rowRef}
+                className="gap-x-10 grid overflow-x-hidden gap-y-6 sm:gap-x-14 lg:gap-x-14 md:gap-x-10"
+              >
+                {/* عرض محتوى وهمي مع تشويش */}
+                {[1,2,3,4,5,6].map((i) => (
+                  <div key={i} className="w-40 h-60 bg-gray-800 rounded animate-pulse" />
+                ))}
+              </div>
+            </PremiumFeaturePrompt>
+          ) : (
+            <div
+              ref={rowRef}
+              className={
+                (likeMovies?.length || 0) >= 4
+                  ? `gap-x-10 grid overflow-x-hidden gap-y-6 sm:gap-x-14 lg:gap-x-14 md:gap-x-10`
+                  : `flex items-center scrollbar-netflix space-x-1 overflow-x-scroll md:space-x-2 md:p-2`
+              }
+            >
+              {likeMovies!.map((movie: { id: string; data: () => Movie }) => (
+                <MoviesLine
+                  key={movie.id}
+                  movie={movie.data()}
+                  isDetails={isDetails}
+                  type={type}
+                  isfavourite={isfavourite}
+                />
+              ))}
+            </div>
+          )
         ) : (
           <div
             ref={rowRef}

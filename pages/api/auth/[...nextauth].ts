@@ -24,20 +24,16 @@ const authOptions = {
   ],
 
   callbacks: {
-    async session({ session, token }: { session: Session; token: JWT }) {
-      const customSession: CustomSession = {
+    async session({ session, token }: any) {
+      return {
         ...session,
-        expires: session.expires,
         user: {
+          ...session.user,
           id: token.sub || 'demo-user-123',
-          name: session.user?.name || null,
-          email: session.user?.email || null,
-          image: session.user?.image || null,
           username: session.user?.name?.split(" ").join("").toLowerCase() || 'demo-user',
           uid: token.sub || 'demo-user-123'
         }
       };
-      return customSession;
     },
   },
 
