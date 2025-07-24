@@ -6,12 +6,12 @@ export default function Document() {
       <Head>
 
         <meta name="theme-color" content="#000000" />
-        <meta name="description" content="نسخة نتفليكس - تطبيق لتصفح الأفلام والمسلسلات" />
-        <meta name="keywords" content="netflix, movies, tv shows, أفلام, مسلسلات, نتفليكس" />
-        <meta name="author" content="Netflix Clone App" />
+        <meta name="description" content="YEMEN_FLIX - منصة البث الأولى في اليمن للأفلام والمسلسلات" />
+        <meta name="keywords" content="yemen flix, movies, tv shows, أفلام, مسلسلات, يمن فليكس, اليمن" />
+        <meta name="author" content="YEMEN_FLIX" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="نسخة نتفليكس" />
-        <meta property="og:description" content="تطبيق لتصفح الأفلام والمسلسلات مع إمكانية إضافة المفضلات" />
+        <meta property="og:title" content="YEMEN_FLIX - منصة الأفلام والمسلسلات" />
+        <meta property="og:description" content="استمتع بأحدث الأفلام والمسلسلات على YEMEN_FLIX - منصة البث الأولى في اليمن" />
         <link rel="preconnect" href="https://image.tmdb.org" />
         <link rel="preconnect" href="https://api.themoviedb.org" />
         <link rel="dns-prefetch" href="https://image.tmdb.org" />

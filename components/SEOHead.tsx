@@ -9,9 +9,9 @@ interface SEOHeadProps {
 }
 
 const SEOHead: React.FC<SEOHeadProps> = ({
-  title = "نسخة نتفليكس - تصفح الأفلام والمسلسلات",
-  description = "تطبيق نسخة نتفليكس للتصفح والاستمتاع بأحدث الأفلام والمسلسلات مع إمكانية إضافة المفضلات",
-  image = "/Netflix-Logo.wine.png",
+  title = "YEMEN_FLIX - منصة الأفلام والمسلسلات الأولى في اليمن",
+  description = "استمتع بأحدث الأفلام والمسلسلات على YEMEN_FLIX - منصة البث الأولى في اليمن مع إمكانية إضافة المفضلات",
+  image = "/yemen-flix-logo.png",
   url = "",
   type = "website"
 }) => {
@@ -22,7 +22,7 @@ const SEOHead: React.FC<SEOHeadProps> = ({
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta name="robots" content="index, follow" />
       <meta name="language" content="Arabic" />
-      <meta name="author" content="Netflix Clone" />
+      <meta name="author" content="YEMEN_FLIX" />
       
       {/* Open Graph */}
       <meta property="og:type" content={type} />
@@ -30,7 +30,7 @@ const SEOHead: React.FC<SEOHeadProps> = ({
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
       <meta property="og:url" content={url} />
-      <meta property="og:site_name" content="نسخة نتفليكس" />
+      <meta property="og:site_name" content="YEMEN_FLIX" />
       
       {/* Twitter Card */}
       <meta name="twitter:card" content="summary_large_image" />
@@ -40,7 +40,7 @@ const SEOHead: React.FC<SEOHeadProps> = ({
       
       {/* Favicon */}
       <link rel="icon" href="/favicon.ico" />
-      <link rel="apple-touch-icon" href="/Netflix-Logo.wine.png" />
+      <link rel="apple-touch-icon" href="/yemen-flix-icon.png" />
       
       {/* JSON-LD Structured Data */}
       <script
@@ -49,7 +49,7 @@ const SEOHead: React.FC<SEOHeadProps> = ({
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "WebApplication",
-            "name": "نسخة نتفليكس",
+            "name": "YEMEN_FLIX",
             "description": description,
             "url": url,
             "applicationCategory": "Entertainment",
