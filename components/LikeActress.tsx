@@ -14,7 +14,7 @@ function LikeActress({ person, baseUrl }: Props) {
 
   const handleNavigatePage = () => {
     router.push({
-      pathname: `${process.env.NEXT_PUBLIC_AUTH_URL}/cast/${person.id}`,
+      pathname: `/cast/${person.id}`,
       query: {
         castId: person.id.toString(),
       },

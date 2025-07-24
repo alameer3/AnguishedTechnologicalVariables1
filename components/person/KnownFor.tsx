@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { BiChevronLeftCircle, BiChevronRightCircle } from "react-icons/bi";
+import type { IconType } from "react-icons";
 import { CastDataTyping } from "../../typings";
 import BilledCastSceleton from "../skeleton/BilledCastSceleton";
 
@@ -32,20 +33,22 @@ function KnownFor({ castData }: Props) {
   return (
     <div className="px-6 w-screen group relative md:-ml-2">
       <p className="text-2xl font-bold text-gray-500">Known For</p>
-      <BiChevronLeftCircle
-        className={`absolute top-0 bottom-0 left-2 z-40 m-auto h-9 w-9 cursor-pointer opacity-0 transition hover:scale-125 group-hover:opacity-100 ${
+      <div
+        className={`absolute top-0 bottom-0 left-2 z-40 m-auto cursor-pointer opacity-0 transition hover:scale-125 group-hover:opacity-100 ${
           !isMoved && "hidden"
         }`}
         onClick={() => handleClick("left")}
-      />
+      >
+        <BiChevronLeftCircle size={36} />
+      </div>
       <div
         className="flex items-center scrollbar-hide space-x-0.5 overflow-x-scroll md:space-x-1.0 md:p-2"
         ref={rowRef}
       >
         {castData ? (
           <>
-            {castData?.map((crewData, index: number) => (
-              <SingleCast key={index} crewData={crewData} baseUrl={baseUrl} />
+            {castData?.map((crewData: any, index: number) => (
+              <SingleCast key={`crew-${crewData.id}-${index}`} crewData={crewData} baseUrl={baseUrl} />
             ))}
           </>
         ) : (
@@ -62,10 +65,12 @@ function KnownFor({ castData }: Props) {
           </>
         )}
       </div>
-      <BiChevronRightCircle
-        className="absolute top-0 bottom-0 right-2 z-40 m-auto h-9 w-9 cursor-pointer opacity-0 transition hover:scale-125 group-hover:opacity-100"
+      <div
+        className="absolute top-0 bottom-0 right-2 z-40 m-auto cursor-pointer opacity-0 transition hover:scale-125 group-hover:opacity-100"
         onClick={() => handleClick("right")}
-      />
+      >
+        <BiChevronRightCircle size={36} />
+      </div>
     </div>
   );
 }

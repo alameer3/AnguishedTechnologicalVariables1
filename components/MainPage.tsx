@@ -33,10 +33,20 @@ function MainPage({
   const [searchMovie, setSearchMovie] = useState([]);
 
   const fetchData = async (searchItem: string) => {
-    const movieSearchdata = await fetch(
-      `https://api.themoviedb.org/3/search/multi?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=en-US&query=${searchItem}&page=1&include_adult=false`
-    ).then((res) => res.json());
-    setSearchMovie(movieSearchdata.results);
+    try {
+      const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+      if (!apiKey) {
+        console.error('API key is missing');
+        return;
+      }
+      
+      const movieSearchdata = await fetch(
+        `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&language=en-US&query=${searchItem}&page=1&include_adult=false`
+      ).then((res) => res.json());
+      setSearchMovie(movieSearchdata.results || []);
+    } catch (error) {
+      console.error('Error searching movies:', error);
+    }
   };
 
   useEffect(() => {
