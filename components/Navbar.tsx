@@ -37,7 +37,11 @@ function Navbar({ isSearch, setSearchTerm, searchTerm }: Props) {
   return (
     <>
       <header
-        className={`header ${isScrolled && "bg-[#141414]"} hover:bg-[#141414]`}
+        className={`header transition-all duration-500 ${
+          isScrolled 
+            ? "bg-black/95 backdrop-blur-xl shadow-2xl border-b border-red-500/20" 
+            : "bg-transparent"
+        } hover:bg-black/95`}
       >
       <div className="flex items-center space-x-2 md:space-x-10">
         <div className="relative w-[280px] h-[70px] cursor-pointer transition-all duration-300 hover:scale-110 hover:drop-shadow-2xl interactive-glow" onClick={() => router.push("/")}>

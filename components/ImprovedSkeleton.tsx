@@ -30,14 +30,14 @@ const ImprovedSkeleton: React.FC<ImprovedSkeletonProps> = ({
     switch (type) {
       case 'banner':
         return (
-          <div className={`w-full h-64 md:h-96 bg-gray-700 rounded-lg ${className}`}>
+          <div className={`w-full h-64 md:h-96 bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg loading-shimmer ${className}`}>
             <div className="flex flex-col justify-end h-full p-8 space-y-4">
-              <div className="w-3/4 h-8 bg-gray-600 rounded"></div>
-              <div className="w-1/2 h-4 bg-gray-600 rounded"></div>
-              <div className="w-full h-16 bg-gray-600 rounded"></div>
+              <div className="w-3/4 h-8 bg-gradient-to-r from-gray-600 to-gray-500 rounded loading-shimmer"></div>
+              <div className="w-1/2 h-4 bg-gradient-to-r from-gray-600 to-gray-500 rounded loading-shimmer"></div>
+              <div className="w-full h-16 bg-gradient-to-r from-gray-600 to-gray-500 rounded loading-shimmer"></div>
               <div className="flex space-x-4">
-                <div className="w-24 h-10 bg-gray-600 rounded"></div>
-                <div className="w-24 h-10 bg-gray-600 rounded"></div>
+                <div className="w-24 h-10 bg-gradient-to-r from-red-600/50 to-red-500/50 rounded loading-shimmer"></div>
+                <div className="w-24 h-10 bg-gradient-to-r from-gray-600 to-gray-500 rounded loading-shimmer"></div>
               </div>
             </div>
           </div>

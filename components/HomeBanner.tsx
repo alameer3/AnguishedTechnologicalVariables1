@@ -108,7 +108,8 @@ function HomeBanner({ netflixOriginals, session, isTv }: Props) {
             <LoadingSpinner size="large" text="جاري تحميل المحتوى..." />
           </div>
         )}
-        <div className="absolute w-full h-40 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent bottom-0 z-20" />
+        <div className="absolute w-full h-40 bg-gradient-to-t from-black via-black/80 to-transparent bottom-0 z-20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/30 z-10" />
       </div>
 
       <motion.h1 
@@ -123,16 +124,16 @@ function HomeBanner({ netflixOriginals, session, isTv }: Props) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.7, duration: 0.8 }}
-        className="max-w-sm text-base md:max-w-xl md:text-xl lg:max-w-3xl lg:text-2xl line-clamp-4 text-white font-medium text-shadow-enhanced leading-relaxed"
+        className="max-w-sm text-base md:max-w-xl md:text-lg lg:max-w-3xl lg:text-xl line-clamp-3 text-gray-200 font-medium text-shadow-enhanced leading-relaxed mb-8"
       >
-        {movie?.overview}
+        {movie?.overview || 'استمتع بأحدث الأفلام والمسلسلات على منصة YEMEN_FLIX، المنصة اليمنية الرائدة للترفيه المرئي.'}
       </motion.p>
 
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.9, duration: 0.8 }}
-        className="flex flex-col sm:flex-row gap-4 sm:gap-6 mt-8"
+        className="flex flex-col sm:flex-row gap-4 sm:gap-6"
       >
         <EnhancedButton
           variant="primary"

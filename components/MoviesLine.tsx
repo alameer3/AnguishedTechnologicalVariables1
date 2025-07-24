@@ -41,33 +41,44 @@ function MoviesLine({ movie, isDetails, type, isfavourite }: Props) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.5 }}
-      animate={{ opacity: 1, scale: 1 }}
+      initial={{ opacity: 0, scale: 0.8, y: 20 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{
-        duration: 0.8,
-        delay: 0.5,
+        duration: 0.6,
+        delay: 0.2,
         ease: [0, 0.71, 0.2, 1.01],
+      }}
+      whileHover={{ 
+        scale: 1.08,
+        y: -8,
+        transition: { duration: 0.3 }
       }}
       onClick={handleChangePage}
       className={
         isDetails
-          ? `relative h-28 min-w-[180px] cursor-pointer transition-transform duration-200 ease-out md:h-[200px] md:min-w-[350px] md:hover:scale-105`
-          : `relative h-28 min-w-[180px] cursor-pointer transition-transform duration-200 ease-out md:h-36 md:min-w-[260px] md:hover:scale-105`
+          ? `relative h-28 min-w-[180px] cursor-pointer transition-all duration-300 ease-out md:h-[200px] md:min-w-[350px] rounded-lg overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-red-500/20 ring-1 ring-gray-800 hover:ring-red-500/50`
+          : `relative h-28 min-w-[180px] cursor-pointer transition-all duration-300 ease-out md:h-36 md:min-w-[260px] rounded-lg overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-red-500/20 ring-1 ring-gray-800 hover:ring-red-500/50`
       }
     >
       {movie.backdrop_path || movie.poster_path ? (
-        <Image
-          src={`https://image.tmdb.org/t/p/w500${
-            movie.backdrop_path || movie.poster_path
-          }`}
-          fill
-          className="rounded-sm object-cover md:rounded"
-          alt={movie.title || movie.name || movie.original_name || "Movie poster"}
-          sizes="(max-width: 768px) 180px, 260px"
-          loading="lazy"
-          placeholder="blur"
-          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/2wBDAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/wAARCAABAAEDAREAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAX/xAAhEAABBQEBAQEBAQAAAAAAAAABAAIDBAUGBwgJCgv/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8A3QAA"
-        />
+        <div className="relative w-full h-full">
+          <Image
+            src={`https://image.tmdb.org/t/p/w500${
+              movie.backdrop_path || movie.poster_path
+            }`}
+            fill
+            className="rounded-lg object-cover transition-transform duration-300 group-hover:scale-110"
+            alt={movie.title || movie.name || movie.original_name || "Movie poster"}
+            sizes="(max-width: 768px) 180px, 260px"
+            loading="lazy"
+            placeholder="blur"
+            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/2wBDAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/wAARCAABAAEDAREAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAX/xAAhEAABBQEBAQEBAQAAAAAAAAABAAIDBAUGBwgJCgv/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8A3QAA"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
+          <div className="absolute bottom-2 left-2 right-2 text-white text-sm font-semibold opacity-0 hover:opacity-100 transition-opacity duration-300 line-clamp-2">
+            {movie.title || movie.name || movie.original_name}
+          </div>
+        </div>
       ) : (
         <div
           role="status"
