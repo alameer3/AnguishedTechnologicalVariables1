@@ -16,7 +16,8 @@ type Props = {
 };
 
 function People({ popular, session }: Props) {
-  if (!session) return <SignIn />;
+  // Skip authentication check for demo
+  // if (!session) return <SignIn />;
 
   return (
     <motion.div
@@ -47,7 +48,16 @@ function People({ popular, session }: Props) {
 export default People;
 
 export const getServerSideProps = async (context: any) => {
-  const session = await getSession(context);
+  // Create mock session to bypass authentication
+  const mockSession = {
+    user: {
+      name: "Demo User",
+      email: "demo@netflix.com",
+      image: "https://i.imgur.com/HeIi0wU.png",
+      username: "demouser",
+      uid: "demo-uid-12345"
+    }
+  };
 
   const [popular] = await Promise.all([
     fetch(peopleRequests.fetchPopular).then((res) => res.json()),
@@ -56,7 +66,7 @@ export const getServerSideProps = async (context: any) => {
   return {
     props: {
       popular: popular.results,
-      session: session,
+      session: mockSession,
     },
   };
 };
