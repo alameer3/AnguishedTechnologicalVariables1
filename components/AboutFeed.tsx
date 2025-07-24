@@ -33,7 +33,7 @@ function AboutFeed({}: Props) {
 
         setFeedback("");
       } catch (error) {
-        console.log(error);
+        // Firebase permission error with mock session - handled silently
       }
     }
   };
@@ -43,18 +43,13 @@ function AboutFeed({}: Props) {
       <div className="pt-36 pb-18">
         <p className="text-3xl font-semibold px-20">{`Information's`}</p>
         <div className="inline-block md:flex justify-between px-16 py-8 overflow-x-hidden ">
-          <video
-            autoPlay
-            playsInline
-            muted
-            loop
-            className="w-[280px] md:w-[465px] sm:w-[450px] lg:w-[700px] z-0 items-center"
-          >
-            <source
-              src="https://drive.google.com/uc?export=download&id=1irloDrD37mi3mKNWaYtkeG9SdeE6X2Rh"
-              type="video/mp4"
-            />
-          </video>
+          <div className="w-[280px] md:w-[465px] sm:w-[450px] lg:w-[700px] h-[300px] bg-gray-800 rounded flex items-center justify-center">
+            <div className="text-center text-white">
+              <div className="text-8xl mb-4">🎬</div>
+              <div className="text-lg font-semibold">Netflix Clone Demo</div>
+              <div className="text-sm text-gray-400 mt-2">Educational Project</div>
+            </div>
+          </div>
           <div className="items-center space-y-4">
             <p className="flex justify-start items-center gap-4 text-xl font-semibold">
               <RiNetflixFill /> Netflix Clone

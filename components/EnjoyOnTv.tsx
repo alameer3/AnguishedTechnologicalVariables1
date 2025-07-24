@@ -27,18 +27,12 @@ function EnjoyOnTv({}: Props) {
         </div>
 
         <div className="top-[85px] left-[52px] sm:top-[122px] sm:left-[80px] absolute lg:top-[100px] lg:left-[62px] md:top-[125px] md:left-[185px] z-0">
-          <video
-            autoPlay
-            playsInline
-            muted
-            loop
-            className="w-[280px] md:w-[465px] sm:w-[450px] lg:w-[350px] z-0"
-          >
-            <source
-              src="https://drive.google.com/uc?export=download&id=1i_6u8bQQGXc5yHgFTgz5xeobJcHQUmR_"
-              type="video/mp4"
-            />
-          </video>
+          <div className="w-[280px] md:w-[465px] sm:w-[450px] lg:w-[350px] h-[200px] bg-black rounded flex items-center justify-center">
+            <div className="text-center text-white">
+              <div className="text-6xl mb-4">📺</div>
+              <div className="text-sm">Demo Video Placeholder</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

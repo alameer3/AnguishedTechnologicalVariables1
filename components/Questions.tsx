@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 type Props = {};
 
@@ -12,61 +13,79 @@ function Questions({}: Props) {
         <h2 className="text-md sm:text-lg md:text-xl lg:text-2xl">
           What is Netflix?
         </h2>
-        <img
-          className="w-8 md:w-6 md:h-6 p-2 md:p-0"
-          src="./assets/plus.png"
-          alt="plus"
-        />
+        <div className="relative w-8 h-8 md:w-6 md:h-6">
+          <Image
+            src="/assets/plus.png"
+            alt="Expand question"
+            fill
+            className="object-contain p-2 md:p-0"
+          />
+        </div>
       </div>
       <div className="flex justify-between p-3 lg:p-5 mt-2 bg-[#303030] cursor-pointer">
         <h2 className="text-md sm:text-lg md:text-xl lg:text-2xl">
           How much does Netflix cost?
         </h2>
-        <img
-          className="w-8 p-2 md:w-6 md:h-6 md:p-0"
-          src="./assets/plus.png"
-          alt="plus"
-        />
+        <div className="relative w-8 h-8 md:w-6 md:h-6">
+          <Image
+            src="/assets/plus.png"
+            alt="Expand question"
+            fill
+            className="object-contain p-2 md:p-0"
+          />
+        </div>
       </div>
       <div className="flex justify-between p-3 lg:p-5 mt-2 bg-[#303030] cursor-pointer">
         <h2 className="text-md sm:text-lg md:text-xl lg:text-2xl">
           Where can I watch?
         </h2>
-        <img
-          className="w-8 p-2 md:w-6 md:h-6 md:p-0"
-          src="./assets/plus.png"
-          alt="plus"
-        />
+        <div className="relative w-8 h-8 md:w-6 md:h-6">
+          <Image
+            src="/assets/plus.png"
+            alt="Expand question"
+            fill
+            className="object-contain p-2 md:p-0"
+          />
+        </div>
       </div>
       <div className="flex justify-between p-3 lg:p-5 mt-2 bg-[#303030] cursor-pointer">
         <h2 className="text-md sm:text-lg md:text-xl lg:text-2xl">
           How do I cancel?
         </h2>
-        <img
-          className="w-8 p-2 md:w-6 md:h-6 md:p-0"
-          src="./assets/plus.png"
-          alt="plus"
-        />
+        <div className="relative w-8 h-8 md:w-6 md:h-6">
+          <Image
+            src="/assets/plus.png"
+            alt="Expand question"
+            fill
+            className="object-contain p-2 md:p-0"
+          />
+        </div>
       </div>
       <div className="flex justify-between p-3 lg:p-5 mt-2 bg-[#303030] cursor-pointer">
         <h2 className="text-md sm:text-md sm:text-lg md:text-xl lg:text-2xl">
           What can I watch on Netflix?
         </h2>
-        <img
-          className="w-8 p-2 md:w-6 md:h-6 md:p-0"
-          src="./assets/plus.png"
-          alt="plus"
-        />
+        <div className="relative w-8 h-8 md:w-6 md:h-6">
+          <Image
+            src="/assets/plus.png"
+            alt="Expand question"
+            fill
+            className="object-contain p-2 md:p-0"
+          />
+        </div>
       </div>
       <div className="flex justify-between p-3 lg:p-5 mt-2 bg-[#303030] cursor-pointer">
         <h2 className="text-md sm:text-lg md:text-xl lg:text-2xl">
           Is Netflix good for kids?
         </h2>
-        <img
-          className="w-8 p-2 md:w-6 md:h-6 md:p-0"
-          src="./assets/plus.png"
-          alt="plus"
-        />
+        <div className="relative w-8 h-8 md:w-6 md:h-6">
+          <Image
+            src="/assets/plus.png"
+            alt="Expand question"
+            fill
+            className="object-contain p-2 md:p-0"
+          />
+        </div>
       </div>
     </div>
   );
