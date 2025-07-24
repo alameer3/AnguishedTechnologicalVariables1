@@ -43,7 +43,8 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
           ${sizeClasses[size]} 
           ${colorClasses[color]}
           border-4 border-t-transparent rounded-full
-          shadow-lg
+          shadow-lg drop-shadow-xl
+          bg-gradient-to-r from-transparent via-red-500/20 to-transparent
         `}
       />
       {text && (

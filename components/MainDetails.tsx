@@ -48,20 +48,36 @@ function MainDetails({ movieDetails }: Props) {
       movieDetails?.name ||
       movieDetails?.original_name ? (
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="space-y-6"
         >
-          <h1 className="text-2xl md:text-4xl lg:text-7xl font-bold">
+          <h1 className="text-2xl md:text-4xl lg:text-7xl font-black text-white text-shadow-enhanced leading-tight">
             {movieDetails?.title ||
               movieDetails?.name ||
               movieDetails?.original_name}
           </h1>
-          <p className="text-sm font-semibold py-6">
-            Release Date: {movieDetails.release_date}
-          </p>
-          <p className="max-w-xs text-shadow-md text-xs md:max-w-xl md:text-lg lg:max-w-2xl line-clamp-5">
-            {movieDetails?.overview}
+          
+          <div className="flex flex-wrap items-center gap-4 text-sm md:text-base">
+            <span className="bg-red-600 text-white px-3 py-1 rounded-full font-semibold text-shadow-soft">
+              {movieDetails.release_date ? `سنة الإصدار: ${new Date(movieDetails.release_date).getFullYear()}` : 'تاريخ غير متوفر'}
+            </span>
+            {(movieDetails as any).vote_average && (
+              <span className="bg-yellow-500 text-black px-3 py-1 rounded-full font-semibold">
+                ⭐ {((movieDetails as any).vote_average as number).toFixed(1)}
+              </span>
+            )}
+            {(movieDetails as any).runtime && (
+              <span className="bg-blue-600 text-white px-3 py-1 rounded-full font-semibold text-shadow-soft">
+                🕒 {(movieDetails as any).runtime} دقيقة
+              </span>
+            )}
+          </div>
+          
+          <p className="max-w-xs text-gray-200 text-shadow-soft text-sm md:max-w-xl md:text-lg lg:max-w-3xl lg:text-xl line-clamp-4 leading-relaxed">
+            {movieDetails?.overview || 'لا يوجد وصف متاح لهذا العنوان.'}
           </p>
         </motion.div>
       ) : (
