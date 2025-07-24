@@ -1,5 +1,5 @@
 import React from "react";
-import { AiOutlineSearch } from "react-icons/ai";
+import { SearchIcon } from "./Icons";
 
 type Props = {
   searchThrem: string;
@@ -17,7 +17,7 @@ function Search({ setSearchTerm, searchThrem }: Props) {
           className="bg-transparent text-lg font-medium hover:bg-gray-900 w-[400px] h-[50px] px-4 py-2 rounded-xl placeholder:text-lg font-md text-white outline-none focus:bg-gray-900"
         />
         <button className="px-2.5">
-          <AiOutlineSearch className="hidden sm:inline sm:w-6 sm:h-6 cursor-pointer" />
+          <SearchIcon className="hidden sm:inline sm:w-6 sm:h-6 cursor-pointer" />
         </button>
       </div>
     </div>

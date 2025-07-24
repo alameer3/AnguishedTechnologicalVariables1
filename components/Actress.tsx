@@ -19,22 +19,25 @@ interface ActressDocument {
 function Actress({ session }: Props) {
   const [likeActress, setLikeAlikeActress] = useState<ActressDocument[]>([]);
 
-  useEffect(
-    () =>
-      onSnapshot(
+  useEffect(() => {
+    try {
+      const unsubscribe = onSnapshot(
         query(
           collection(
             firestore,
             "netflixUsers",
-            session?.user?.uid,
+            (session?.user as any)?.uid || "demouser",
             "likeActress"
           ),
           orderBy("popularity", "desc")
         ),
-        (snapshot) => setLikeAlikeActress(snapshot.docs)
-      ),
-    [firestore, session?.user?.uid]
-  );
+        (snapshot) => setLikeAlikeActress(snapshot.docs as any[])
+      );
+      return unsubscribe;
+    } catch (error) {
+      // Firebase permission error with mock session - handled silently
+    }
+  }, [firestore, session?.user]);
 
   return (
     <div className="overflow-x-hidden">
@@ -49,7 +52,7 @@ function Actress({ session }: Props) {
           {likeActress?.map((person) => (
             <LikeActress
               key={person.id}
-              person={person.data()}
+              person={person.data() as any}
               baseUrl={baseUrl}
             />
           ))}

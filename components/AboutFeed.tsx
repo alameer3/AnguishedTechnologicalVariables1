@@ -7,10 +7,7 @@ import {
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 
-import { AiFillMail } from "react-icons/ai";
-import { GoGitPullRequest } from "react-icons/go";
-import { MdCastForEducation } from "react-icons/md";
-import { RiNetflixFill } from "react-icons/ri";
+import { NetflixIcon, EducationIcon, MailIcon, GitPullRequestIcon } from "./Icons";
 import { firestore } from "../firebase/firebase";
 
 type Props = {};
@@ -52,13 +49,13 @@ function AboutFeed({}: Props) {
           </div>
           <div className="items-center space-y-4">
             <p className="flex justify-start items-center gap-4 text-xl font-semibold">
-              <RiNetflixFill size={24} /> Netflix Clone
+              <NetflixIcon className="w-6 h-6" /> Netflix Clone
             </p>
             <p className="flex justify-start items-center gap-4 text-lg font-semibold">
-              <MdCastForEducation size={24} /> For Educational Purposes Only
+              <EducationIcon className="w-6 h-6" /> For Educational Purposes Only
             </p>
             <p className="flex justify-start items-center gap-4 text-lg font-semibold">
-              <AiFillMail size={24} /> Contact:
+              <MailIcon className="w-6 h-6" /> Contact:
               <br />{" "}
               <span className="text-sm text-gray-400">
                 sashenjayathilaka95@gmail.com
@@ -69,7 +66,7 @@ function AboutFeed({}: Props) {
               onSubmit={handleSubmit}
             >
               <p className="flex justify-start items-center space-x-4 text-lg font-medium gap-4">
-                <GoGitPullRequest size={24} /> Feedback
+                <GitPullRequestIcon className="w-6 h-6" /> Feedback
               </p>
               <input
                 className="py-6 w-[500px] mt-4 bg-gray-900 placeholder:text-gray-400 rounded-md outline-none px-2.5"
@@ -80,7 +77,7 @@ function AboutFeed({}: Props) {
               />
               <button
                 disabled={!feedback}
-                onClick={handleSubmit}
+                onClick={(e) => handleSubmit(e as any)}
                 type="submit"
                 className="bg-gray-800 text-sm px-2.5 py-2.5 font-medium hover:bg-gray-500 text-gray-100 hover:text-gray-900 mt-2 rounded-lg cursor-pointer disabled:cursor-not-allowed disabled:text-gray-500"
               >

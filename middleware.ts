@@ -4,25 +4,13 @@ import { NextRequest, NextResponse } from 'next/server';
 export function middleware(request: NextRequest) {
   const response = NextResponse.next();
 
-  // Add security headers
+  // Add security headers (CSP is handled by next.config.js)
   response.headers.set('X-Frame-Options', 'DENY');
   response.headers.set('X-Content-Type-Options', 'nosniff');
   response.headers.set('Referrer-Policy', 'origin-when-cross-origin');
-  response.headers.set(
-    'Content-Security-Policy',
-    "default-src 'self'; " +
-    "script-src 'self' 'unsafe-eval' 'unsafe-inline'; " +
-    "style-src 'self' 'unsafe-inline'; " +
-    "img-src 'self' data: https://image.tmdb.org https://*.replit.dev; " +
-    "connect-src 'self' https://api.themoviedb.org https://*.replit.dev wss://*.replit.dev; " +
-    "font-src 'self'; " +
-    "object-src 'none'; " +
-    "base-uri 'self'; " +
-    "form-action 'self';"
-  );
 
   // Rate limiting headers (basic implementation)
-  const ip = request.ip || 'anonymous';
+  const ip = request.headers.get('x-forwarded-for') || 'anonymous';
   const userAgent = request.headers.get('user-agent') || '';
   
   // Add request tracking headers

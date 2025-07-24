@@ -3,8 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
-import { AiFillBell, AiOutlineSearch } from "react-icons/ai";
-import { RiNetflixFill } from "react-icons/ri";
+import { SearchIcon, BellIcon, NetflixIcon } from "./Icons";
 import Search from "./Search";
 
 type Props = {
@@ -94,13 +93,13 @@ function Navbar({ isSearch, setSearchTerm, searchThrem }: Props) {
         {isSearch ? (
           <Search searchThrem={searchThrem!} setSearchTerm={setSearchTerm} />
         ) : (
-          <AiOutlineSearch
+          <SearchIcon
             className="hidden sm:inline sm:w-6 sm:h-6 cursor-pointer"
             onClick={() => router.push("/")}
           />
         )}
-        <AiFillBell className="h-6 w-6 cursor-pointer" />
-        <RiNetflixFill className="h-6 w-6 cursor-pointer text-red-800" />
+        <BellIcon className="h-6 w-6 cursor-pointer" />
+        <NetflixIcon className="h-6 w-6 cursor-pointer text-red-800" />
         <div onClick={() => signOut()} className="cursor-pointer">
           {session?.user?.image ? (
             <div className="relative w-8 h-8">

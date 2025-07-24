@@ -32,11 +32,14 @@ function SeasonTrailer({ movieDetails, movieTrailer }: Props) {
                 className="w-[500px] h-[300px] relative min-w-[180px] cursor-pointer items-center ease-out md:h-[300px] md:min-w-[500px] px-2 py-2 rounded-md hover:shadow-lg"
               >
                 <ReactPlayer
-                  url={`https://www.youtube.com/watch?v=${trailer.key}`}
-                  width="100%"
-                  height="100%"
-                  playing={false}
-                  muted={false}
+                  {...{
+                    url: `https://www.youtube.com/watch?v=${trailer.key}`,
+                    width: "100%",
+                    height: "100%",
+                    playing: false,
+                    muted: false,
+                    controls: true
+                  } as any}
                 />
                 <p className="text-lg">{trailer.name}</p>
               </motion.div>

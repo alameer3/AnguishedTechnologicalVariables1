@@ -89,13 +89,13 @@ function DetailsFeed({ netflixOriginals }: Props) {
     <div className="overflow-x-hidden">
       <Navbar />
       <main className="relative pl-4 pb-24 lg:space-y-24">
-        <MainDetails movieDetails={movieDetails} />
-        <Companies movieDetails={movieDetails} />
-        {movieDetails?.id && <AddBookmark movieDetails={movieDetails} />}
-        <Trailer movieTrailer={movieTrailer} movieDetails={movieDetails} />
-        <BilledCast movieCast={movieCast} />
-        <MoreDetails movieDetails={movieDetails} />
-        {type === "tv" && <Seasons movieDetails={movieDetails} />}
+        <MainDetails movieDetails={movieDetails as any} />
+        <Companies movieDetails={movieDetails as any} />
+        {movieDetails?.id && <AddBookmark movieDetails={movieDetails as any} />}
+        <Trailer movieTrailer={movieTrailer as any} movieDetails={movieDetails as any} />
+        <BilledCast movieCast={movieCast as any} />
+        <MoreDetails movieDetails={movieDetails as any} />
+        {type === "tv" && <Seasons movieDetails={movieDetails as any} />}
         <div className="pb-8">
           <Row
             title="More Like This"

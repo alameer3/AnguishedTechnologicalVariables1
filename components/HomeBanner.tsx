@@ -2,8 +2,7 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { AiFillPlayCircle } from "react-icons/ai";
-import { IoMdInformationCircleOutline } from "react-icons/io";
+import { PlayCircleIcon, InformationCircleIcon } from "./Icons";
 
 import { firestore } from "../firebase/firebase";
 import { Movie } from "../typings";
@@ -109,7 +108,7 @@ function HomeBanner({ netflixOriginals, session, isTv }: Props) {
           className="cursor-pointer flex items-center gap-x-2 rounded px-5 py-1.5 text-sm font-semibold transition hover:opacity-75 md:py-2.5 md:px-8 md:text-xl bg-white text-black"
           onClick={handleChangePage}
         >
-          <AiFillPlayCircle className="h-4 w-4 text-black md:h-7 md:w-7" />
+          <PlayCircleIcon className="h-4 w-4 text-black md:h-7 md:w-7" />
           Play
         </button>
         <button
@@ -117,7 +116,7 @@ function HomeBanner({ netflixOriginals, session, isTv }: Props) {
           onClick={handleChangePage}
         >
           More Info{" "}
-          <IoMdInformationCircleOutline className="h-5 w-5 md:h-8 md:w-8" />
+          <InformationCircleIcon className="h-5 w-5 md:h-8 md:w-8" />
         </button>
       </div>
     </div>

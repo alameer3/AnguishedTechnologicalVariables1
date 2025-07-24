@@ -8,11 +8,7 @@ import {
 import { motion } from "framer-motion";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
-import {
-  BsFillBookmarkDashFill,
-  BsFillBookmarkCheckFill,
-} from "react-icons/bs";
-import { IoIosRemoveCircle, IoIosAddCircle } from "react-icons/io";
+import { BookmarkDashIcon, BookmarkCheckIcon, RemoveCircleIcon, AddCircleIcon } from "./Icons";
 
 import { firestore } from "../firebase/firebase";
 
@@ -36,12 +32,12 @@ function PersonBookMark({ castPerson }: Props) {
         collection(
           firestore,
           "netflixUsers",
-          session?.user?.uid,
+          (session?.user as any)?.uid || "demouser",
           "likeActress"
         ),
-        (snapshot) => setLikes(snapshot.docs)
+        (snapshot) => setLikes(snapshot.docs as any[])
       ),
-    [firestore, session?.user?.uid]
+    [firestore, (session?.user as any)?.uid]
   );
 
   useEffect(
@@ -59,7 +55,7 @@ function PersonBookMark({ castPerson }: Props) {
           doc(
             firestore,
             "netflixUsers",
-            session?.user?.uid,
+            (session?.user as any)?.uid || "demouser",
             "likeActress",
             castPerson?.id.toString()
           )
@@ -68,7 +64,7 @@ function PersonBookMark({ castPerson }: Props) {
         const userRef = doc(
           firestore,
           "netflixUsers",
-          session?.user?.uid,
+          (session?.user as any)?.uid || "demouser",
           "likeActress",
           castPerson?.id.toString()
         );
@@ -84,9 +80,9 @@ function PersonBookMark({ castPerson }: Props) {
       <div className="flex justify-between items-center text-center">
         <button className="px-4 items-center text-center">
           {hasLikes ? (
-            <BsFillBookmarkDashFill className="h-8 w-8 text-red-500" />
+            <BookmarkDashIcon className="h-8 w-8 text-red-500" />
           ) : (
-            <BsFillBookmarkCheckFill className="h-8 w-8 text-green-500" />
+            <BookmarkCheckIcon className="h-8 w-8 text-green-500" />
           )}
         </button>
         <div className="w-[250px]">
@@ -103,7 +99,7 @@ function PersonBookMark({ castPerson }: Props) {
             className="ml-24 cursor-pointer px-2.5 py-2.5 bg-gray-900 rounded-full items-center hover:bg-red-300"
             onClick={() => likeMovie()}
           >
-            <IoIosRemoveCircle className="h-6 w-6 text-red-500" />
+            <RemoveCircleIcon className="h-6 w-6 text-red-500" />
           </motion.button>
         ) : (
           <motion.button
@@ -112,7 +108,7 @@ function PersonBookMark({ castPerson }: Props) {
             className="ml-24 cursor-pointer px-2.5 py-2.5 bg-gray-900 rounded-full items-center hover:bg-green-300"
             onClick={() => likeMovie()}
           >
-            <IoIosAddCircle className="h-6 w-6 text-green-500" />
+            <AddCircleIcon className="h-6 w-6 text-green-500" />
           </motion.button>
         )}
       </div>

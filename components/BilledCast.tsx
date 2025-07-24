@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { BiChevronLeftCircle, BiChevronRightCircle } from "react-icons/bi";
+import { ChevronLeftIcon, ChevronRightIcon } from "./Icons";
 
 import { Cast } from "../typings";
 import Person from "./Person";
@@ -35,7 +35,7 @@ function BilledCast({ movieCast }: Props) {
         <h1 className="text-start text-white text-3xl font-bold">
           Top Billed Cast
         </h1>
-        <BiChevronLeftCircle
+        <ChevronLeftIcon
           className={`absolute top-0 bottom-0 left-2 z-40 m-auto h-9 w-9 cursor-pointer opacity-0 transition hover:scale-125 group-hover:opacity-100 ${
             !isMoved && "hidden"
           }`}
@@ -62,7 +62,7 @@ function BilledCast({ movieCast }: Props) {
             </>
           )}
         </div>
-        <BiChevronRightCircle
+        <ChevronRightIcon
           className="absolute top-0 bottom-0 right-2 z-40 m-auto h-9 w-9 cursor-pointer opacity-0 transition hover:scale-125 group-hover:opacity-100"
           onClick={() => handleClick("right")}
         />

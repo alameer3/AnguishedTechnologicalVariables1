@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { BiChevronLeftCircle, BiChevronRightCircle } from "react-icons/bi";
+import { ChevronLeftIcon, ChevronRightIcon } from "../Icons";
 import type { IconType } from "react-icons";
 import { CastDataTyping } from "../../typings";
 import BilledCastSceleton from "../skeleton/BilledCastSceleton";
@@ -39,7 +39,7 @@ function KnownFor({ castData }: Props) {
         }`}
         onClick={() => handleClick("left")}
       >
-        <BiChevronLeftCircle size={36} />
+        <ChevronLeftIcon className="h-9 w-9" />
       </div>
       <div
         className="flex items-center scrollbar-hide space-x-0.5 overflow-x-scroll md:space-x-1.0 md:p-2"
@@ -69,7 +69,7 @@ function KnownFor({ castData }: Props) {
         className="absolute top-0 bottom-0 right-2 z-40 m-auto cursor-pointer opacity-0 transition hover:scale-125 group-hover:opacity-100"
         onClick={() => handleClick("right")}
       >
-        <BiChevronRightCircle size={36} />
+        <ChevronRightIcon className="h-9 w-9" />
       </div>
     </div>
   );

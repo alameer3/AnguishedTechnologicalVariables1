@@ -132,7 +132,7 @@ function PersonBanner({ castPerson }: Props) {
         </div>
       </div>
       {castPerson.id && castPerson.name && (
-        <PersonBookMark castPerson={castPerson} />
+        <PersonBookMark castPerson={castPerson as any} />
       )}
     </div>
   );

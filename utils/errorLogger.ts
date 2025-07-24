@@ -24,7 +24,8 @@ export const isRateLimited = (key: string): boolean => {
   const windowStart = now - RATE_LIMIT_WINDOW;
   
   // Clean old entries
-  for (const [k, timestamp] of rateLimitCache.entries()) {
+  const entries = Array.from(rateLimitCache.entries());
+  for (const [k, timestamp] of entries) {
     if (timestamp < windowStart) {
       rateLimitCache.delete(k);
     }

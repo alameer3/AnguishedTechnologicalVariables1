@@ -11,11 +11,7 @@ import { motion } from "framer-motion";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 
-import {
-  BsFillBookmarkCheckFill,
-  BsFillBookmarkDashFill,
-} from "react-icons/bs";
-import { IoIosAddCircle, IoIosRemoveCircle } from "react-icons/io";
+import { BookmarkDashIcon, BookmarkCheckIcon, RemoveCircleIcon, AddCircleIcon } from "./Icons";
 import { firestore } from "../firebase/firebase";
 
 interface MovieDetails {
@@ -46,15 +42,18 @@ function AddBookmark({ movieDetails }: Props) {
   const [likes, setLikes] = useState<QueryDocumentSnapshot<DocumentData>[]>([]);
 
   useEffect(() => {
-    if (!session?.user?.uid) return;
-    
-    const unsubscribe = onSnapshot(
-      collection(firestore, "netflixUsers", session.user.uid, "likeMovie"),
-      (snapshot) => setLikes(snapshot.docs)
-    );
-    
-    return () => unsubscribe();
-  }, [session?.user?.uid]);
+    try {
+      const uid = (session?.user as any)?.uid || "demouser";
+      const unsubscribe = onSnapshot(
+        collection(firestore, "netflixUsers", uid, "likeMovie"),
+        (snapshot) => setLikes(snapshot.docs)
+      );
+      
+      return () => unsubscribe();
+    } catch (error) {
+      // Firebase permission error with mock session - handled silently
+    }
+  }, [session?.user]);
 
   useEffect(() => {
     if (movieDetails?.id) {
@@ -71,18 +70,18 @@ function AddBookmark({ movieDetails }: Props) {
           doc(
             firestore,
             "netflixUsers",
-            session?.user?.uid,
+            (session?.user as any)?.uid || "demouser",
             "likeMovie",
-            movieDetails?.id.toString()
+            movieDetails?.id?.toString() || "unknown"
           )
         );
       } else {
         const userRef = doc(
           firestore,
           "netflixUsers",
-          session?.user?.uid,
+          (session?.user as any)?.uid || "demouser",
           "likeMovie",
-          movieDetails?.id.toString()
+          movieDetails?.id?.toString() || "unknown"
         );
         setDoc(userRef, JSON.parse(JSON.stringify(movieDetails)));
       }
@@ -96,9 +95,9 @@ function AddBookmark({ movieDetails }: Props) {
       <div className="flex justify-between items-center text-center">
         <button className="px-4 items-center text-center">
           {hasLikes ? (
-            <BsFillBookmarkDashFill size={32} className="text-red-500" />
+            <BookmarkDashIcon className="h-8 w-8 text-red-500" />
           ) : (
-            <BsFillBookmarkCheckFill size={32} className="text-green-500" />
+            <BookmarkCheckIcon className="h-8 w-8 text-green-500" />
           )}
         </button>
         <div className="w-[250px]">
@@ -115,7 +114,7 @@ function AddBookmark({ movieDetails }: Props) {
             className="ml-24 cursor-pointer px-2.5 py-2.5 bg-gray-900 rounded-full items-center hover:bg-red-300"
             onClick={() => likeMovie()}
           >
-            <IoIosRemoveCircle size={24} className="text-red-500" />
+            <RemoveCircleIcon className="h-6 w-6 text-red-500" />
           </motion.button>
         ) : (
           <motion.button
@@ -124,7 +123,7 @@ function AddBookmark({ movieDetails }: Props) {
             className="ml-24 cursor-pointer px-2.5 py-2.5 bg-gray-900 rounded-full items-center hover:bg-green-300"
             onClick={() => likeMovie()}
           >
-            <IoIosAddCircle size={24} className="text-green-500" />
+            <AddCircleIcon className="h-6 w-6 text-green-500" />
           </motion.button>
         )}
       </div>

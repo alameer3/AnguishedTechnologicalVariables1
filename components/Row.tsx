@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 
-import { BiChevronLeftCircle, BiChevronRightCircle } from "react-icons/bi";
+import { ChevronLeftIcon, ChevronRightIcon } from "./Icons";
 
 import { Movie } from "../typings";
 import MoviesLine from "./MoviesLine";
@@ -60,7 +60,7 @@ function Row({
       </h2>
       <div className="group relative md:-ml-2">
         {!isSearch && (
-          <BiChevronLeftCircle
+          <ChevronLeftIcon
             className={`absolute top-0 bottom-0 left-2 z-40 m-auto h-9 w-9 cursor-pointer opacity-0 transition hover:scale-125 group-hover:opacity-100 ${
               !isMoved && "hidden"
             }`}
@@ -108,7 +108,7 @@ function Row({
         )}
 
         {!isSearch && (
-          <BiChevronRightCircle
+          <ChevronRightIcon
             className="absolute top-0 bottom-0 right-2 z-40 m-auto h-9 w-9 cursor-pointer opacity-0 transition hover:scale-125 group-hover:opacity-100"
             onClick={() => handleClick("right")}
           />
