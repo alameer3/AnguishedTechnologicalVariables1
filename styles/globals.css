@@ -1677,3 +1677,35 @@ body {
   flex-grow: 0;
   flex-shrink: 0;
 }
+
+/* إضافة أنماط محسنة للصور */
+.image-container {
+  position: relative !important;
+}
+
+/* تحسينات الأنيميشن والتأثيرات */
+.netflix-shimmer {
+  background: linear-gradient(90deg, 
+    rgba(255,255,255,0.1) 0%, 
+    rgba(255,255,255,0.2) 50%, 
+    rgba(255,255,255,0.1) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* تحسينات النصوص */
+.text-shadow-soft {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* تحسينات الـ glass morphism */
+.glass-morphism {
+  backdrop-filter: blur(20px);
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}

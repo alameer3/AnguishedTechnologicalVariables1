@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
 import { Movie } from "../typings";
 import { motion } from "framer-motion";
+import MovieHoverCard from "./MovieHoverCard";
 
 type Props = {
   movie: Movie;
@@ -14,6 +15,10 @@ type Props = {
 
 function MoviesLine({ movie, isDetails, type, isfavourite }: Props) {
   const router = useRouter();
+  const [showHoverCard, setShowHoverCard] = useState(false);
+  const [hoverPosition, setHoverPosition] = useState({ x: 0, y: 0 });
+  const cardRef = useRef<HTMLDivElement>(null);
+  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleChangePage = () => {
     const detailsPath = `/details/${movie.id}`;
@@ -39,23 +44,47 @@ function MoviesLine({ movie, isDetails, type, isfavourite }: Props) {
     }
   };
 
-  return (
-    <motion.div
-      onClick={handleChangePage}
-      className={
-        isDetails
-          ? `movie-card netflix-card-enhanced relative h-28 min-w-[180px] cursor-pointer md:h-36 md:min-w-[240px]`
-          : `movie-card netflix-card-enhanced relative h-28 min-w-[180px] cursor-pointer md:h-36 md:min-w-[240px]`
+  const handleMouseEnter = (e: React.MouseEvent) => {
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+    }
+    
+    hoverTimeoutRef.current = setTimeout(() => {
+      const rect = cardRef.current?.getBoundingClientRect();
+      if (rect) {
+        setHoverPosition({
+          x: rect.left,
+          y: rect.bottom + 10
+        });
+        setShowHoverCard(true);
       }
+    }, 500); // تأخير 500ms قبل إظهار البطاقة
+  };
+
+  const handleMouseLeave = () => {
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+    }
+    setShowHoverCard(false);
+  };
+
+  return (
+    <div className="relative">
+      <motion.div
+      onClick={handleChangePage}
+      className="movie-card netflix-card-enhanced relative h-28 min-w-[180px] cursor-pointer md:h-36 md:min-w-[240px] group"
       whileHover={{ 
         scale: 1.05,
         y: -8,
-        transition: { duration: 0.3 }
+        transition: { duration: 0.3, ease: "easeOut" }
       }}
       whileTap={{ scale: 0.98 }}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      ref={cardRef}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       {/* تأثير التوهج عند الهوفر */}
       <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-red-500/20 via-transparent to-red-600/10 opacity-0 transition-opacity duration-300 hover:opacity-100 pointer-events-none" />
@@ -71,6 +100,8 @@ function MoviesLine({ movie, isDetails, type, isfavourite }: Props) {
             alt={movie.title || movie.name || movie.original_name || "Movie poster"}
             sizes="(max-width: 768px) 180px, 240px"
             loading="lazy"
+            placeholder="blur"
+            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckriInlVOhgknyJhI"
           />
           
           {/* تدرج لوني من الأسفل */}
@@ -104,7 +135,16 @@ function MoviesLine({ movie, isDetails, type, isfavourite }: Props) {
           </div>
         </div>
       )}
-    </motion.div>
+      </motion.div>
+
+      {/* بطاقة المعاينة عند الهوفر */}
+      <MovieHoverCard
+        movie={movie}
+        isVisible={showHoverCard}
+        onClose={() => setShowHoverCard(false)}
+        position={hoverPosition}
+      />
+    </div>
   );
 }
 
