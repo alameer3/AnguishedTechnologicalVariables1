@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://your-domain.com/sitemap.xml
+
+# Disallow admin and private pages
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+Disallow: /.env*
+
+# Allow important pages
+Allow: /
+Allow: /tv
+Allow: /favourite
+Allow: /people
+Allow: /details/
+Allow: /season/
+Allow: /cast/
+
+# Crawl delay (optional)
+Crawl-delay: 1
