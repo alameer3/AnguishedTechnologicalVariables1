@@ -29,6 +29,18 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
     }
   }, [isOpen]);
 
+  // تأخير البحث لتحسين الأداء
+  const debounce = <T extends (...args: any[]) => any>(
+    func: T,
+    delay: number
+  ): ((...args: Parameters<T>) => void) => {
+    let timeoutId: NodeJS.Timeout;
+    return (...args: Parameters<T>) => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => func(...args), delay);
+    };
+  };
+
   // البحث الفوري مع debounce
   const debouncedSearch = useCallback(
     debounce(async (query: string) => {
@@ -45,7 +57,10 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
         const data = await response.json();
         setSuggestions(data.results?.slice(0, 8) || []);
       } catch (error) {
-        console.error('خطأ في البحث:', error);
+        // تسجيل الخطأ للمطورين فقط
+        if (process.env.NODE_ENV === 'development') {
+          console.warn('خطأ في البحث:', error);
+        }
         setSuggestions([]);
       } finally {
         setIsLoading(false);

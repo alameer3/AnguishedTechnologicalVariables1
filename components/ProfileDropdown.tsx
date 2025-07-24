@@ -123,7 +123,7 @@ const ProfileDropdown: React.FC = () => {
                 setIsOpen(false);
               }}
             >
-              <item.icon className="w-4 h-4" />
+              {React.createElement(item.icon, { className: "w-4 h-4" })}
               <span>{item.label}</span>
             </div>
           ))}

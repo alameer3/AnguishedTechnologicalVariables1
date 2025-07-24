@@ -21,10 +21,12 @@ interface PersonData {
 }
 
 type Props = {
-  castPerson: PersonData;
+  castPerson: PersonData | null;
 };
 
 function PersonBanner({ castPerson }: Props) {
+  if (!castPerson) return null;
+  
   return (
     <div className="overflow-x-hidden">
       <div className="inline-block md:flex justify-start gap-16 px-8 pl-16 pt-36 text-white">
