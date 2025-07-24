@@ -103,11 +103,11 @@ function HomeBanner({ netflixOriginals, session, isTv }: Props) {
             />
           </motion.div>
         ) : (
-          <div className="w-full h-full bg-gray-800 dark:bg-gray-900 flex items-center justify-center">
+          <div className="w-full h-full bg-gray-800 flex items-center justify-center">
             <LoadingSpinner size="large" text="جاري تحميل المحتوى..." />
           </div>
         )}
-        <div className="absolute w-full h-32 bg-gradient-to-t from-white/20 dark:from-gray-900/20 to-transparent bottom-0 z-20" />
+        <div className="absolute w-full h-32 bg-gradient-to-t from-gray-100 to-transparent bottom-0 z-20" />
       </div>
 
       <motion.h1 

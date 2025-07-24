@@ -30,14 +30,14 @@ const ImprovedSkeleton: React.FC<ImprovedSkeletonProps> = ({
     switch (type) {
       case 'banner':
         return (
-          <div className={`w-full h-64 md:h-96 bg-gray-300 dark:bg-gray-700 rounded-lg ${className}`}>
+          <div className={`w-full h-64 md:h-96 bg-gray-700 rounded-lg ${className}`}>
             <div className="flex flex-col justify-end h-full p-8 space-y-4">
-              <div className="w-3/4 h-8 bg-gray-400 dark:bg-gray-600 rounded"></div>
-              <div className="w-1/2 h-4 bg-gray-400 dark:bg-gray-600 rounded"></div>
-              <div className="w-full h-16 bg-gray-400 dark:bg-gray-600 rounded"></div>
+              <div className="w-3/4 h-8 bg-gray-600 rounded"></div>
+              <div className="w-1/2 h-4 bg-gray-600 rounded"></div>
+              <div className="w-full h-16 bg-gray-600 rounded"></div>
               <div className="flex space-x-4">
-                <div className="w-24 h-10 bg-gray-400 dark:bg-gray-600 rounded"></div>
-                <div className="w-24 h-10 bg-gray-400 dark:bg-gray-600 rounded"></div>
+                <div className="w-24 h-10 bg-gray-600 rounded"></div>
+                <div className="w-24 h-10 bg-gray-600 rounded"></div>
               </div>
             </div>
           </div>
@@ -45,12 +45,12 @@ const ImprovedSkeleton: React.FC<ImprovedSkeletonProps> = ({
 
       case 'card':
         return (
-          <div className={`bg-gray-300 dark:bg-gray-700 rounded-lg overflow-hidden ${className}`}>
-            <div className="h-48 bg-gray-400 dark:bg-gray-600"></div>
+          <div className={`bg-gray-700 rounded-lg overflow-hidden ${className}`}>
+            <div className="h-48 bg-gray-600"></div>
             <div className="p-4 space-y-3">
-              <div className="w-3/4 h-4 bg-gray-400 dark:bg-gray-600 rounded"></div>
-              <div className="w-1/2 h-3 bg-gray-400 dark:bg-gray-600 rounded"></div>
-              <div className="w-full h-3 bg-gray-400 dark:bg-gray-600 rounded"></div>
+              <div className="w-3/4 h-4 bg-gray-600 rounded"></div>
+              <div className="w-1/2 h-3 bg-gray-600 rounded"></div>
+              <div className="w-full h-3 bg-gray-600 rounded"></div>
             </div>
           </div>
         );
@@ -58,24 +58,24 @@ const ImprovedSkeleton: React.FC<ImprovedSkeletonProps> = ({
       case 'text':
         return (
           <div className={`space-y-2 ${className}`}>
-            <div className="w-full h-4 bg-gray-300 dark:bg-gray-700 rounded"></div>
-            <div className="w-3/4 h-4 bg-gray-300 dark:bg-gray-700 rounded"></div>
-            <div className="w-1/2 h-4 bg-gray-300 dark:bg-gray-700 rounded"></div>
+            <div className="w-full h-4 bg-gray-700 rounded"></div>
+            <div className="w-3/4 h-4 bg-gray-700 rounded"></div>
+            <div className="w-1/2 h-4 bg-gray-700 rounded"></div>
           </div>
         );
 
       case 'avatar':
         return (
-          <div className={`w-12 h-12 bg-gray-300 dark:bg-gray-700 rounded-full ${className}`}></div>
+          <div className={`w-12 h-12 bg-gray-700 rounded-full ${className}`}></div>
         );
 
       case 'button':
         return (
-          <div className={`w-24 h-10 bg-gray-300 dark:bg-gray-700 rounded ${className}`}></div>
+          <div className={`w-24 h-10 bg-gray-700 rounded ${className}`}></div>
         );
 
       default:
-        return <div className={`w-full h-4 bg-gray-300 dark:bg-gray-700 rounded ${className}`}></div>;
+        return <div className={`w-full h-4 bg-gray-700 rounded ${className}`}></div>;
     }
   };
 
