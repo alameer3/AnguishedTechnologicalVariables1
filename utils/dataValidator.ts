@@ -34,7 +34,7 @@ export const sanitizeHTML = (text: string): string => {
 export const validateMovieData = (data: unknown): MovieData | null => {
   if (!data || typeof data !== 'object') return null;
   
-  const movieData = data as Record<string, any>;
+  const movieData = data as Record<string, unknown>;
   
   // Required fields
   if (!movieData.id || typeof movieData.id !== 'number') return null;
@@ -83,7 +83,7 @@ export const validateMovieData = (data: unknown): MovieData | null => {
 export const validatePersonData = (data: unknown): PersonData | null => {
   if (!data || typeof data !== 'object') return null;
   
-  const personData = data as Record<string, any>;
+  const personData = data as Record<string, unknown>;
   
   // Required fields
   if (!personData.id || typeof personData.id !== 'number') return null;

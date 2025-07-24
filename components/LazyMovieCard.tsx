@@ -1,10 +1,11 @@
 import React, { lazy, Suspense } from 'react';
 import LoadingSpinner from './LoadingSpinner';
+import { Movie } from '../typings.d';
 
 // Lazy load المكونات الثقيلة  
 const MovieComponent = lazy(() => 
   import('./Row').then(module => ({ 
-    default: ({ movie, index, genre }: any) => (
+    default: ({ movie, index, genre }: { movie: Movie; index: number; genre?: string }) => (
       <div className="movie-card">
         <h3>{movie.title || movie.name}</h3>
       </div>
@@ -13,16 +14,7 @@ const MovieComponent = lazy(() =>
 );
 
 interface LazyMovieCardProps {
-  movie: {
-    id: number;
-    title?: string;
-    name?: string;
-    poster_path?: string;
-    backdrop_path?: string;
-    overview?: string;
-    release_date?: string;
-    vote_average?: number;
-  };
+  movie: Movie;
   index: number;
   genre: string;
 }

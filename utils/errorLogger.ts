@@ -8,7 +8,7 @@ export const logError = (error: Error | string, context?: string) => {
   // like Sentry, LogRocket, or similar
 };
 
-export const logInfo = (message: string, data?: any) => {
+export const logInfo = (message: string, data?: unknown) => {
   if (process.env.NODE_ENV === 'development') {
     // Info logged only in development mode
   }
