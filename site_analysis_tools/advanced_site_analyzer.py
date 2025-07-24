@@ -324,17 +324,31 @@ class AdvancedSiteAnalyzer:
         return navigation
     
     def analyze_technical_structure(self, html, soup):
-        """تحليل البنية التقنية"""
+        """تحليل البنية التقنية الشامل"""
         technical = {
             'meta_tags': {},
             'scripts': [],
             'stylesheets': [],
             'external_resources': [],
             'encoding': 'utf-8',
-            'doctype': str(soup).split('\n')[0] if soup else 'unknown'
+            'doctype': 'HTML5' if '<!DOCTYPE html>' in html.upper() else 'Other',
+            'html_structure': {},
+            'all_tags': {},
+            'attributes_analysis': {},
+            'text_content': {},
+            'hidden_elements': {},
+            'interactive_elements': {},
+            'multimedia_elements': {},
+            'seo_elements': {},
+            'security_elements': {}
         }
         
-        # Meta tags
+        # تحليل جميع العلامات في الصفحة
+        all_tags = soup.find_all()
+        tag_counter = Counter([tag.name for tag in all_tags])
+        technical['all_tags'] = dict(tag_counter)
+        
+        # Meta tags تحليل مفصل
         meta_tags = soup.find_all('meta')
         for meta in meta_tags:
             name = meta.get('name') or meta.get('property') or meta.get('http-equiv')
@@ -342,28 +356,157 @@ class AdvancedSiteAnalyzer:
             if name and content:
                 technical['meta_tags'][name] = content
         
-        # Scripts
+        # Scripts تحليل مفصل
         scripts = soup.find_all('script')
         for script in scripts:
-            src = script.get('src')
-            if src:
-                technical['scripts'].append({
-                    'src': src,
-                    'type': script.get('type', 'text/javascript'),
-                    'is_external': not (src.startswith('/') or 'ak.sv' in src)
-                })
+            script_info = {
+                'src': script.get('src', ''),
+                'type': script.get('type', 'text/javascript'),
+                'content_length': len(script.get_text()) if script.get_text() else 0,
+                'has_inline_code': bool(script.get_text().strip()),
+                'is_external': bool(script.get('src')),
+                'async': script.has_attr('async'),
+                'defer': script.has_attr('defer')
+            }
+            if script_info['src']:
+                script_info['is_external_domain'] = not (script_info['src'].startswith('/') or 'ak.sv' in script_info['src'])
+            technical['scripts'].append(script_info)
         
-        # Stylesheets
-        links = soup.find_all('link', rel='stylesheet')
+        # Stylesheets تحليل مفصل
+        links = soup.find_all('link')
         for link in links:
-            href = link.get('href')
-            if href:
-                technical['stylesheets'].append({
-                    'href': href,
-                    'is_external': not (href.startswith('/') or 'ak.sv' in href)
-                })
+            if link.get('rel') == ['stylesheet'] or 'stylesheet' in str(link.get('rel', [])):
+                style_info = {
+                    'href': link.get('href', ''),
+                    'media': link.get('media', 'all'),
+                    'type': link.get('type', 'text/css'),
+                    'is_external': not (link.get('href', '').startswith('/') or 'ak.sv' in link.get('href', ''))
+                }
+                technical['stylesheets'].append(style_info)
+        
+        # تحليل العناصر التفاعلية
+        forms = soup.find_all('form')
+        buttons = soup.find_all('button')
+        inputs = soup.find_all('input')
+        selects = soup.find_all('select')
+        textareas = soup.find_all('textarea')
+        
+        technical['interactive_elements'] = {
+            'forms': len(forms),
+            'buttons': len(buttons),
+            'inputs': len(inputs),
+            'selects': len(selects),
+            'textareas': len(textareas),
+            'form_details': [
+                {
+                    'method': form.get('method', 'get'),
+                    'action': form.get('action', ''),
+                    'enctype': form.get('enctype', 'application/x-www-form-urlencoded')
+                } for form in forms
+            ],
+            'input_types': Counter([inp.get('type', 'text') for inp in inputs])
+        }
+        
+        # تحليل عناصر الوسائط المتعددة
+        images = soup.find_all('img')
+        videos = soup.find_all('video')
+        audios = soup.find_all('audio')
+        iframes = soup.find_all('iframe')
+        objects = soup.find_all('object')
+        embeds = soup.find_all('embed')
+        
+        technical['multimedia_elements'] = {
+            'images': len(images),
+            'videos': len(videos),
+            'audios': len(audios),
+            'iframes': len(iframes),
+            'objects': len(objects),
+            'embeds': len(embeds),
+            'image_formats': Counter([img.get('src', '').split('.')[-1].lower() for img in images if img.get('src') and '.' in img.get('src')]),
+            'lazy_loading': len([img for img in images if img.get('loading') == 'lazy']),
+            'alt_texts': len([img for img in images if img.get('alt')])
+        }
+        
+        # تحليل عناصر SEO
+        title = soup.find('title')
+        h_tags = soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])
+        canonical = soup.find('link', rel='canonical')
+        
+        technical['seo_elements'] = {
+            'title': title.get_text() if title else '',
+            'title_length': len(title.get_text()) if title else 0,
+            'heading_tags': Counter([h.name for h in h_tags]),
+            'total_headings': len(h_tags),
+            'canonical_url': canonical.get('href') if canonical else '',
+            'meta_description': technical['meta_tags'].get('description', ''),
+            'meta_keywords': technical['meta_tags'].get('keywords', ''),
+            'og_tags': {k: v for k, v in technical['meta_tags'].items() if k.startswith('og:')},
+            'twitter_tags': {k: v for k, v in technical['meta_tags'].items() if k.startswith('twitter:')},
+            'robots': technical['meta_tags'].get('robots', '')
+        }
+        
+        # تحليل العناصر المخفية والمشروطة
+        hidden_elements = soup.find_all(attrs={'style': re.compile(r'display:\s*none|visibility:\s*hidden', re.I)})
+        comments = soup.find_all(string=lambda text: isinstance(text, type(soup.new_string(''))) and text.parent.name == '[document]')
+        
+        technical['hidden_elements'] = {
+            'hidden_by_style': len(hidden_elements),
+            'html_comments': len([c for c in soup.contents if str(type(c)) == "<class 'bs4.Comment'>"]),
+            'conditional_comments': len(re.findall(r'<!--\[if.*?\]>.*?<!\[endif\]-->', html, re.DOTALL)),
+            'noscript_tags': len(soup.find_all('noscript'))
+        }
+        
+        # تحليل عناصر الأمان
+        technical['security_elements'] = {
+            'csrf_tokens': len(soup.find_all('input', {'name': re.compile(r'csrf|token', re.I)})),
+            'https_links': len([a for a in soup.find_all('a', href=True) if a['href'].startswith('https://')]),
+            'http_links': len([a for a in soup.find_all('a', href=True) if a['href'].startswith('http://')]),
+            'external_links': len([a for a in soup.find_all('a', href=True) if not a['href'].startswith('/') and 'ak.sv' not in a['href'] and a['href'].startswith('http')]),
+            'email_links': len([a for a in soup.find_all('a', href=True) if a['href'].startswith('mailto:')]),
+            'tel_links': len([a for a in soup.find_all('a', href=True) if a['href'].startswith('tel:')])
+        }
+        
+        # تحليل بنية HTML
+        html_structure = soup.find('html')
+        head = soup.find('head')
+        body = soup.find('body')
+        
+        technical['html_structure'] = {
+            'html_lang': html_structure.get('lang', '') if html_structure else '',
+            'html_dir': html_structure.get('dir', '') if html_structure else '',
+            'head_elements': len(head.find_all()) if head else 0,
+            'body_elements': len(body.find_all()) if body else 0,
+            'total_elements': len(all_tags),
+            'max_nesting_depth': self.calculate_max_depth(soup) if soup else 0
+        }
+        
+        # تحليل النصوص والمحتوى
+        all_text = soup.get_text()
+        technical['text_content'] = {
+            'total_characters': len(all_text),
+            'total_words': len(all_text.split()),
+            'paragraphs': len(soup.find_all('p')),
+            'lists': len(soup.find_all(['ul', 'ol'])),
+            'list_items': len(soup.find_all('li')),
+            'tables': len(soup.find_all('table')),
+            'table_rows': len(soup.find_all('tr')),
+            'table_cells': len(soup.find_all(['td', 'th']))
+        }
         
         return technical
+    
+    def calculate_max_depth(self, element, current_depth=0):
+        """حساب أقصى عمق للعناصر المتداخلة"""
+        if not element.children:
+            return current_depth
+        
+        max_child_depth = current_depth
+        for child in element.children:
+            if hasattr(child, 'children'):
+                child_depth = self.calculate_max_depth(child, current_depth + 1)
+                max_child_depth = max(max_child_depth, child_depth)
+        
+        return max_child_depth
     
     def analyze_main_content_structure(self, soup):
         """تحليل بنية المحتوى الرئيسي"""
