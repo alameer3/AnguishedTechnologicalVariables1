@@ -45,30 +45,27 @@ function Row({
     <div
       className={
         isfavourite || isSearch
-          ? `h-auto space-y-0.5 md:space-y-2 px-1`
-          : `h-40 space-y-0.5 md:space-y-2 px-4`
+          ? `h-auto space-y-0.5 md:space-y-2 px-4 md:px-12`
+          : `h-40 space-y-0.5 md:space-y-2 px-4 md:px-12`
       }
     >
       <h2
         className={
           isDetails
-            ? `w-full cursor-pointer text-xl font-bold text-white text-shadow-soft transition-all duration-300 hover:text-red-400 hover:scale-105 md:text-3xl mb-4 flex items-center gap-3`
-            : `w-full cursor-pointer text-lg font-bold text-white text-shadow-soft transition-all duration-300 hover:text-red-400 hover:scale-105 md:text-2xl mb-4 flex items-center gap-3`
+            ? `w-56 cursor-pointer text-xl font-semibold text-[#e5e5e5] transition-colors duration-200 hover:text-white md:text-3xl`
+            : `w-56 cursor-pointer text-sm font-semibold text-[#e5e5e5] transition-colors duration-200 hover:text-white md:text-2xl`
         }
       >
-        <span className="text-red-500 text-2xl">🎬</span>
         {title}
-        <div className="flex-1 h-px bg-gradient-to-r from-red-500/50 to-transparent"></div>
       </h2>
       <div className="group relative md:-ml-2">
         {!isSearch && (
-          <div className={`absolute top-0 bottom-0 left-2 z-40 m-auto h-12 w-12 flex items-center justify-center cursor-pointer opacity-0 transition-all duration-300 hover:scale-125 group-hover:opacity-100 bg-black/50 hover:bg-red-600/90 rounded-full backdrop-blur-sm border border-gray-700 hover:border-red-500 ${
+          <ChevronLeftIcon
+            className={`absolute top-0 bottom-0 left-2 z-40 m-auto h-9 w-9 cursor-pointer opacity-0 transition hover:scale-125 group-hover:opacity-100 ${
               !isMoved && "hidden"
             }`}
             onClick={() => handleClick("left")}
-          >
-            <ChevronLeftIcon className="h-6 w-6 text-white" />
-          </div>
+          />
         )}
 
         {isfavourite ? (
@@ -111,11 +108,10 @@ function Row({
         )}
 
         {!isSearch && (
-          <div className="absolute top-0 bottom-0 right-2 z-40 m-auto h-12 w-12 flex items-center justify-center cursor-pointer opacity-0 transition-all duration-300 hover:scale-125 group-hover:opacity-100 bg-black/50 hover:bg-red-600/90 rounded-full backdrop-blur-sm border border-gray-700 hover:border-red-500"
+          <ChevronRightIcon
+            className="absolute top-0 bottom-0 right-2 z-40 m-auto h-9 w-9 cursor-pointer opacity-0 transition hover:scale-125 group-hover:opacity-100"
             onClick={() => handleClick("right")}
-          >
-            <ChevronRightIcon className="h-6 w-6 text-white" />
-          </div>
+          />
         )}
       </div>
     </div>

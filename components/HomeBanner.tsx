@@ -85,7 +85,7 @@ function HomeBanner({ netflixOriginals, session, isTv }: Props) {
   }
 
   return (
-    <div className="flex flex-col space-y-4 py-20 md:space-y-6 lg:h-[70vh] lg:justify-end lg:pb-16 lg:pl-28">
+    <div className="flex flex-col space-y-2 py-16 md:space-y-4 lg:h-[65vh] lg:justify-end lg:pb-12 lg:pl-24 relative z-20">
       <div className="absolute top-0 left-0 h-[95vh] w-screen -z-10 relative">
         {(movie?.backdrop_path || movie?.poster_path) ? (
           <motion.div
@@ -108,15 +108,14 @@ function HomeBanner({ netflixOriginals, session, isTv }: Props) {
             <LoadingSpinner size="large" text="جاري تحميل المحتوى..." />
           </div>
         )}
-        <div className="absolute w-full h-40 bg-gradient-to-t from-black via-black/80 to-transparent bottom-0 z-20" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/30 z-10" />
+        <div className="absolute w-full h-32 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent bottom-0 z-20" />
       </div>
 
       <motion.h1 
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.8 }}
-        className="text-3xl md:text-5xl lg:text-8xl font-black text-white text-shadow-enhanced"
+        className="text-2xl md:text-4xl lg:text-7xl font-bold text-white text-shadow-enhanced max-w-xs md:max-w-lg lg:max-w-2xl"
       >
         {movie?.title || movie?.name || movie?.original_name}
       </motion.h1>
@@ -124,9 +123,9 @@ function HomeBanner({ netflixOriginals, session, isTv }: Props) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.7, duration: 0.8 }}
-        className="max-w-sm text-base md:max-w-xl md:text-lg lg:max-w-3xl lg:text-xl line-clamp-3 text-gray-200 font-medium text-shadow-enhanced leading-relaxed mb-8"
+        className="max-w-xs text-shadow-md text-xs md:max-w-lg md:text-lg lg:max-w-2xl line-clamp-3"
       >
-        {movie?.overview || 'استمتع بأحدث الأفلام والمسلسلات على منصة YEMEN_FLIX، المنصة اليمنية الرائدة للترفيه المرئي.'}
+        {movie?.overview}
       </motion.p>
 
       <motion.div 
@@ -135,23 +134,21 @@ function HomeBanner({ netflixOriginals, session, isTv }: Props) {
         transition={{ delay: 0.9, duration: 0.8 }}
         className="flex flex-col sm:flex-row gap-4 sm:gap-6"
       >
-        <EnhancedButton
-          variant="primary"
-          size="lg"
+        <button 
           onClick={handleChangePage}
-          icon={<PlayCircleIcon className="h-6 w-6 md:h-8 md:w-8" />}
+          className="flex items-center gap-x-2 rounded bg-white px-5 py-1.5 text-sm font-semibold text-black transition hover:bg-[#e6e6e6] md:py-2.5 md:px-8 md:text-xl"
         >
-          ▶ تشغيل الآن
-        </EnhancedButton>
+          <PlayCircleIcon className="h-4 w-4 text-black md:h-7 md:w-7" />
+          تشغيل
+        </button>
         
-        <EnhancedButton
-          variant="outline"
-          size="lg"
+        <button 
           onClick={handleChangePage}
-          icon={<InformationCircleIcon className="h-6 w-6 md:h-8 md:w-8" />}
+          className="flex items-center gap-x-2 rounded bg-[gray]/70 px-5 py-1.5 text-sm font-semibold text-white transition hover:bg-[#6f6f6f] md:py-2.5 md:px-8 md:text-xl"
         >
-          ℹ المزيد من التفاصيل
-        </EnhancedButton>
+          <InformationCircleIcon className="h-4 w-4 md:h-7 md:w-7" />
+          المزيد من المعلومات
+        </button>
       </motion.div>
     </div>
   );

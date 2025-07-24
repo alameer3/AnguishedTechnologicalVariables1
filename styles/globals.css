@@ -252,13 +252,7 @@
 
 /* تحسينات شريط التنقل */
 .header {
-  @apply fixed top-0 z-50 flex w-full items-center justify-between px-6 py-4 transition-all duration-500 md:px-16;
-  backdrop-filter: blur(20px);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
-}
-
-.header:hover {
-  box-shadow: 0 12px 40px rgba(239, 68, 68, 0.1);
+  @apply fixed top-0 z-50 flex w-full items-center justify-between px-6 py-6 transition-all duration-500 md:px-16;
 }
 
 /* تأثيرات تفاعلية محسنة */
