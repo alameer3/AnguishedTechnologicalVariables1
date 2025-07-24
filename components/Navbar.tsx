@@ -9,7 +9,7 @@ import Search from "./Search";
 
 type Props = {
   isSearch?: boolean;
-  setSearchTerm?: any;
+  setSearchTerm?: (term: string) => void;
   searchThrem?: string;
 };
 

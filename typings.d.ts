@@ -104,7 +104,7 @@ export interface CastDataTyping {
 
 export interface Episode {
   air_date: string;
-  crew: any[];
+  crew: Array<{ id: number; name: string; job: string; profile_path?: string }>;
   episode_number: number;
   guest_stars: Cast[];
   id: number;

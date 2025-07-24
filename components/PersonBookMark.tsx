@@ -17,13 +17,18 @@ import { IoIosRemoveCircle, IoIosAddCircle } from "react-icons/io";
 import { firestore } from "../firebase/firebase";
 
 type Props = {
-  castPerson: any;
+  castPerson: { id: number; name?: string; profile_path?: string; [key: string]: any };
 };
+
+interface LikeDocument {
+  id: string;
+  data: () => { id: number; name: string; profile_path?: string };
+}
 
 function PersonBookMark({ castPerson }: Props) {
   const [hasLikes, setHasLikes] = useState(false);
-  const { data: session }: any = useSession();
-  const [likes, setLikes] = useState<any[]>([]);
+  const { data: session } = useSession();
+  const [likes, setLikes] = useState<LikeDocument[]>([]);
 
   useEffect(
     () =>

@@ -15,7 +15,7 @@ type Props = {
   horrorMovies: Movie[];
   romanceMovies: Movie[];
   documentaries: Movie[];
-  session: any;
+  session: { user?: { name?: string; email?: string; image?: string } } | null;
 };
 
 function MainPage({
@@ -36,7 +36,10 @@ function MainPage({
     try {
       const apiKey = process.env.NEXT_PUBLIC_API_KEY;
       if (!apiKey) {
-        console.error('API key is missing');
+        // API key missing - silent fail for production
+        if (process.env.NODE_ENV === 'development') {
+          console.warn('TMDB API key is missing');
+        }
         return;
       }
       
@@ -45,7 +48,11 @@ function MainPage({
       ).then((res) => res.json());
       setSearchMovie(movieSearchdata.results || []);
     } catch (error) {
-      console.error('Error searching movies:', error);
+      // Handle search errors gracefully
+      if (process.env.NODE_ENV === 'development') {
+        console.warn('Failed to search movies:', error);
+      }
+      setSearchMovie([]);
     }
   };
 

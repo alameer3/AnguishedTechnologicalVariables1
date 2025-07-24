@@ -8,7 +8,7 @@ import BilledCastSceleton from "./skeleton/BilledCastSceleton";
 const baseUrl = "https://image.tmdb.org/t/p/original";
 
 type Props = {
-  movieCast: any;
+  movieCast: { cast?: Cast[] } | null;
 };
 
 function BilledCast({ movieCast }: Props) {
