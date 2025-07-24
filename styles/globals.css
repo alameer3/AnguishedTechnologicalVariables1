@@ -2,23 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
-/* متغيرات الألوان */
+/* متغيرات الألوان - Netflix Style */
 :root {
   --background: #000000;
   --foreground: #ffffff;
-  --card: #141414;
+  --card: #000000;
   --card-foreground: #ffffff;
   --primary: #e50914;
   --primary-foreground: #ffffff;
-  --secondary: #464646;
+  --secondary: #6d6d6e;
   --secondary-foreground: #ffffff;
-  --muted: #262626;
-  --muted-foreground: #a3a3a3;
-  --accent: #333333;
+  --muted: #000000;
+  --muted-foreground: #e5e5e5;
+  --accent: #000000;
   --accent-foreground: #ffffff;
-  --border: #404040;
-  --input: #333333;
+  --border: #000000;
+  --input: #000000;
   --ring: #e50914;
+}
+
+body {
+  @apply !scrollbar-hide bg-black text-white;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  background-color: #000000;
 }
 
 /* تحسينات الاستجابة */
@@ -196,7 +203,7 @@
   filter: drop-shadow(0 0 30px rgba(239, 68, 68, 0.5));
 }
 
-/* تحسينات للاستجابة */
+/* تحسينات للاستجابة - Netflix Style */
 @media (max-width: 768px) {
   .mobile-padding {
     padding: 1rem;
@@ -205,6 +212,47 @@
   .mobile-text {
     font-size: clamp(1rem, 4vw, 1.5rem);
   }
+  
+  .header {
+    padding: 0 4vw;
+    height: 50px;
+  }
+}
+
+/* إخفاء شريط التمرير */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* تحسينات Netflix للبطاقات */
+.netflix-card {
+  position: relative;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  transition: transform 0.3s cubic-bezier(0.5, 0, 0.1, 1);
+}
+
+.netflix-card:hover {
+  transform: scale(1.05);
+  z-index: 10;
+}
+
+/* نصوص Netflix */
+.netflix-title {
+  color: #e5e5e5;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.netflix-subtitle {
+  color: #b3b3b3;
+  font-weight: 400;
 }
 
 /* تحسين شريط التمرير */
@@ -250,9 +298,15 @@
   @apply bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 focus-ring shadow-lg hover:shadow-xl hover:scale-105 border border-gray-600 hover:border-red-500;
 }
 
-/* تحسينات شريط التنقل */
+/* تحسينات شريط التنقل - Netflix Style */
 .header {
-  @apply fixed top-0 z-50 flex w-full items-center justify-between px-6 py-6 transition-all duration-500 md:px-16;
+  @apply fixed top-0 z-50 flex w-full items-center justify-between px-4 py-4 transition-all duration-500 md:px-16;
+  background: linear-gradient(180deg, rgba(0,0,0,0.7) 10%, transparent);
+  height: 68px;
+}
+
+.header.scrolled {
+  background-color: #000000;
 }
 
 /* تأثيرات تفاعلية محسنة */

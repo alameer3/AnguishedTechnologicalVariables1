@@ -108,32 +108,17 @@ function HomeBanner({ netflixOriginals, session, isTv }: Props) {
             <LoadingSpinner size="large" text="جاري تحميل المحتوى..." />
           </div>
         )}
-        <div className="absolute w-full h-32 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent bottom-0 z-20" />
+        <div className="absolute w-full h-32 bg-gradient-to-t from-black to-transparent bottom-0 z-20" />
       </div>
 
-      <motion.h1 
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5, duration: 0.8 }}
-        className="text-2xl md:text-4xl lg:text-7xl font-bold text-white text-shadow-enhanced max-w-xs md:max-w-lg lg:max-w-2xl"
-      >
+      <h1 className="text-3xl font-bold text-white md:text-5xl lg:text-6xl max-w-xs md:max-w-lg lg:max-w-2xl">
         {movie?.title || movie?.name || movie?.original_name}
-      </motion.h1>
-      <motion.p 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.7, duration: 0.8 }}
-        className="max-w-xs text-shadow-md text-xs md:max-w-lg md:text-lg lg:max-w-2xl line-clamp-3"
-      >
+      </h1>
+      <p className="max-w-xs text-shadow-md text-xs md:max-w-lg md:text-lg lg:max-w-2xl line-clamp-3 text-white">
         {movie?.overview}
-      </motion.p>
+      </p>
 
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.9, duration: 0.8 }}
-        className="flex flex-col sm:flex-row gap-4 sm:gap-6"
-      >
+      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
         <button 
           onClick={handleChangePage}
           className="flex items-center gap-x-2 rounded bg-white px-5 py-1.5 text-sm font-semibold text-black transition hover:bg-[#e6e6e6] md:py-2.5 md:px-8 md:text-xl"
@@ -149,7 +134,7 @@ function HomeBanner({ netflixOriginals, session, isTv }: Props) {
           <InformationCircleIcon className="h-4 w-4 md:h-7 md:w-7" />
           المزيد من المعلومات
         </button>
-      </motion.div>
+      </div>
     </div>
   );
 }
