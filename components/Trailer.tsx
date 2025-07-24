@@ -6,7 +6,7 @@ import { Details, Result } from "../typings";
 import TrailerSkeleton from "./skeleton/TrailerSkeleton";
 
 type Props = {
-  movieTrailer: any;
+  movieTrailer: { results?: { key?: string; site?: string; type?: string; name?: string }[] };
   movieDetails: Details | undefined;
 };
 
@@ -22,7 +22,7 @@ function Trailer({ movieTrailer, movieDetails }: Props) {
       <div className="flex items-center scrollbar-hide space-x-0.5 overflow-x-scroll md:space-x-1.0 md:p-2 h-[350px] overflow-y-hidden">
         {movieTrailer?.results ? (
           <>
-            {movieTrailer?.results?.map((trailer: Result) => (
+            {movieTrailer?.results?.map((trailer: any) => (
               <motion.div
                 initial={{ opacity: 0, scale: 0.5 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -42,7 +42,7 @@ function Trailer({ movieTrailer, movieDetails }: Props) {
                     playing: false,
                     muted: false,
                     controls: true
-                  } as any}
+                  } as unknown as { playing: boolean; muted: boolean; volume: number; width: string; height: string }}
                 />
                 <p className="text-xl">{trailer.name}</p>
               </motion.div>

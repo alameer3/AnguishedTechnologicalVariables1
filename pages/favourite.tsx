@@ -9,7 +9,13 @@ import Navbar from "../components/Navbar";
 import SignIn from "../components/SignIn";
 
 type Props = {
-  session: any;
+  session: {
+    user?: {
+      uid?: string;
+      name?: string;
+      email?: string;
+    };
+  } | null;
 };
 
 function Favorite({ session }: Props) {
@@ -35,7 +41,7 @@ function Favorite({ session }: Props) {
 
 export default Favorite;
 
-export const getServerSideProps = async (context: any) => {
+export const getServerSideProps = async (context: { query?: { id?: string } }) => {
   // Create mock session to bypass authentication
   const mockSession = {
     user: {

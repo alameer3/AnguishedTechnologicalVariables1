@@ -39,7 +39,7 @@ function SeasonTrailer({ movieDetails, movieTrailer }: Props) {
                     playing: false,
                     muted: false,
                     controls: true
-                  } as any}
+                  } as unknown as { playing: boolean; muted: boolean; volume: number; width: string; height: string }}
                 />
                 <p className="text-lg">{trailer.name}</p>
               </motion.div>

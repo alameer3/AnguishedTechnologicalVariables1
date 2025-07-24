@@ -3,7 +3,7 @@ import { SearchIcon } from "./Icons";
 
 type Props = {
   searchThrem: string;
-  setSearchTerm: any;
+  setSearchTerm: (term: string) => void;
 };
 
 function Search({ setSearchTerm, searchThrem }: Props) {

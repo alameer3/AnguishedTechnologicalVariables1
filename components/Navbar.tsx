@@ -91,7 +91,7 @@ function Navbar({ isSearch, setSearchTerm, searchThrem }: Props) {
 
       <div className="font-light flex items-center space-x-4 text-sm">
         {isSearch ? (
-          <Search searchThrem={searchThrem!} setSearchTerm={setSearchTerm} />
+          <Search searchThrem={searchThrem || ""} setSearchTerm={setSearchTerm || (() => {})} />
         ) : (
           <SearchIcon
             className="hidden sm:inline sm:w-6 sm:h-6 cursor-pointer"

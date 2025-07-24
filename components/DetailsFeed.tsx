@@ -65,7 +65,7 @@ function DetailsFeed({ netflixOriginals }: Props) {
       // Ensure cast has original_name field
       const castWithOriginalName = {
         ...movieCast,
-        cast: movieCast.cast?.map((member: any) => ({
+        cast: movieCast.cast?.map((member: { name?: string; character?: string; profile_path?: string; original_name?: string }) => ({
           ...member,
           original_name: member.original_name || member.name || ''
         })) || []
@@ -93,7 +93,7 @@ function DetailsFeed({ netflixOriginals }: Props) {
       <main className="relative pl-4 pb-24 lg:space-y-24">
         <MainDetails movieDetails={movieDetails as Details | undefined} />
         <Companies movieDetails={movieDetails as Details | undefined} />
-        {movieDetails?.id && <AddBookmark movieDetails={movieDetails as any} />}
+        {movieDetails?.id && <AddBookmark movieDetails={movieDetails as { id: number; title?: string; name?: string; poster_path?: string }} />}
         <Trailer movieTrailer={movieTrailer} movieDetails={movieDetails as Details | undefined} />
         <BilledCast movieCast={movieCast as { cast?: Cast[] } | null} />
         <MoreDetails movieDetails={movieDetails as Details | undefined} />

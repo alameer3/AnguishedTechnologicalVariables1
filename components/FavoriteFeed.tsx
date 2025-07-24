@@ -69,7 +69,7 @@ function FavoriteFeed({ session }: Props) {
           <>
             {likeMovies.length > 0 ? (
               <Row
-                likeMovies={likeMovies}
+                likeMovies={likeMovies as any[]}
                 isDetails={true}
                 type="movie"
                 isSearch={true}

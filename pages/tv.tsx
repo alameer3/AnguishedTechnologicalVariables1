@@ -16,7 +16,13 @@ type Props = {
   topRated: Movie[];
   onTheAirTv: Movie[];
   popularTv: Movie[];
-  session: any;
+  session: {
+    user?: {
+      uid?: string;
+      name?: string;
+      email?: string;
+    };
+  } | null;
 };
 
 function TvSeasons({ topRated, onTheAirTv, popularTv, session }: Props) {
@@ -76,7 +82,7 @@ function TvSeasons({ topRated, onTheAirTv, popularTv, session }: Props) {
 
 export default TvSeasons;
 
-export const getServerSideProps = async (context: any) => {
+export const getServerSideProps = async (context: { query?: { id?: string } }) => {
   // Create mock session to bypass authentication
   const mockSession = {
     user: {
