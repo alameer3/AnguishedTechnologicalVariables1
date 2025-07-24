@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { getSession } from "next-auth/react";
+import { GetServerSidePropsContext } from "next";
 import Head from "next/head";
 
 import MainPage from "../components/MainPage";
@@ -64,7 +65,7 @@ export default function Home({
   );
 }
 
-export const getServerSideProps = async (context: { req: any; res: any }) => {
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const session = await getSession(context);
   const [
     netflixOriginals,

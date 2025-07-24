@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { getSession } from "next-auth/react";
+import { GetServerSidePropsContext } from "next";
 import Head from "next/head";
 import SEOHead from "../components/SEOHead";
 import FavoriteFeed from "../components/FavoriteFeed";
@@ -40,7 +41,7 @@ function Favorite({ session }: Props) {
 
 export default Favorite;
 
-export const getServerSideProps = async (context: { req: any; res: any }) => {
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const session = await getSession(context);
 
   return {
