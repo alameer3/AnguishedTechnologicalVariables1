@@ -85,8 +85,12 @@ function HomeBanner({ netflixOriginals, session, isTv }: Props) {
   }
 
   return (
-    <div className="flex flex-col space-y-2 py-16 md:space-y-4 lg:h-[65vh] lg:justify-end lg:pb-12 lg:pl-24 relative z-20">
-      <div className="absolute top-0 left-0 h-[95vh] w-screen -z-10 relative">
+    <div className="flex flex-col space-y-2 py-16 md:space-y-4 lg:h-[65vh] lg:justify-end lg:pb-12 lg:pl-24 relative z-20 page-transition">
+      {/* تدرجات متطورة متعددة الطبقات مثل Netflix */}
+      <div className="absolute inset-0 gradient-overlay-advanced z-10" />
+      <div className="absolute inset-0 gradient-overlay-bottom z-10" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-transparent z-10" />
+      <div className="absolute top-0 left-0 h-[95vh] w-screen -z-10 relative overflow-hidden">
         {(movie?.backdrop_path || movie?.poster_path) ? (
           <motion.div
             initial={{ opacity: 0, scale: 1.1 }}
@@ -111,27 +115,27 @@ function HomeBanner({ netflixOriginals, session, isTv }: Props) {
         <div className="absolute w-full h-32 bg-gradient-to-t from-black to-transparent bottom-0 z-20" />
       </div>
 
-      <h1 className="text-3xl font-bold text-white md:text-5xl lg:text-6xl max-w-xs md:max-w-lg lg:max-w-2xl">
+      <h1 className="title-enhanced text-3xl font-bold md:text-5xl lg:text-6xl max-w-xs md:max-w-lg lg:max-w-2xl relative z-20">
         {movie?.title || movie?.name || movie?.original_name}
       </h1>
-      <p className="max-w-xs text-shadow-md text-xs md:max-w-lg md:text-lg lg:max-w-2xl line-clamp-3 text-white">
+      <p className="description-enhanced max-w-xs text-xs md:max-w-lg md:text-lg lg:max-w-2xl line-clamp-3 relative z-20">
         {movie?.overview}
       </p>
 
-      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 relative z-20">
         <button 
           onClick={handleChangePage}
-          className="flex items-center gap-x-2 rounded bg-white px-5 py-1.5 text-sm font-semibold text-black transition hover:bg-[#e6e6e6] md:py-2.5 md:px-8 md:text-xl"
+          className="netflix-btn-primary px-6 py-3 text-sm md:py-4 md:px-8 md:text-lg"
         >
-          <PlayCircleIcon className="h-4 w-4 text-black md:h-7 md:w-7" />
+          <PlayCircleIcon className="h-4 w-4 text-black md:h-6 md:w-6" />
           تشغيل
         </button>
         
         <button 
           onClick={handleChangePage}
-          className="flex items-center gap-x-2 rounded bg-[gray]/70 px-5 py-1.5 text-sm font-semibold text-white transition hover:bg-[#6f6f6f] md:py-2.5 md:px-8 md:text-xl"
+          className="netflix-btn-secondary px-6 py-3 text-sm md:py-4 md:px-8 md:text-lg"
         >
-          <InformationCircleIcon className="h-4 w-4 md:h-7 md:w-7" />
+          <InformationCircleIcon className="h-4 w-4 md:h-6 md:w-6" />
           المزيد من المعلومات
         </button>
       </div>

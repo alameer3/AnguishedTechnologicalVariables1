@@ -68,7 +68,7 @@ function Row({
             className={
               (likeMovies?.length || 0) >= 4
                 ? `gap-x-10 grid overflow-x-hidden gap-y-6 sm:gap-x-14 lg:gap-x-14 md:gap-x-10`
-                : `flex items-center scrollbar-hide space-x-1 overflow-x-scroll md:space-x-2 md:p-2`
+                : `flex items-center scrollbar-netflix space-x-1 overflow-x-scroll md:space-x-2 md:p-2`
             }
           >
             {likeMovies!.map((movie: { id: string; data: () => Movie }) => (
@@ -87,7 +87,7 @@ function Row({
             className={
               isSearch && movies!.length >= 4
                 ? `grid overflow-x-hidden gap-y-6 gap-x-24`
-                : `flex items-center scrollbar-hide space-x-1 overflow-x-scroll md:space-x-2 md:p-2`
+                : `flex items-center scrollbar-netflix space-x-1 overflow-x-scroll md:space-x-2 md:p-2`
             }
           >
             {movies?.map((movie) => (

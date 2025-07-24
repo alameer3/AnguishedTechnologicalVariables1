@@ -6,6 +6,7 @@ import Image from "next/image";
 import { SearchIcon, BellIcon, NetflixIcon } from "./Icons";
 import Search from "./Search";
 import Breadcrumbs from "./Breadcrumbs";
+import ProfileDropdown from "./ProfileDropdown";
 
 type Props = {
   isSearch?: boolean;
@@ -95,23 +96,7 @@ function Navbar({ isSearch, setSearchTerm, searchTerm }: Props) {
           />
         )}
         <BellIcon className="h-6 w-6 cursor-pointer" />
-        <div onClick={() => signOut()} className="cursor-pointer">
-          {session?.user?.image ? (
-            <div className="relative w-8 h-8">
-              <Image
-                src={session.user.image}
-                alt={session.user.name || "User profile"}
-                fill
-                className="object-cover rounded"
-                sizes="32px"
-              />
-            </div>
-          ) : (
-            <div className="w-8 h-8 bg-red-600 rounded flex items-center justify-center">
-              <span className="text-white text-sm font-bold">👤</span>
-            </div>
-          )}
-        </div>
+        <ProfileDropdown />
       </div>
       </header>
       
