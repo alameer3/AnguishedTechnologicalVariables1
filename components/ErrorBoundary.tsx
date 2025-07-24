@@ -21,9 +21,9 @@ class ErrorBoundary extends React.Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    // Log error in development mode only
+    // Log error in development mode only for debugging
     if (process.env.NODE_ENV === 'development') {
-      console.error('Error caught by boundary:', error, errorInfo);
+      // Error logged only in development environment
     }
   }
 

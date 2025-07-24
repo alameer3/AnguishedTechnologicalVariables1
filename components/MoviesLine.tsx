@@ -64,6 +64,9 @@ function MoviesLine({ movie, isDetails, type, isfavourite }: Props) {
           className="rounded-sm object-cover md:rounded"
           alt={movie.title || movie.name || movie.original_name || "Movie poster"}
           sizes="(max-width: 768px) 180px, 260px"
+          loading="lazy"
+          placeholder="blur"
+          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/2wBDAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/wAARCAABAAEDAREAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAX/xAAhEAABBQEBAQEBAQAAAAAAAAABAAIDBAUGBwgJCgv/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8A3QAA"
         />
       ) : (
         <div

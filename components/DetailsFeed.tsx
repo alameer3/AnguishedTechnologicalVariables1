@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-import { Movie } from "../typings";
+import { Movie, Details, Cast } from "../typings";
 import AddBookmark from "./AddBookmark";
 import BilledCast from "./BilledCast";
 import Companies from "./Companies";
@@ -38,7 +38,7 @@ function DetailsFeed({ netflixOriginals }: Props) {
   const router = useRouter();
   const { movieId, type } = router.query;
   const [movieTrailer, setMovieTrailer] = useState<{ results: Array<{ id: string; key: string; name: string; type: string }> }>({ results: [] });
-  const [movieCast, setMovieCast] = useState<{ cast: Array<{ id: number; name: string; character: string; profile_path?: string }> }>({ cast: [] });
+  const [movieCast, setMovieCast] = useState<{ cast: Array<{ id: number; name: string; character: string; profile_path?: string; original_name: string }> }>({ cast: [] });
   const [movieDetails, setMovieDetails] = useState<MovieDetails | null>(null);
 
   const fetchData = async (id: string | number, type: string) => {
@@ -46,9 +46,6 @@ function DetailsFeed({ netflixOriginals }: Props) {
       const apiKey = process.env.NEXT_PUBLIC_API_KEY;
       if (!apiKey) {
         // API key missing - silent fail for production
-        if (process.env.NODE_ENV === 'development') {
-          console.warn('TMDB API key is missing');
-        }
         return;
       }
 
@@ -65,13 +62,18 @@ function DetailsFeed({ netflixOriginals }: Props) {
       ).then((res) => res.json());
 
       setMovieTrailer(movieVideo);
-      setMovieCast(movieCast);
+      // Ensure cast has original_name field
+      const castWithOriginalName = {
+        ...movieCast,
+        cast: movieCast.cast?.map((member: any) => ({
+          ...member,
+          original_name: member.original_name || member.name || ''
+        })) || []
+      };
+      setMovieCast(castWithOriginalName);
       setMovieDetails(movieDetails);
     } catch (error) {
       // Handle API errors gracefully
-      if (process.env.NODE_ENV === 'development') {
-        console.warn('Failed to fetch movie data:', error);
-      }
       // Set empty states to prevent crashes
       setMovieTrailer({ results: [] });
       setMovieCast({ cast: [] });
@@ -89,13 +91,13 @@ function DetailsFeed({ netflixOriginals }: Props) {
     <div className="overflow-x-hidden">
       <Navbar />
       <main className="relative pl-4 pb-24 lg:space-y-24">
-        <MainDetails movieDetails={movieDetails as any} />
-        <Companies movieDetails={movieDetails as any} />
+        <MainDetails movieDetails={movieDetails as Details | undefined} />
+        <Companies movieDetails={movieDetails as Details | undefined} />
         {movieDetails?.id && <AddBookmark movieDetails={movieDetails as any} />}
-        <Trailer movieTrailer={movieTrailer as any} movieDetails={movieDetails as any} />
-        <BilledCast movieCast={movieCast as any} />
-        <MoreDetails movieDetails={movieDetails as any} />
-        {type === "tv" && <Seasons movieDetails={movieDetails as any} />}
+        <Trailer movieTrailer={movieTrailer} movieDetails={movieDetails as Details | undefined} />
+        <BilledCast movieCast={movieCast as { cast?: Cast[] } | null} />
+        <MoreDetails movieDetails={movieDetails as Details | undefined} />
+        {type === "tv" && <Seasons movieDetails={movieDetails as Details | undefined} />}
         <div className="pb-8">
           <Row
             title="More Like This"
