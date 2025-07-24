@@ -1,127 +1,127 @@
-# Netflix Clone 2.0
+# نسخة نتفليكس 2.0
 
-## Overview
+## نظرة عامة
 
-This is a Netflix clone application built with Next.js 13, featuring movie and TV show browsing, user authentication, and personalized favorites. The application replicates the Netflix user interface and functionality, allowing users to discover movies, TV shows, actors, and manage their favorite content.
+هذا تطبيق نسخة من نتفليكس مبني بـ Next.js 13، يتضمن تصفح الأفلام والمسلسلات، تسجيل دخول المستخدمين، والمفضلة الشخصية. يحاكي التطبيق واجهة نتفليكس ووظائفها، مما يتيح للمستخدمين اكتشاف الأفلام والمسلسلات والممثلين وإدارة المحتوى المفضل لديهم.
 
-## User Preferences
+## تفضيلات المستخدم
 
-Preferred communication style: Simple, everyday language.
+أسلوب التواصل المفضل: لغة بسيطة ومفهومة.
 
-## System Architecture
+## معمارية النظام
 
-### Frontend Architecture
-- **Framework**: Next.js 13 with TypeScript for type safety and modern React features
-- **Styling**: Tailwind CSS for utility-first styling with custom Netflix-like dark theme
-- **UI Components**: Custom React components with consistent design patterns
-- **Animation**: Framer Motion for smooth transitions and interactive animations
-- **State Management**: React hooks (useState, useEffect) with Next.js built-in state handling
+### معمارية الواجهة الأمامية
+- **الإطار**: Next.js 13 مع TypeScript لضمان الأمان النوعي وميزات React الحديثة
+- **التصميم**: Tailwind CSS للتصميم المساعد مع ثيم داكن مشابه لنتفليكس
+- **مكونات الواجهة**: مكونات React مخصصة مع أنماط تصميم متسقة
+- **الرسوم المتحركة**: Framer Motion للانتقالات السلسة والتفاعلات المتحركة
+- **إدارة الحالة**: خطافات React (useState, useEffect) مع إدارة الحالة المدمجة في Next.js
 
-### Authentication System
-- **Provider**: NextAuth.js v4 for secure authentication
-- **OAuth**: Google Authentication integration
-- **Session Management**: Server-side session handling with automatic token refresh
-- **Protection**: Route-based authentication guards redirecting unauthenticated users
+### نظام المصادقة
+- **المزود**: NextAuth.js v4 للمصادقة الآمنة
+- **OAuth**: تكامل مصادقة جوجل
+- **إدارة الجلسة**: إدارة الجلسة من جانب الخادم مع تحديث الرموز التلقائي
+- **الحماية**: حماية المسارات المستندة إلى المصادقة مع إعادة توجيه المستخدمين غير المصادق عليهم
 
-### Data Management
-- **External API**: The Movie Database (TMDB) API for movie/TV show data
-- **Database**: Firebase Firestore for user data and favorites storage
-- **Real-time Updates**: Firebase real-time listeners for instant UI updates
-- **Caching**: Next.js automatic caching for API responses
+### إدارة البيانات
+- **API خارجي**: The Movie Database (TMDB) API لبيانات الأفلام والمسلسلات
+- **قاعدة البيانات**: Firebase Firestore لتخزين بيانات المستخدمين والمفضلات
+- **التحديثات الفورية**: مستمعات Firebase الفورية للتحديثات الفورية للواجهة
+- **التخزين المؤقت**: التخزين المؤقت التلقائي لـ Next.js لاستجابات API
 
-## Key Components
+## المكونات الرئيسية
 
-### Core Pages
-- **Home**: Main dashboard with trending content and recommendations
-- **TV Shows**: Dedicated TV series browsing with seasons/episodes
-- **People**: Actor and crew member discovery and details
-- **Favorites**: User's saved movies and actors collection
-- **Details**: Comprehensive movie/show information with trailers and cast
-- **Season**: Individual season details with episode listings
-- **Cast**: Actor profile pages with filmography
+### الصفحات الأساسية
+- **الرئيسية**: لوحة التحكم الرئيسية مع المحتوى الرائج والتوصيات
+- **المسلسلات**: تصفح مخصص للمسلسلات التلفزيونية مع المواسم والحلقات
+- **الأشخاص**: اكتشاف الممثلين وأعضاء الطاقم وتفاصيلهم
+- **المفضلة**: مجموعة الأفلام والممثلين المحفوظة للمستخدم
+- **التفاصيل**: معلومات شاملة عن الأفلام/المسلسلات مع المقاطع الدعائية والطاقم
+- **الموسم**: تفاصيل الموسم الفردي مع قوائم الحلقات
+- **الطاقم**: صفحات ملف تعريف الممثل مع الفيلموجرافيا
 
-### Reusable Components
-- **Navbar**: Responsive navigation with search functionality
-- **HomeBanner**: Hero section with featured content
-- **Row**: Horizontal scrolling content rows
-- **MoviesLine**: Individual movie/show cards
-- **Person**: Actor profile cards
-- **Trailer**: Video player integration for trailers
-- **AddBookmark**: Favorite management functionality
+### المكونات القابلة لإعادة الاستخدام
+- **شريط التنقل**: تنقل متجاوب مع وظيفة البحث
+- **البانر الرئيسي**: قسم البطل مع المحتوى المميز
+- **الصف**: صفوف المحتوى ذات التمرير الأفقي
+- **خط الأفلام**: بطاقات الأفلام/المسلسلات الفردية
+- **الشخص**: بطاقات ملف تعريف الممثل
+- **المقطع الدعائي**: تكامل مشغل الفيديو للمقاطع الدعائية
+- **إضافة إشارة مرجعية**: وظيفة إدارة المفضلات
 
-### Firebase Integration
-- **User Profiles**: Automatic user document creation on first login
-- **Favorites Storage**: Separate collections for liked movies and actors
-- **Real-time Sync**: Instant updates across devices for user preferences
+### تكامل Firebase
+- **ملفات تعريف المستخدمين**: إنشاء وثيقة المستخدم التلقائي عند تسجيل الدخول الأول
+- **تخزين المفضلات**: مجموعات منفصلة للأفلام والممثلين المعجب بهم
+- **المزامنة الفورية**: تحديثات فورية عبر الأجهزة لتفضيلات المستخدم
 
-## Data Flow
+## تدفق البيانات
 
-1. **Authentication Flow**:
-   - User clicks Sign In → Google OAuth → NextAuth session creation → Firebase user document
-   - Protected routes check session status → Redirect to sign-in if unauthenticated
+1. **تدفق المصادقة**:
+   - المستخدم ينقر على تسجيل الدخول → Google OAuth → إنشاء جلسة NextAuth → وثيقة مستخدم Firebase
+   - المسارات المحمية تفحص حالة الجلسة → إعادة توجيه لتسجيل الدخول إذا لم تتم المصادقة
 
-2. **Content Discovery**:
-   - TMDB API requests → Data transformation → Component rendering
-   - Search functionality → Real-time API calls → Filtered results display
+2. **اكتشاف المحتوى**:
+   - طلبات TMDB API → تحويل البيانات → عرض المكونات
+   - وظيفة البحث → مكالمات API في الوقت الفعلي → عرض النتائج المفلترة
 
-3. **Favorites Management**:
-   - User interaction → Firebase Firestore write → Real-time listener update → UI refresh
-   - Cross-device synchronization through Firebase real-time database
+3. **إدارة المفضلات**:
+   - تفاعل المستخدم → كتابة Firebase Firestore → تحديث المستمع في الوقت الفعلي → تحديث الواجهة
+   - المزامنة عبر الأجهزة من خلال قاعدة بيانات Firebase في الوقت الفعلي
 
-4. **Navigation Flow**:
-   - Router-based navigation → Dynamic route parameters → Component-specific data fetching
-   - Smooth transitions with Framer Motion animations
+4. **تدفق التنقل**:
+   - التنقل المستند إلى الموجه → معاملات المسار الديناميكية → جلب البيانات الخاصة بالمكون
+   - انتقالات سلسة مع رسوم Framer Motion المتحركة
 
-## External Dependencies
+## التبعيات الخارجية
 
-### APIs and Services
-- **TMDB API**: Movie, TV show, and actor data with high-quality images
-- **Firebase**: User authentication, real-time database, and cloud storage
-- **Google OAuth**: Secure user authentication and profile management
+### واجهات برمجة التطبيقات والخدمات
+- **TMDB API**: بيانات الأفلام والمسلسلات والممثلين مع صور عالية الجودة
+- **Firebase**: مصادقة المستخدم وقاعدة البيانات في الوقت الفعلي والتخزين السحابي
+- **Google OAuth**: مصادقة المستخدم الآمنة وإدارة الملف الشخصي
 
-### Key Libraries
-- **next-auth**: Authentication solution with multiple provider support
-- **framer-motion**: Animation library for smooth UI interactions
-- **react-player**: Video player component for trailer playback
-- **react-icons**: Comprehensive icon library for UI elements
-- **firebase**: Backend-as-a-Service for data storage and real-time updates
+### المكتبات الرئيسية
+- **next-auth**: حل المصادقة مع دعم موفرين متعددين
+- **framer-motion**: مكتبة الرسوم المتحركة للتفاعلات السلسة للواجهة
+- **react-player**: مكون مشغل الفيديو لتشغيل المقاطع الدعائية
+- **react-icons**: مكتبة أيقونات شاملة لعناصر الواجهة
+- **firebase**: خدمة الخلفية كخدمة لتخزين البيانات والتحديثات في الوقت الفعلي
 
-### Development Tools
-- **TypeScript**: Type safety and enhanced developer experience
-- **Tailwind CSS**: Utility-first CSS framework with custom scrollbar plugins
-- **PostCSS**: CSS processing with autoprefixer for browser compatibility
+### أدوات التطوير
+- **TypeScript**: أمان النوع وخبرة مطور محسنة
+- **Tailwind CSS**: إطار عمل CSS مفيد أولاً مع مكونات إضافية مخصصة لشريط التمرير
+- **PostCSS**: معالجة CSS مع autoprefixer لتوافق المتصفح
 
-## Deployment Strategy
+## استراتيجية النشر
 
-### Build Configuration
-- **Next.js Build**: Static generation where possible with server-side rendering fallback
-- **Image Optimization**: Next.js Image component with TMDB domain configuration
-- **Environment Variables**: Secure API key and configuration management
+### تكوين البناء
+- **بناء Next.js**: التوليد الثابت حيثما أمكن مع عرض من جانب الخادم كاحتياطي
+- **تحسين الصورة**: مكون صورة Next.js مع تكوين نطاق TMDB
+- **متغيرات البيئة**: إدارة مفاتيح API الآمنة والتكوين
 
-### Production Considerations
-- **Performance**: Image lazy loading, component code splitting, and API response caching
-- **SEO**: Meta tags, structured data, and server-side rendering for better search visibility
-- **Security**: Environment variable protection and secure authentication flows
-- **Scalability**: Firebase's automatic scaling for user data and real-time features
+### اعتبارات الإنتاج
+- **الأداء**: التحميل الكسول للصور وتقسيم كود المكونات وتخزين استجابات API المؤقت
+- **SEO**: علامات Meta والبيانات المنظمة والعرض من جانب الخادم لرؤية بحث أفضل
+- **الأمان**: حماية متغيرات البيئة وتدفقات المصادقة الآمنة
+- **قابلية التوسع**: التوسع التلقائي لـ Firebase لبيانات المستخدم والميزات في الوقت الفعلي
 
-### Current Deployment  
-- **Platform**: Replit (migrated from Netlify)
-- **Authentication**: Temporarily bypassed with mock session for demo purposes
-- **Development Server**: Running on port 5000 with Next.js dev server
+### النشر الحالي
+- **المنصة**: Replit (تم الانتقال من Netlify)
+- **المصادقة**: تم تجاوزها مؤقتاً بجلسة وهمية لأغراض العرض التوضيحي
+- **خادم التطوير**: يعمل على المنفذ 5000 مع خادم تطوير Next.js
 
-## Recent Changes
+## التغييرات الأخيرة
 
-### Migration Updates (January 2025)
-- **Authentication Bypass**: All pages now use mock session to allow browsing without Google login
-- **Mock User**: Created demo user with username "demouser" for all protected routes
-- **Page Access**: Home, TV Shows, People, Favorites, Details, Cast, and Season pages all accessible
-- **Replit Integration**: Project successfully migrated to run on Replit environment
+### تحديثات الانتقال (يناير 2025)
+- **تجاوز المصادقة**: جميع الصفحات تستخدم الآن جلسة وهمية للسماح بالتصفح بدون تسجيل دخول جوجل
+- **مستخدم وهمي**: تم إنشاء مستخدم تجريبي باسم المستخدم "demouser" لجميع المسارات المحمية
+- **الوصول للصفحات**: الرئيسية والمسلسلات والأشخاص والمفضلات والتفاصيل والطاقم وصفحات الموسم جميعها قابلة للوصول
+- **تكامل Replit**: تم ترحيل المشروع بنجاح للعمل في بيئة Replit
 
-## Future Enhancements
+## التحسينات المستقبلية
 
-The application has a roadmap for additional features including:
-- Episode-specific pages for detailed TV show content
-- User profile management and customization
-- Stripe payment integration for subscription management
-- Enhanced search filters and recommendation algorithms
-- Re-enable Google OAuth authentication when credentials are available
+التطبيق لديه خارطة طريق لميزات إضافية تشمل:
+- صفحات خاصة بالحلقات لمحتوى مسلسلات تلفزيونية مفصل
+- إدارة ملف تعريف المستخدم والتخصيص
+- تكامل دفع Stripe لإدارة الاشتراكات
+- مرشحات بحث محسنة وخوارزميات التوصية
+- إعادة تمكين مصادقة Google OAuth عند توفر بيانات الاعتماد
