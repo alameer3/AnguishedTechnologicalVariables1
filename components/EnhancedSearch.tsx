@@ -135,11 +135,46 @@ const EnhancedSearch: React.FC<EnhancedSearchProps> = ({
     onClose();
   };
 
-  // البحث الصوتي
+  // البحث الصوتي مع أنواع TypeScript آمنة
   const startVoiceSearch = () => {
     if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-      const SpeechRecognition = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition;
-      const recognition = new SpeechRecognition();
+      interface SpeechRecognitionEvent extends Event {
+        results: SpeechRecognitionResultList;
+      }
+
+      interface SpeechRecognitionResultList {
+        [index: number]: SpeechRecognitionResult;
+        length: number;
+      }
+
+      interface SpeechRecognitionResult {
+        [index: number]: SpeechRecognitionAlternative;
+        isFinal: boolean;
+        length: number;
+      }
+
+      interface SpeechRecognitionAlternative {
+        transcript: string;
+        confidence: number;
+      }
+
+      interface SpeechRecognitionConstructor {
+        new(): SpeechRecognition;
+      }
+
+      interface SpeechRecognition extends EventTarget {
+        lang: string;
+        interimResults: boolean;
+        maxAlternatives: number;
+        start(): void;
+        stop(): void;
+        onresult: ((event: SpeechRecognitionEvent) => void) | null;
+        onerror: ((event: Event) => void) | null;
+        onend: ((event: Event) => void) | null;
+      }
+
+      const SpeechRecognitionClass = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition as SpeechRecognitionConstructor;
+      const recognition = new SpeechRecognitionClass();
       
       recognition.lang = 'ar-SA';
       recognition.interimResults = false;
@@ -148,7 +183,7 @@ const EnhancedSearch: React.FC<EnhancedSearchProps> = ({
       setIsVoiceSearch(true);
       recognition.start();
 
-      recognition.onresult = (event: any) => {
+      recognition.onresult = (event: SpeechRecognitionEvent) => {
         const transcript = event.results[0][0].transcript;
         setSearchTerm(transcript);
         setIsVoiceSearch(false);

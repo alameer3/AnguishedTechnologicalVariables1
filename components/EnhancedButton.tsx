@@ -1,61 +1,108 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { forwardRef } from 'react';
+import { useAccessibility } from './AccessibilityProvider';
 
-interface EnhancedButtonProps {
-  children: React.ReactNode;
-  onClick?: () => void;
-  variant?: 'primary' | 'secondary' | 'outline';
+interface EnhancedButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: 'primary' | 'secondary' | 'danger' | 'ghost';
   size?: 'sm' | 'md' | 'lg';
-  icon?: React.ReactNode;
-  className?: string;
-  disabled?: boolean;
+  loading?: boolean;
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
+  fullWidth?: boolean;
+  children: React.ReactNode;
 }
 
-const EnhancedButton: React.FC<EnhancedButtonProps> = ({
-  children,
-  onClick,
-  variant = 'primary',
-  size = 'md',
-  icon,
-  className = '',
-  disabled = false
-}) => {
-  const baseClasses = "relative flex items-center justify-center gap-3 font-bold rounded-xl transition-all duration-300 shadow-lg hover:shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden";
-  
-  const variantClasses = {
-    primary: "bg-gradient-to-r from-red-600 to-red-500 text-white border-2 border-transparent hover:from-red-500 hover:to-red-400 hover:shadow-red-500/30",
-    secondary: "bg-gradient-to-r from-gray-800 to-gray-700 text-white border-2 border-gray-600 hover:border-red-500 hover:from-gray-700 hover:to-gray-600 hover:shadow-gray-500/30",
-    outline: "bg-transparent text-white border-2 border-white/30 hover:border-red-500 hover:bg-red-500/10 backdrop-blur-sm"
-  };
-  
-  const sizeClasses = {
-    sm: "px-4 py-2 text-sm",
-    md: "px-6 py-3 text-base",
-    lg: "px-8 py-4 text-lg md:px-12 md:py-5 md:text-xl"
-  };
+const EnhancedButton = forwardRef<HTMLButtonElement, EnhancedButtonProps>(
+  ({
+    variant = 'primary',
+    size = 'md',
+    loading = false,
+    leftIcon,
+    rightIcon,
+    fullWidth = false,
+    disabled,
+    className = '',
+    children,
+    onClick,
+    ...props
+  }, ref) => {
+    const { announceMessage } = useAccessibility();
 
-  return (
-    <motion.button
-      whileHover={{ 
-        scale: 1.05, 
-        y: -2,
-        boxShadow: "0 20px 40px rgba(0,0,0,0.4)"
-      }}
-      whileTap={{ 
-        scale: 0.98,
-        y: 0
-      }}
-      onClick={onClick}
-      disabled={disabled}
-      className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
-    >
-      {/* Background glow effect */}
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full hover:translate-x-full transition-transform duration-1000" />
+    const baseClasses = `
+      relative inline-flex items-center justify-center
+      font-medium rounded-lg transition-all duration-200
+      focus:outline-none focus:ring-2 focus:ring-offset-2
+      disabled:opacity-50 disabled:cursor-not-allowed
+      transform hover:scale-105 active:scale-95
+    `;
+
+    const variantClasses = {
+      primary: `
+        bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800
+        text-white shadow-lg hover:shadow-xl
+        focus:ring-red-500 focus:ring-offset-red-100
+      `,
+      secondary: `
+        bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800
+        text-white shadow-lg hover:shadow-xl
+        focus:ring-gray-500 focus:ring-offset-gray-100
+      `,
+      danger: `
+        bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700
+        text-white shadow-lg hover:shadow-xl
+        focus:ring-red-400 focus:ring-offset-red-50
+      `,
+      ghost: `
+        bg-transparent hover:bg-white/10 text-white border border-white/20
+        focus:ring-white/50 focus:ring-offset-transparent
+      `
+    };
+
+    const sizeClasses = {
+      sm: 'px-3 py-1.5 text-sm gap-1.5',
+      md: 'px-4 py-2 text-base gap-2',
+      lg: 'px-6 py-3 text-lg gap-2.5'
+    };
+
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+      if (loading || disabled) return;
       
-      {icon && <span className="relative z-10">{icon}</span>}
-      <span className="relative z-10">{children}</span>
-    </motion.button>
-  );
-};
+      announceMessage(`تم النقر على ${children}`);
+      onClick?.(e);
+    };
+
+    const classes = `
+      ${baseClasses}
+      ${variantClasses[variant]}
+      ${sizeClasses[size]}
+      ${fullWidth ? 'w-full' : ''}
+      ${className}
+    `;
+
+    return (
+      <button
+        ref={ref}
+        className={classes}
+        disabled={disabled || loading}
+        onClick={handleClick}
+        aria-busy={loading}
+        {...props}
+      >
+        {loading && (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+          </div>
+        )}
+        
+        <div className={`flex items-center gap-2 ${loading ? 'opacity-0' : 'opacity-100'}`}>
+          {leftIcon && <span className="flex-shrink-0">{leftIcon}</span>}
+          <span>{children}</span>
+          {rightIcon && <span className="flex-shrink-0">{rightIcon}</span>}
+        </div>
+      </button>
+    );
+  }
+);
+
+EnhancedButton.displayName = 'EnhancedButton';
 
 export default EnhancedButton;

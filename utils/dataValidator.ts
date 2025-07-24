@@ -31,72 +31,76 @@ export const sanitizeHTML = (text: string): string => {
 };
 
 // Validate movie/TV show data from TMDB API
-export const validateMovieData = (data: any): MovieData | null => {
+export const validateMovieData = (data: unknown): MovieData | null => {
   if (!data || typeof data !== 'object') return null;
   
+  const movieData = data as Record<string, any>;
+  
   // Required fields
-  if (!data.id || typeof data.id !== 'number') return null;
+  if (!movieData.id || typeof movieData.id !== 'number') return null;
   
   const validated: MovieData = {
-    id: data.id,
+    id: movieData.id,
   };
   
   // Optional fields with validation
-  if (data.title && typeof data.title === 'string') {
-    validated.title = sanitizeHTML(data.title);
+  if (movieData.title && typeof movieData.title === 'string') {
+    validated.title = sanitizeHTML(movieData.title);
   }
   
-  if (data.name && typeof data.name === 'string') {
-    validated.name = sanitizeHTML(data.name);
+  if (movieData.name && typeof movieData.name === 'string') {
+    validated.name = sanitizeHTML(movieData.name);
   }
   
-  if (data.overview && typeof data.overview === 'string') {
-    validated.overview = sanitizeHTML(data.overview);
+  if (movieData.overview && typeof movieData.overview === 'string') {
+    validated.overview = sanitizeHTML(movieData.overview);
   }
   
-  if (data.poster_path && typeof data.poster_path === 'string') {
-    validated.poster_path = data.poster_path;
+  if (movieData.poster_path && typeof movieData.poster_path === 'string') {
+    validated.poster_path = movieData.poster_path;
   }
   
-  if (data.backdrop_path && typeof data.backdrop_path === 'string') {
-    validated.backdrop_path = data.backdrop_path;
+  if (movieData.backdrop_path && typeof movieData.backdrop_path === 'string') {
+    validated.backdrop_path = movieData.backdrop_path;
   }
   
-  if (data.vote_average && typeof data.vote_average === 'number') {
-    validated.vote_average = Math.max(0, Math.min(10, data.vote_average));
+  if (movieData.vote_average && typeof movieData.vote_average === 'number') {
+    validated.vote_average = Math.max(0, Math.min(10, movieData.vote_average));
   }
   
-  if (data.release_date && typeof data.release_date === 'string') {
-    validated.release_date = data.release_date;
+  if (movieData.release_date && typeof movieData.release_date === 'string') {
+    validated.release_date = movieData.release_date;
   }
   
-  if (data.first_air_date && typeof data.first_air_date === 'string') {
-    validated.first_air_date = data.first_air_date;
+  if (movieData.first_air_date && typeof movieData.first_air_date === 'string') {
+    validated.first_air_date = movieData.first_air_date;
   }
   
   return validated;
 };
 
 // Validate person data from TMDB API
-export const validatePersonData = (data: any): PersonData | null => {
+export const validatePersonData = (data: unknown): PersonData | null => {
   if (!data || typeof data !== 'object') return null;
   
+  const personData = data as Record<string, any>;
+  
   // Required fields
-  if (!data.id || typeof data.id !== 'number') return null;
-  if (!data.name || typeof data.name !== 'string') return null;
+  if (!personData.id || typeof personData.id !== 'number') return null;
+  if (!personData.name || typeof personData.name !== 'string') return null;
   
   const validated: PersonData = {
-    id: data.id,
-    name: sanitizeHTML(data.name),
+    id: personData.id,
+    name: sanitizeHTML(personData.name),
   };
   
   // Optional fields
-  if (data.profile_path && typeof data.profile_path === 'string') {
-    validated.profile_path = data.profile_path;
+  if (personData.profile_path && typeof personData.profile_path === 'string') {
+    validated.profile_path = personData.profile_path;
   }
   
-  if (data.known_for_department && typeof data.known_for_department === 'string') {
-    validated.known_for_department = sanitizeHTML(data.known_for_department);
+  if (personData.known_for_department && typeof personData.known_for_department === 'string') {
+    validated.known_for_department = sanitizeHTML(personData.known_for_department);
   }
   
   return validated;
@@ -150,4 +154,36 @@ export const isAPICallAllowed = (endpoint: string): boolean => {
   
   apiCallCache.set(`${endpoint}-${now}`, now);
   return true;
+};
+
+// Content validation for different input types
+export const validateContent = (content: string, type: string): boolean => {
+  if (!content || typeof content !== 'string') return false;
+  
+  // Remove potentially dangerous patterns
+  const dangerousPatterns = [
+    /<script[^>]*>.*?<\/script>/gi,
+    /javascript:/gi,
+    /on\w+\s*=/gi,
+    /<iframe[^>]*>.*?<\/iframe>/gi,
+    /<object[^>]*>.*?<\/object>/gi,
+    /<embed[^>]*>/gi,
+    /data:text\/html/gi
+  ];
+  
+  for (const pattern of dangerousPatterns) {
+    if (pattern.test(content)) return false;
+  }
+  
+  // Type-specific validation
+  switch (type) {
+    case 'search':
+      return content.length <= 100 && content.trim().length > 0;
+    case 'feedback':
+      return content.length <= 1000 && content.trim().length > 0;
+    case 'general':
+      return content.length <= 500 && content.trim().length > 0;
+    default:
+      return true;
+  }
 };
