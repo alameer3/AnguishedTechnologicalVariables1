@@ -64,7 +64,17 @@ export default function Home({
 }
 
 export const getServerSideProps = async (context: any) => {
-  const session = await getSession(context);
+  // Create mock session to bypass authentication
+  const mockSession = {
+    user: {
+      name: "Demo User",
+      email: "demo@netflix.com",
+      image: "https://i.imgur.com/HeIi0wU.png",
+      username: "demouser",
+      uid: "demo-uid-12345"
+    }
+  };
+  const session = mockSession;
   const [
     netflixOriginals,
     trendingNow,
