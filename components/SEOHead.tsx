@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import DOMPurify from 'dompurify';
 
 interface SEOHeadProps {
   title?: string;
@@ -46,20 +47,35 @@ const SEOHead: React.FC<SEOHeadProps> = ({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "WebApplication",
-            "name": "YEMEN_FLIX",
-            "description": description,
-            "url": url,
-            "applicationCategory": "Entertainment",
-            "operatingSystem": "Web Browser",
-            "offers": {
-              "@type": "Offer",
-              "price": "0",
-              "priceCurrency": "USD"
-            }
-          })
+          __html: typeof window !== 'undefined' 
+            ? DOMPurify.sanitize(JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "WebApplication",
+                "name": "YEMEN_FLIX",
+                "description": description,
+                "url": url,
+                "applicationCategory": "Entertainment",
+                "operatingSystem": "Web Browser",
+                "offers": {
+                  "@type": "Offer",
+                  "price": "0",
+                  "priceCurrency": "USD"
+                }
+              }))
+            : JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "WebApplication",
+                "name": "YEMEN_FLIX",
+                "description": description,
+                "url": url,
+                "applicationCategory": "Entertainment",
+                "operatingSystem": "Web Browser",
+                "offers": {
+                  "@type": "Offer",
+                  "price": "0",
+                  "priceCurrency": "USD"
+                }
+              })
         }}
       />
     </Head>

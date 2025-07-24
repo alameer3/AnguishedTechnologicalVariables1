@@ -1,5 +1,5 @@
 // Error logging utility for production-safe error handling
-export const logError = (error: Error | unknown, context?: string) => {
+export const logError = (error: Error | string, context?: string) => {
   if (process.env.NODE_ENV === 'development') {
     // Error logged only in development mode
   }
@@ -8,7 +8,7 @@ export const logError = (error: Error | unknown, context?: string) => {
   // like Sentry, LogRocket, or similar
 };
 
-export const logInfo = (message: string, data?: unknown) => {
+export const logInfo = (message: string, data?: any) => {
   if (process.env.NODE_ENV === 'development') {
     // Info logged only in development mode
   }

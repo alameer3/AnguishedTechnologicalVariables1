@@ -173,7 +173,7 @@ const EnhancedSearch: React.FC<EnhancedSearchProps> = ({
         onend: ((event: Event) => void) | null;
       }
 
-      const SpeechRecognitionClass = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition as SpeechRecognitionConstructor;
+      const SpeechRecognitionClass = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition;
       const recognition = new SpeechRecognitionClass();
       
       recognition.lang = 'ar-SA';

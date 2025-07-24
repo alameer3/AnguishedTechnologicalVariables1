@@ -20,7 +20,7 @@ const ImprovedSkeleton: React.FC<ImprovedSkeletonProps> = ({
     backgroundPosition: ['200% 0', '-200% 0'],
     transition: {
       duration: 2,
-      ease: 'linear',
+      ease: 'linear' as const,
       repeat: Infinity,
     }
   };

@@ -53,9 +53,14 @@ export const AccessibilityProvider: React.FC<AccessibilityProviderProps> = ({ ch
   const announceMessage = (message: string) => {
     if (announcer) {
       announcer.textContent = message;
-      setTimeout(() => {
-        announcer.textContent = '';
+      const timeoutId = setTimeout(() => {
+        if (announcer) {
+          announcer.textContent = '';
+        }
       }, 1000);
+      
+      // تنظيف timeout عند إلغاء تحميل المكون
+      return () => clearTimeout(timeoutId);
     }
   };
 

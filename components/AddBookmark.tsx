@@ -72,7 +72,7 @@ function AddBookmark({ movieDetails }: Props) {
             "netflixUsers",
             (session?.user as { uid?: string })?.uid || "demouser",
             "likeMovie",
-            movieDetails?.id?.toString() || "unknown"
+            movieDetails?.id?.toString() || "0"
           )
         );
       } else {
@@ -81,7 +81,7 @@ function AddBookmark({ movieDetails }: Props) {
           "netflixUsers",
           (session?.user as { uid?: string })?.uid || "demouser",
           "likeMovie",
-          movieDetails?.id?.toString() || "unknown"
+          movieDetails?.id?.toString() || "0"
         );
         setDoc(userRef, JSON.parse(JSON.stringify(movieDetails)));
       }

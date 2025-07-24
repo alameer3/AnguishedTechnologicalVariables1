@@ -13,7 +13,15 @@ import { PopularTyping } from "../typings";
 import { firestore } from "../firebase/firebase";
 
 type Props = {
-  castPerson: { id: number; name?: string; profile_path?: string; [key: string]: unknown };
+  castPerson: { 
+    id: number; 
+    name?: string; 
+    profile_path?: string; 
+    biography?: string;
+    birthday?: string;
+    place_of_birth?: string;
+    known_for_department?: string;
+  };
 };
 
 interface LikeDocument {

@@ -206,7 +206,7 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
 };
 
 // دالة debounce للحد من طلبات API
-function debounce<T extends (...args: unknown[]) => unknown>(func: T, wait: number): T {
+function debounce<T extends (...args: any[]) => any>(func: T, wait: number): T {
   let timeout: NodeJS.Timeout;
   return ((...args: Parameters<T>) => {
     clearTimeout(timeout);
