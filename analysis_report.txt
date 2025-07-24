@@ -1,0 +1,126 @@
+=== تحليل شامل لملف site_links.txt ===
+تاريخ التحليل: Thu Jul 24 09:25:10 PM UTC 2025
+====================================
+
+إجمالي الروابط: 18114
+الروابط الفريدة: 18109
+
+=== التصنيف حسب النوع ===
+الصفحات الرئيسية: 11
+صفحات الأفلام: 7333
+صفحات المسلسلات: 3586
+صفحات العروض: 480
+صفحات المنوعات: 31
+صفحات الحلقات: 2068
+الروابط المرجعية (Fragments): 6
+الصفحات الثابتة: 4
+
+=== تحليل مفصل للأفلام ===
+https://ak.sv/movie/9915/spiders-on-a-plane
+https://ak.sv/movie/1001/hacked
+https://ak.sv/movie/1002/miracle-in-cell-no-7
+https://ak.sv/movie/1004/love-wedding-repeat
+https://ak.sv/movie/1005/the-main-event
+https://ak.sv/movie/1006/we-summon-the-darkness-1
+https://ak.sv/movie/1007/in-the-trap
+https://ak.sv/movie/1008/kurtlar-vadisi-filistin
+https://ak.sv/movie/1011/blush
+https://ak.sv/movie/1012/8slices
+https://ak.sv/movie/1013/the-lost-husband
+https://ak.sv/movie/1018/let-me-in
+https://ak.sv/movie/1019/the-proposal
+https://ak.sv/movie/1021/seetharama-kalyana
+https://ak.sv/movie/1022/khamiyaza
+https://ak.sv/movie/1023/ÙÙÙ-ÙÙÙÙØ©-4
+https://ak.sv/movie/1024/robert-the-bruce
+https://ak.sv/movie/1025/over-the-hedge
+https://ak.sv/movie/1026/the-roads-not-taken
+https://ak.sv/movie/1027/bamfaad
+
+=== عينة من المسلسلات ===
+https://ak.sv/series/4960/%D8%AD%D8%B1%D8%A8-%D8%A7%D9%84%D8%AC%D8%A8%D8%A7%D9%84%D9%8A
+https://ak.sv/series/1000/criminal-minds-Ø§ÙÙÙØ³Ù-Ø§ÙØ§ÙÙ-15
+https://ak.sv/series/1001/criminal-minds-Ø§ÙÙÙØ³Ù-Ø§ÙØ«Ø§ÙÙ-12
+https://ak.sv/series/1003/vinland-saga-Ø§ÙÙÙØ³Ù-Ø§ÙØ§ÙÙ
+https://ak.sv/series/1004/scissor-seven-Ø§ÙÙÙØ³Ù-Ø§ÙØ§ÙÙ
+https://ak.sv/series/1005/evim-Ø§ÙÙÙØ³Ù-Ø§ÙØ«Ø§ÙÙ
+https://ak.sv/series/1006/guten-morgen-vernica-Ø§ÙÙÙØ³Ù-Ø§ÙØ§ÙÙ
+https://ak.sv/series/1007/oktoberfest-beer-blood-Ø§ÙÙÙØ³Ù-Ø§ÙØ§ÙÙ
+https://ak.sv/series/1010/the-walking-dead-world-beyond-Ø§ÙÙÙØ³Ù-Ø§ÙØ§ÙÙ
+https://ak.sv/series/1011/song-exploder-Ø§ÙÙÙØ³Ù-Ø§ÙØ§ÙÙ
+https://ak.sv/series/1012/emily-in-paris-Ø§ÙÙÙØ³Ù-Ø§ÙØ§ÙÙ-1
+https://ak.sv/series/1017/dragon-quest-dai-no-daibouken-Ø§ÙÙÙØ³Ù-Ø§ÙØ§ÙÙ-12
+https://ak.sv/series/1018/carmen-sandiego-Ø§ÙÙÙØ³Ù-Ø§ÙØ§ÙÙ
+https://ak.sv/series/1019/carmen-sandiego-Ø§ÙÙÙØ³Ù-Ø§ÙØ«Ø§ÙÙ
+https://ak.sv/series/1020/apache-la-vida-de-carlos-tevez-1
+https://ak.sv/series/1021/Ø£ÙÙ-Ø¯ÙØ§Ù-ÙØ§ÙØ¹ÙØ§Ù
+https://ak.sv/series/1022/Ø´ÙØ§Ø¯Ø©-ÙÙÙØ§Ø¯-Ø§ÙÙÙØ³Ù-Ø§ÙØ«Ø§ÙÙ-1
+https://ak.sv/series/1028/next-Ø§ÙÙÙØ³Ù-Ø§ÙØ§ÙÙ
+https://ak.sv/series/1029/pandora-Ø§ÙÙÙØ³Ù-Ø§ÙØ«Ø§ÙÙ
+https://ak.sv/series/1030/white-wall-Ø§ÙÙÙØ³Ù-Ø§ÙØ§ÙÙ
+
+=== عينة من العروض ===
+https://ak.sv/shows/2807/wwe-saturday-nights-main-event-12-07-2025-%D9%85%D8%AA%D8%B1%D8%AC%D9%85
+https://ak.sv/shows/1009/Ø§ÙÙØ°Ø§ÙÙ-Ø§ÙØ£ÙØ§Ù-Ø§ÙØ§Ø®ÙØ±Ø©
+https://ak.sv/shows/1010/wwe-nxtÂ 2021-04-21
+https://ak.sv/shows/1013/last-breath
+https://ak.sv/shows/1019/wwe-nxtÂ 2021-04-28
+https://ak.sv/shows/1022/wwe-friday-night-smackdown-2021-04-30
+https://ak.sv/shows/1026/oga-kazuo-exhibition
+https://ak.sv/shows/1029/aew-dynamite-2021-05-05
+https://ak.sv/shows/1052/a-man-returned
+https://ak.sv/shows/1060/ÙØµØ©-Ø§ÙØ±ÙÙØ§
+https://ak.sv/shows/1061/why-we-fight-prelude-to-war
+https://ak.sv/shows/1063/Ø£ÙØ§Ø¨ÙØ¯Ø§
+https://ak.sv/shows/1064/notturno
+https://ak.sv/shows/1066/Ø³ÙØ©-ÙØ¹-Ø§ÙØ´ØºÙ-Ø§ÙÙØ°ÙØ°
+https://ak.sv/shows/1067/wwe-monday-night-raw-2021-05-24
+
+=== تحليل الحلقات - أشهر المسلسلات ===
+      2 88489
+      2 88488
+      2 88288
+      2 88209
+      2 88208
+      2 88134
+      2 88133
+      1 9361
+      1 9244
+      1 9068
+      1 8989
+      1 8979
+      1 88566
+      1 88565
+      1 88564
+      1 88563
+      1 88562
+      1 88559
+      1 88558
+      1 88557
+
+=== الروابط المرجعية (Fragments) ===
+https://ak.sv/#downloads
+https://ak.sv/#series-episodes
+https://ak.sv/#show-episodes
+https://ak.sv/#tab-3
+https://ak.sv/#tab-4
+https://ak.sv/#tab-5
+
+=== الصفحات الثابتة والإدارية ===
+https://ak.sv/AKWAM-Notifications
+https://ak.sv/ad-policy
+https://ak.sv/contactus
+https://ak.sv/dmca
+
+=== تحليل أنماط URL المختلفة ===
+نطاق أرقام الأفلام:
+227
+9959
+نطاق أرقام المسلسلات:
+21
+5011
+
+=== تحليل المحتوى حسب اللغة ===
+الروابط بمحتوى عربي: 0
+الروابط بمحتوى لاتيني: 0
+
