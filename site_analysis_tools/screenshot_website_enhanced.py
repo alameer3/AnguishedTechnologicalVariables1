@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-أداة تحليل وأخذ لقطات شاشة شاملة للمواقع - نسخة محدثة ومحسنة
-Enhanced Website Screenshot and Analysis Tool - Updated Version
+أداة تحليل وأخذ لقطات شاشة شاملة للمواقع
+Enhanced Website Screenshot and Analysis Tool
 مطور خصيصاً لبيئة Replit مع دعم كامل للقطات الشاشة PNG
 يقرأ الروابط من ملف روابط_AKWAM_ترتيب_هرمي_شامل.txt
 """
@@ -29,7 +29,7 @@ import time
 import logging
 
 # =====================================================
-# إعداد نظام تسجيل الأخطاء والتكوين الأساسي
+# 1. إعداد نظام تسجيل الأخطاء والتكوين الأساسي
 # =====================================================
 
 logging.basicConfig(
@@ -52,8 +52,9 @@ class ScreenshotConfig:
         self.links_file = "روابط_AKWAM_ترتيب_هرمي_شامل.txt"
         
         # إعدادات التحليل
-        self.max_depth = 2
-        self.max_pages = 100
+        self.max_depth = 3
+        self.max_pages = 200
+        self.max_links_per_batch = 50
         self.screenshot_delay = 2
         self.timeout = 30000
         
@@ -61,10 +62,24 @@ class ScreenshotConfig:
         self.viewport_width = 1920
         self.viewport_height = 1080
         self.screenshot_quality = 90
+        self.full_page_screenshot = True
         self.screenshot_format = 'png'
         
         # إعدادات الأداء
+        self.concurrent_requests = 3
+        self.retry_attempts = 3
         self.delay_between_requests = 1
+        
+        # إعدادات المحتوى
+        self.save_html = True
+        self.save_assets = True
+        self.analyze_cms = True
+        self.check_broken_links = True
+        self.generate_sitemap = True
+
+# =====================================================
+# 2. المتغيرات العامة وإنشاء المجلدات
+# =====================================================
 
 config = ScreenshotConfig()
 ua = UserAgent()
@@ -81,6 +96,7 @@ screenshot_stats = {
     'total_assets_downloaded': 0,
     'start_time': None,
     'end_time': None,
+    'duration_seconds': 0,
     'links_from_file': 0,
     'links_discovered': 0
 }
@@ -100,14 +116,60 @@ def create_directory_structure():
         os.path.join(config.output_root, "assets", "docs"),
         os.path.join(config.output_root, "assets", "others"),
         os.path.join(config.output_root, "metadata"),
-        os.path.join(config.output_root, "reports")
+        os.path.join(config.output_root, "reports"),
+        os.path.join(config.output_root, "broken_links"),
+        os.path.join(config.output_root, "cms_detection")
     ]
     
     for directory in directories:
         os.makedirs(directory, exist_ok=True)
+        
+    logger.info(f"✅ تم إنشاء هيكل المجلدات في: {config.output_root}")
 
 # إنشاء المجلدات عند تحميل الوحدة
 create_directory_structure()
+
+# =====================================================
+# 3. وظائف معالجة الملفات والنصوص
+# =====================================================
+
+def sanitize_path(url):
+    """تنظيف مسار URL لاستخدامه كاسم مجلد"""
+    try:
+        parsed = urlparse(url)
+        path = parsed.path.strip("/").replace("/", "_") or "home"
+        query = parsed.query
+        
+        # تنظيف المسار من الأحرف الخاصة
+        safe_path = re.sub(r'[^\w\-_.]', '_', path)
+        safe_path = re.sub(r'_+', '_', safe_path).strip('_')
+        
+        # إضافة معلومات الاستعلام إذا وجدت
+        if query:
+            safe_query = re.sub(r'[^\w\-_.]', '_', query)[:50]  # تحديد طول الاستعلام
+            safe_path += f"_q_{safe_query}"
+        
+        # تحديد طول النهائي
+        return safe_path[:100] if safe_path else "unknown_page"
+        
+    except Exception as e:
+        logger.error(f"خطأ في تنظيف المسار {url}: {e}")
+        return f"page_{len(visited)}"
+
+def create_safe_filename(text, max_length=100):
+    """إنشاء اسم ملف آمن من النص"""
+    if not text:
+        return "unknown"
+    
+    # تنظيف النص من الأحرف الخاصة
+    safe_name = re.sub(r'[^\w\-_.أ-ي]', '_', str(text))
+    safe_name = re.sub(r'_+', '_', safe_name).strip('_')
+    
+    # تحديد الطول
+    if len(safe_name) > max_length:
+        safe_name = safe_name[:max_length]
+    
+    return safe_name or "unknown"
 
 def load_links_from_file(file_path):
     """تحميل الروابط من ملف النص"""
@@ -139,42 +201,9 @@ def load_links_from_file(file_path):
         logger.error(f"❌ خطأ في قراءة الملف {file_path}: {e}")
         return []
 
-def sanitize_path(url):
-    """تنظيف مسار URL لاستخدامه كاسم مجلد"""
-    try:
-        parsed = urlparse(url)
-        path = parsed.path.strip("/").replace("/", "_") or "home"
-        query = parsed.query
-        
-        # تنظيف المسار من الأحرف الخاصة
-        safe_path = re.sub(r'[^\w\-_.]', '_', path)
-        safe_path = re.sub(r'_+', '_', safe_path).strip('_')
-        
-        # إضافة معلومات الاستعلام إذا وجدت
-        if query:
-            safe_query = re.sub(r'[^\w\-_.]', '_', query)[:50]
-            safe_path += f"_q_{safe_query}"
-        
-        return safe_path[:100] if safe_path else "unknown_page"
-        
-    except Exception as e:
-        logger.error(f"خطأ في تنظيف المسار {url}: {e}")
-        return f"page_{len(visited)}"
-
-def create_safe_filename(text, max_length=100):
-    """إنشاء اسم ملف آمن من النص"""
-    if not text:
-        return "unknown"
-    
-    # تنظيف النص من الأحرف الخاصة
-    safe_name = re.sub(r'[^\w\-_.أ-ي]', '_', str(text))
-    safe_name = re.sub(r'_+', '_', safe_name).strip('_')
-    
-    # تحديد الطول
-    if len(safe_name) > max_length:
-        safe_name = safe_name[:max_length]
-    
-    return safe_name or "unknown"
+# =====================================================
+# 4. وظائف حفظ المحتوى والأصول
+# =====================================================
 
 def save_html(content, folder):
     """حفظ محتوى HTML في مجلد محدد"""
@@ -199,23 +228,29 @@ def save_html(content, folder):
         return None
 
 def get_asset_folder_by_mime(mime):
+    """تحديد مجلد الحفظ حسب نوع الملف"""
     if not mime:
         return "others"
-    if mime.startswith("image/"):
+    
+    mime_lower = mime.lower()
+    
+    if mime_lower.startswith("image/"):
         return "images"
-    if mime.startswith("font/") or mime in ["application/font-woff", "application/font-woff2"]:
+    elif mime_lower.startswith("font/") or mime_lower in ["application/font-woff", "application/font-woff2"]:
         return "fonts"
-    if mime == "text/css":
+    elif mime_lower == "text/css":
         return "css"
-    if mime == "application/javascript" or mime == "text/javascript":
+    elif mime_lower in ["application/javascript", "text/javascript"]:
         return "js"
-    if mime.startswith("video/"):
+    elif mime_lower.startswith("video/"):
         return "videos"
-    if mime.startswith("audio/"):
+    elif mime_lower.startswith("audio/"):
         return "audios"
-    if mime in ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"]:
+    elif mime_lower in ["application/pdf", "application/msword", 
+                       "application/vnd.openxmlformats-officedocument.wordprocessingml.document"]:
         return "docs"
-    return "others"
+    else:
+        return "others"
 
 def save_binary(url, page_folder):
     """تحميل وحفظ الملفات الثنائية (الصور، CSS، JS، إلخ)"""
@@ -304,6 +339,10 @@ def extract_assets(soup, page_folder, page_url):
         logger.error(f"خطأ في حفظ معلومات الأصول: {e}")
     
     return extracted_assets
+
+# =====================================================
+# 5. وظائف استخراج البيانات الوصفية
+# =====================================================
 
 def get_meta_info(soup):
     """استخراج جميع معلومات Meta من الصفحة"""
@@ -402,6 +441,77 @@ def detect_cms(headers, soup):
         logger.error(f"خطأ في كشف CMS: {e}")
         return ["Error in Detection"]
 
+def extract_page_structure(soup):
+    """استخراج هيكل الصفحة وتحليل المحتوى"""
+    structure = {
+        'headings': {},
+        'links': [],
+        'images': [],
+        'forms': [],
+        'tables': [],
+        'lists': [],
+        'paragraphs_count': 0,
+        'word_count': 0
+    }
+    
+    try:
+        # استخراج العناوين
+        for i in range(1, 7):
+            headings = soup.find_all(f'h{i}')
+            structure['headings'][f'h{i}'] = [h.get_text(strip=True) for h in headings]
+        
+        # استخراج الروابط
+        for link in soup.find_all('a', href=True):
+            structure['links'].append({
+                'href': link.get('href'),
+                'text': link.get_text(strip=True),
+                'title': link.get('title', '')
+            })
+        
+        # استخراج الصور
+        for img in soup.find_all('img'):
+            structure['images'].append({
+                'src': img.get('src', ''),
+                'alt': img.get('alt', ''),
+                'title': img.get('title', ''),
+                'width': img.get('width', ''),
+                'height': img.get('height', '')
+            })
+        
+        # استخراج النماذج
+        for form in soup.find_all('form'):
+            inputs = [inp.get('type', 'text') for inp in form.find_all('input')]
+            structure['forms'].append({
+                'action': form.get('action', ''),
+                'method': form.get('method', 'get'),
+                'inputs': inputs
+            })
+        
+        # استخراج الجداول
+        for table in soup.find_all('table'):
+            rows = len(table.find_all('tr'))
+            cols = len(table.find_all('th')) or len(table.find_all('td')[:1])
+            structure['tables'].append({
+                'rows': rows,
+                'columns': cols
+            })
+        
+        # حساب الفقرات والكلمات
+        paragraphs = soup.find_all('p')
+        structure['paragraphs_count'] = len(paragraphs)
+        
+        text_content = soup.get_text()
+        structure['word_count'] = len(text_content.split())
+        
+    except Exception as e:
+        logger.error(f"خطأ في استخراج هيكل الصفحة: {e}")
+    
+    return structure
+
+# =====================================================
+# 6. وظائف فحص الروابط المعطلة
+# =====================================================
+
 def check_links(links):
     """فحص الروابط المعطلة"""
     broken_links = []
@@ -430,6 +540,109 @@ def check_links(links):
             })
     
     return broken_links
+
+# =====================================================
+# 7. وظائف أخذ لقطات الشاشة المتقدمة
+# =====================================================
+
+async def take_enhanced_screenshot(page, page_folder, url):
+    """أخذ لقطات شاشة متقدمة ومتعددة"""
+    screenshots_taken = []
+    
+    try:
+        # إنشاء مجلد لقطات الشاشة
+        screenshots_folder = os.path.join(page_folder, "screenshots")
+        os.makedirs(screenshots_folder, exist_ok=True)
+        
+        # انتظار تحميل الصفحة بالكامل
+        await asyncio.sleep(config.screenshot_delay)
+        
+        # لقطة شاشة كاملة للصفحة
+        full_screenshot_path = os.path.join(screenshots_folder, "full_page.png")
+        await page.screenshot(
+            path=full_screenshot_path, 
+            full_page=True,
+            type=config.screenshot_format
+        )
+        screenshots_taken.append(full_screenshot_path)
+        
+        # لقطة شاشة للجزء المرئي فقط
+        viewport_screenshot_path = os.path.join(screenshots_folder, "viewport.png")
+        await page.screenshot(
+            path=viewport_screenshot_path,
+            full_page=False,
+            type=config.screenshot_format
+        )
+        screenshots_taken.append(viewport_screenshot_path)
+        
+        # لقطة شاشة للموبايل (عرض ضيق)
+        await page.set_viewport_size({'width': 375, 'height': 667})
+        mobile_screenshot_path = os.path.join(screenshots_folder, "mobile_view.png")
+        await page.screenshot(
+            path=mobile_screenshot_path,
+            full_page=True,
+            type=config.screenshot_format
+        )
+        screenshots_taken.append(mobile_screenshot_path)
+        
+        # إعادة تعيين حجم العرض الأصلي
+        await page.set_viewport_size({
+            'width': config.viewport_width, 
+            'height': config.viewport_height
+        })
+        
+        # تحسين جودة الصور
+        await optimize_screenshots(screenshots_folder)
+        
+        screenshot_stats['successful_screenshots'] += 1
+        screenshot_stats['total_screenshots'] += len(screenshots_taken)
+        
+        logger.info(f"✅ تم أخذ {len(screenshots_taken)} لقطة شاشة لـ {url}")
+        return screenshots_taken
+        
+    except Exception as e:
+        logger.error(f"❌ فشل في أخذ لقطة شاشة لـ {url}: {e}")
+        screenshot_stats['failed_screenshots'] += 1
+        failed_urls.append({
+            'url': url,
+            'error': str(e),
+            'timestamp': datetime.now().isoformat(),
+            'error_type': 'screenshot_error'
+        })
+        return []
+
+async def optimize_screenshots(screenshots_folder):
+    """تحسين جودة وحجم لقطات الشاشة"""
+    try:
+        for filename in os.listdir(screenshots_folder):
+            if filename.endswith('.png'):
+                filepath = os.path.join(screenshots_folder, filename)
+                
+                # فتح الصورة وتحسينها
+                with Image.open(filepath) as img:
+                    # تحويل إلى RGB إذا لزم الأمر
+                    if img.mode in ('RGBA', 'LA', 'P'):
+                        background = Image.new('RGB', img.size, (255, 255, 255))
+                        if img.mode == 'P':
+                            img = img.convert('RGBA')
+                        background.paste(img, mask=img.split()[-1] if img.mode == 'RGBA' else None)
+                        img = background
+                    
+                    # حفظ بجودة محسنة
+                    optimized_path = os.path.join(screenshots_folder, f"opt_{filename}")
+                    img.save(optimized_path, 'PNG', optimize=True, quality=config.screenshot_quality)
+                    
+                    # إنشاء thumbnail
+                    img.thumbnail((300, 200), Image.Resampling.LANCZOS)
+                    thumbnail_path = os.path.join(screenshots_folder, f"thumb_{filename}")
+                    img.save(thumbnail_path, 'PNG')
+                    
+    except Exception as e:
+        logger.error(f"خطأ في تحسين لقطات الشاشة: {e}")
+
+# =====================================================
+# 8. الوظيفة الرئيسية للزحف والتحليل
+# =====================================================
 
 async def crawl(page, url, depth=0):
     """الوظيفة الرئيسية للزحف وتحليل الصفحات"""
@@ -464,55 +677,40 @@ async def crawl(page, url, depth=0):
         page_folder = os.path.join(config.output_root, sanitize_path(url))
         os.makedirs(page_folder, exist_ok=True)
         
-        # حفظ HTML
-        save_html(content, page_folder)
+        # حفظ HTML إذا كان مفعل
+        if config.save_html:
+            save_html(content, page_folder)
         
-        # أخذ لقطات الشاشة المتعددة
-        screenshots_folder = os.path.join(page_folder, "screenshots")
-        os.makedirs(screenshots_folder, exist_ok=True)
-        
-        # انتظار تحميل الصفحة بالكامل
-        await asyncio.sleep(config.screenshot_delay)
-        
-        # لقطة شاشة كاملة للصفحة
-        full_screenshot_path = os.path.join(screenshots_folder, "full_page.png")
-        await page.screenshot(
-            path=full_screenshot_path, 
-            full_page=True,
-            type=config.screenshot_format
-        )
-        
-        # لقطة شاشة للجزء المرئي فقط
-        viewport_screenshot_path = os.path.join(screenshots_folder, "viewport.png")
-        await page.screenshot(
-            path=viewport_screenshot_path,
-            full_page=False,
-            type=config.screenshot_format
-        )
-        
-        screenshot_stats['successful_screenshots'] += 1
-        screenshot_stats['total_screenshots'] += 2
+        # أخذ لقطات الشاشة
+        screenshots = await take_enhanced_screenshot(page, page_folder, url)
         
         # تحليل المحتوى باستخدام BeautifulSoup
         soup = BeautifulSoup(content, "html.parser")
         
-        # استخراج الأصول
-        extracted_assets = extract_assets(soup, page_folder, url)
+        # استخراج الأصول إذا كان مفعل
+        if config.save_assets:
+            extracted_assets = extract_assets(soup, page_folder, url)
         
         # استخراج البيانات الوصفية
         meta_info = get_meta_info(soup)
         with open(os.path.join(page_folder, "meta_info.json"), "w", encoding="utf-8") as f:
             json.dump(meta_info, f, ensure_ascii=False, indent=2)
         
-        # كشف نظام إدارة المحتوى
-        cms_detected = detect_cms(headers, soup)
-        cms_info = {
-            'detected_cms': cms_detected,
-            'confidence': 'high' if len(cms_detected) == 1 else 'medium',
-            'detection_time': datetime.now().isoformat()
-        }
-        with open(os.path.join(page_folder, "cms_info.json"), "w", encoding="utf-8") as f:
-            json.dump(cms_info, f, ensure_ascii=False, indent=2)
+        # كشف نظام إدارة المحتوى إذا كان مفعل
+        if config.analyze_cms:
+            cms_detected = detect_cms(headers, soup)
+            cms_info = {
+                'detected_cms': cms_detected,
+                'confidence': 'high' if len(cms_detected) == 1 else 'medium',
+                'detection_time': datetime.now().isoformat()
+            }
+            with open(os.path.join(page_folder, "cms_info.json"), "w", encoding="utf-8") as f:
+                json.dump(cms_info, f, ensure_ascii=False, indent=2)
+        
+        # استخراج هيكل الصفحة
+        page_structure = extract_page_structure(soup)
+        with open(os.path.join(page_folder, "page_structure.json"), "w", encoding="utf-8") as f:
+            json.dump(page_structure, f, ensure_ascii=False, indent=2)
         
         # إضافة الصفحة إلى sitemap
         sitemap_urls.append(url)
@@ -531,8 +729,8 @@ async def crawl(page, url, depth=0):
                     if parsed_next.netloc == parsed_base.netloc:
                         internal_links.append(next_url)
         
-        # فحص الروابط المعطلة
-        if internal_links:
+        # فحص الروابط المعطلة إذا كان مفعل
+        if config.check_broken_links and internal_links:
             broken_links = check_links(internal_links[:10])  # فحص أول 10 روابط
             if broken_links:
                 with open(os.path.join(page_folder, "broken_links.json"), "w", encoding="utf-8") as f:
@@ -545,11 +743,15 @@ async def crawl(page, url, depth=0):
             'processing_time': datetime.now().isoformat(),
             'status_code': response.status,
             'content_length': len(content),
-            'screenshots_taken': 2,
-            'assets_extracted': len(extracted_assets),
+            'screenshots_count': len(screenshots),
+            'assets_extracted': len(extracted_assets) if config.save_assets else 0,
             'internal_links_found': len(internal_links),
-            'cms_detected': cms_detected,
-            'meta_tags_count': len(meta_info)
+            'cms_detected': cms_detected if config.analyze_cms else [],
+            'meta_tags_count': len(meta_info),
+            'headings_count': sum(len(headings) for headings in page_structure['headings'].values()),
+            'images_count': len(page_structure['images']),
+            'forms_count': len(page_structure['forms']),
+            'word_count': page_structure['word_count']
         }
         
         with open(os.path.join(page_folder, "page_summary.json"), "w", encoding="utf-8") as f:
@@ -557,12 +759,12 @@ async def crawl(page, url, depth=0):
         
         processed_links.append(page_summary)
         
-        logger.info(f"✅ تمت معالجة: {url} | العمق: {depth} | CMS: {cms_detected}")
+        logger.info(f"✅ تمت معالجة: {url} | العمق: {depth} | CMS: {cms_detected if config.analyze_cms else 'غير مفعل'}")
         
         # الزحف للروابط الفرعية (محدود العدد)
         for link in internal_links[:3]:  # أول 3 روابط فقط لكل صفحة
             if len(visited) < config.max_pages:
-                await asyncio.sleep(config.delay_between_requests)
+                await asyncio.sleep(config.delay_between_requests)  # تأخير بين الطلبات
                 await crawl(page, link, depth + 1)
             else:
                 break
@@ -570,7 +772,6 @@ async def crawl(page, url, depth=0):
     except PlaywrightTimeoutError:
         error_msg = f"انتهت مهلة تحميل الصفحة: {url}"
         logger.error(f"⏰ {error_msg}")
-        screenshot_stats['failed_screenshots'] += 1
         failed_urls.append({
             'url': url,
             'error': 'timeout',
@@ -581,13 +782,16 @@ async def crawl(page, url, depth=0):
     except Exception as e:
         error_msg = f"خطأ في معالجة {url}: {str(e)}"
         logger.error(f"❌ {error_msg}")
-        screenshot_stats['failed_screenshots'] += 1
         failed_urls.append({
             'url': url,
             'error': str(e),
             'timestamp': datetime.now().isoformat(),
             'error_type': 'general_error'
         })
+
+# =====================================================
+# 9. وظائف إنشاء التقارير والخرائط
+# =====================================================
 
 def save_sitemap(urls, filename="sitemap.xml"):
     """إنشاء وحفظ خريطة الموقع XML"""
@@ -625,9 +829,7 @@ async def generate_comprehensive_report():
         screenshot_stats['end_time'] = datetime.now()
         if screenshot_stats['start_time']:
             duration = screenshot_stats['end_time'] - screenshot_stats['start_time']
-            duration_seconds = duration.total_seconds()
-        else:
-            duration_seconds = 0
+            screenshot_stats['duration_seconds'] = duration.total_seconds()
         
         # تقرير مفصل
         comprehensive_report = {
@@ -636,8 +838,8 @@ async def generate_comprehensive_report():
                     'الموقع_المستهدف': config.base_url,
                     'وقت_البدء': screenshot_stats['start_time'].isoformat() if screenshot_stats['start_time'] else None,
                     'وقت_الانتهاء': screenshot_stats['end_time'].isoformat(),
-                    'مدة_التحليل_بالثواني': duration_seconds,
-                    'مدة_التحليل_بالدقائق': round(duration_seconds / 60, 2)
+                    'مدة_التحليل_بالثواني': screenshot_stats['duration_seconds'],
+                    'مدة_التحليل_بالدقائق': round(screenshot_stats['duration_seconds'] / 60, 2)
                 },
                 'إحصائيات_الصفحات': {
                     'إجمالي_الصفحات_المعالجة': screenshot_stats['total_pages_processed'],
@@ -654,26 +856,99 @@ async def generate_comprehensive_report():
                 },
                 'إحصائيات_الأصول': {
                     'إجمالي_الأصول_المحملة': screenshot_stats['total_assets_downloaded']
+                },
+                'إعدادات_التحليل': {
+                    'الحد_الأقصى_للصفحات': config.max_pages,
+                    'العمق_الأقصى': config.max_depth,
+                    'حفظ_HTML': config.save_html,
+                    'حفظ_الأصول': config.save_assets,
+                    'تحليل_CMS': config.analyze_cms,
+                    'فحص_الروابط_المعطلة': config.check_broken_links,
+                    'إنشاء_sitemap': config.generate_sitemap
                 }
             },
             'تفاصيل_الصفحات_المعالجة': processed_links,
             'الأخطاء_والمشاكل': {
                 'الروابط_الفاشلة': failed_urls,
                 'إجمالي_الأخطاء': len(failed_urls)
+            },
+            'الملفات_المُنشأة': {
+                'مجلد_النتائج_الرئيسي': config.output_root,
+                'مجلد_لقطات_الشاشة': config.screenshots_root,
+                'مجلد_HTML': os.path.join(config.output_root, "html_pages"),
+                'مجلد_الأصول': os.path.join(config.output_root, "assets"),
+                'مجلد_البيانات_الوصفية': os.path.join(config.output_root, "metadata"),
+                'خريطة_الموقع': os.path.join(config.output_root, "sitemap.xml")
             }
         }
         
         # حفظ التقرير المفصل
         report_file = os.path.join(config.output_root, "reports", "comprehensive_report.json")
-        os.makedirs(os.path.dirname(report_file), exist_ok=True)
-        
         async with aiofiles.open(report_file, 'w', encoding='utf-8') as f:
             await f.write(json.dumps(comprehensive_report, ensure_ascii=False, indent=2))
         
+        # إنشاء تقرير نصي مبسط
+        text_report = f"""
+╔══════════════════════════════════════════════════════════════╗
+║                    تقرير تحليل الموقع الشامل                    ║
+╚══════════════════════════════════════════════════════════════╝
+
+🌐 الموقع المحلل: {config.base_url}
+📅 تاريخ التحليل: {screenshot_stats['end_time'].strftime('%Y-%m-%d %H:%M:%S')}
+⏱️ مدة التحليل: {round(screenshot_stats['duration_seconds'] / 60, 2)} دقيقة
+
+📊 إحصائيات عامة:
+═══════════════════
+✅ الصفحات المعالجة بنجاح: {screenshot_stats['total_pages_processed']}
+📄 الروابط من الملف: {screenshot_stats['links_from_file']}
+🔍 الروابط المكتشفة: {len(visited) - screenshot_stats['links_from_file']}
+❌ الصفحات الفاشلة: {len(failed_urls)}
+
+📸 لقطات الشاشة:
+═══════════════════
+✅ لقطات ناجحة: {screenshot_stats['successful_screenshots']}
+❌ لقطات فاشلة: {screenshot_stats['failed_screenshots']}
+📊 إجمالي اللقطات: {screenshot_stats['total_screenshots']}
+📈 معدل النجاح: {(screenshot_stats['successful_screenshots'] / max(screenshot_stats['total_pages_processed'], 1)) * 100:.2f}%
+
+💾 الأصول المحملة:
+═══════════════════
+📦 إجمالي الأصول: {screenshot_stats['total_assets_downloaded']}
+
+📁 الملفات المُنشأة:
+═══════════════════
+🗂️ النتائج الرئيسية: {config.output_root}
+📸 لقطات الشاشة: {config.screenshots_root}
+🌐 خريطة الموقع: {os.path.join(config.output_root, "sitemap.xml")}
+📊 التقارير المفصلة: {os.path.join(config.output_root, "reports")}
+
+⚙️ إعدادات التحليل:
+═══════════════════
+📄 الحد الأقصى للصفحات: {config.max_pages}
+🔍 العمق الأقصى: {config.max_depth}
+💾 حفظ HTML: {'✅' if config.save_html else '❌'}
+📦 حفظ الأصول: {'✅' if config.save_assets else '❌'}
+🔧 تحليل CMS: {'✅' if config.analyze_cms else '❌'}
+🔗 فحص الروابط المعطلة: {'✅' if config.check_broken_links else '❌'}
+
+════════════════════════════════════════════════════════════════
+🎉 تم إنجاز التحليل بنجاح! جميع النتائج محفوظة في المجلدات المحددة.
+════════════════════════════════════════════════════════════════
+"""
+        
+        text_report_file = os.path.join(config.output_root, "reports", "summary_report.txt")
+        async with aiofiles.open(text_report_file, 'w', encoding='utf-8') as f:
+            await f.write(text_report)
+        
         logger.info(f"📊 تم إنشاء التقرير الشامل: {report_file}")
+        logger.info(f"📄 تم إنشاء الملخص النصي: {text_report_file}")
         
     except Exception as e:
         logger.error(f"خطأ في إنشاء التقرير الشامل: {e}")
+
+# =====================================================
+# 10. الوظيفة الرئيسية للتشغيل
+# =====================================================
 
 async def main():
     """الوظيفة الرئيسية لتشغيل التحليل الشامل"""
@@ -748,15 +1023,15 @@ async def main():
             # إغلاق المتصفح
             await browser.close()
         
-        # إنشاء خريطة الموقع
-        sitemap_path = os.path.join(config.output_root, "sitemap.xml")
-        save_sitemap(sitemap_urls, sitemap_path)
+        # إنشاء خريطة الموقع إذا كان مفعل
+        if config.generate_sitemap:
+            sitemap_path = os.path.join(config.output_root, "sitemap.xml")
+            save_sitemap(sitemap_urls, sitemap_path)
         
         # إنشاء التقرير الشامل
         await generate_comprehensive_report()
         
         # طباعة النتائج النهائية
-        screenshot_stats['end_time'] = datetime.now()
         duration = screenshot_stats['end_time'] - screenshot_stats['start_time']
         
         print(f"""
@@ -792,17 +1067,9 @@ def run_screenshot_tool():
         print(f"\n❌ خطأ في تشغيل الأداة: {e}")
         logger.error(f"خطأ في تشغيل الأداة: {e}")
 
-if __name__ == "__main__":
-    run_screenshot_tool()
-
-def run_screenshot_tool():
-    """تشغيل الأداة"""
-    try:
-        asyncio.run(main())
-    except KeyboardInterrupt:
-        print("\n⚠️ تم إيقاف التحليل بواسطة المستخدم")
-    except Exception as e:
-        print(f"\n❌ خطأ في تشغيل الأداة: {e}")
+# =====================================================
+# 11. تشغيل الأداة
+# =====================================================
 
 if __name__ == "__main__":
     run_screenshot_tool()
